@@ -1,0 +1,5 @@
+function f(x: i64): i64
+{
+    const y = (x + 2);
+    return y;
+}

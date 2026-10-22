@@ -1,0 +1,235 @@
+// A shop's stock, orders and automations: the TypeScript side of the agent
+// study (bench/agents/README.md). ../giz/shop.giz is the same program.
+export type Result<T, E> = { kind: "ok"; value: T } | { kind: "err"; error: E };
+const ok = <T>(value: T): Result<T, string> => ({ kind: "ok", value });
+const err = <T>(error: string): Result<T, string> => ({ kind: "err", error });
+
+export type Item = { sku: string; name: string; stock: number; reorderAt: number; priceCents: number };
+export type Line = { sku: string; quantity: number };
+export type Status = { kind: "placed" } | { kind: "shipped" } | { kind: "cancelled" };
+export type Order = { id: number; customer: string; lines: Line[]; status: Status };
+// Follow-up work an automation opened, such as "reorder" for a sku.
+export type Work = { kind: string; subject: string; open: boolean };
+export type Event =
+    | { kind: "stockChanged"; sku: string; stock: number }
+    | { kind: "orderPlaced"; id: number }
+    | { kind: "orderShipped"; id: number }
+    | { kind: "orderCancelled"; id: number };
+export type Store = { items: Item[]; orders: Order[]; work: Work[]; log: string[]; nextId: number };
+
+// Orders at or above this subtotal get the bulk discount.
+export const BULK_CENTS = 100000;
+export const BULK_PERCENT = 10;
+
+export function newStore(): Store {
+    return { items: [], orders: [], work: [], log: [], nextId: 1 };
+}
+export function item(sku: string, name: string, stock: number, reorderAt: number, priceCents: number): Item {
+    return { sku, name, stock, reorderAt, priceCents };
+}
+
+// ----- Items -----
+
+export function findItem(store: Store, sku: string): number {
+    for (let index = 0; index < store.items.length; index++) {
+        if (store.items[index].sku === sku) { return index; }
+    }
+    return -1;
+}
+export function stockOf(store: Store, sku: string): number {
+    const index = findItem(store, sku);
+    if (index < 0) { return -1; }
+    return store.items[index].stock;
+}
+export function addItem(store: Store, entry: Item): Result<Store, string> {
+    if (entry.sku.length === 0) { return err("empty sku"); }
+    if (findItem(store, entry.sku) >= 0) { return err("duplicate sku " + entry.sku); }
+    if (entry.stock < 0 || entry.priceCents < 0) { return err("negative stock or price for " + entry.sku); }
+    return ok(automate({ ...store, items: [...store.items, entry] }, { kind: "stockChanged", sku: entry.sku, stock: entry.stock }));
+}
+// Change one item's stock by `delta` and run the automations.
+function adjust(store: Store, sku: string, delta: number): Store {
+    const index = findItem(store, sku);
+    const items = [...store.items];
+    const stock = items[index].stock + delta;
+    items[index] = { ...items[index], stock };
+    return automate({ ...store, items }, { kind: "stockChanged", sku, stock });
+}
+
+// ----- Orders -----
+
+export function findOrder(store: Store, id: number): number {
+    for (let index = 0; index < store.orders.length; index++) {
+        if (store.orders[index].id === id) { return index; }
+    }
+    return -1;
+}
+function withOrder(store: Store, index: number, order: Order): Store {
+    const orders = [...store.orders];
+    orders[index] = order;
+    return { ...store, orders };
+}
+// Place an order: every line must name a known sku with enough stock; the
+// stock is reserved at once.
+export function placeOrder(store: Store, customer: string, lines: Line[]): Result<Store, string> {
+    if (lines.length === 0) { return err("an order needs lines"); }
+    for (const line of lines) {
+        if (line.quantity <= 0) { return err("quantity must be positive for " + line.sku); }
+        const at = findItem(store, line.sku);
+        if (at < 0) { return err("unknown sku " + line.sku); }
+        if (store.items[at].stock < line.quantity) { return err("not enough " + line.sku); }
+    }
+    const id = store.nextId;
+    let next: Store = { ...store, orders: [...store.orders, { id, customer, lines, status: { kind: "placed" } }], nextId: id + 1 };
+    for (const line of lines) { next = adjust(next, line.sku, -line.quantity); }
+    return ok(automate(next, { kind: "orderPlaced", id }));
+}
+export function lastOrderId(store: Store): number { return store.nextId - 1; }
+export function ship(store: Store, id: number): Result<Store, string> {
+    const index = findOrder(store, id);
+    if (index < 0) { return err("unknown order " + id); }
+    const order = store.orders[index];
+    switch (order.status.kind) {
+        case "placed": return ok(automate(withOrder(store, index, { ...order, status: { kind: "shipped" } }), { kind: "orderShipped", id }));
+        case "shipped": return err("order " + id + " already shipped");
+        case "cancelled": return err("order " + id + " is cancelled");
+    }
+}
+// Cancel a placed order and return its stock.
+export function cancel(store: Store, id: number): Result<Store, string> {
+    const index = findOrder(store, id);
+    if (index < 0) { return err("unknown order " + id); }
+    const order = store.orders[index];
+    switch (order.status.kind) {
+        case "placed": {
+            let next = withOrder(store, index, { ...order, status: { kind: "cancelled" } });
+            for (const line of order.lines) { next = adjust(next, line.sku, line.quantity); }
+            return ok(automate(next, { kind: "orderCancelled", id }));
+        }
+        case "shipped": return err("order " + id + " already shipped");
+        case "cancelled": return err("order " + id + " is cancelled");
+    }
+}
+export function subtotal(store: Store, order: Order): number {
+    let sum = 0;
+    for (const line of order.lines) { sum = sum + line.quantity * store.items[findItem(store, line.sku)].priceCents; }
+    return sum;
+}
+// The amount due in cents, after the bulk discount; -1 for an unknown order.
+export function orderTotal(store: Store, id: number): number {
+    const index = findOrder(store, id);
+    if (index < 0) { return -1; }
+    const amount = subtotal(store, store.orders[index]);
+    if (amount >= BULK_CENTS) { return amount - Math.trunc(amount * BULK_PERCENT / 100); }
+    return amount;
+}
+export function statusName(status: Status): string {
+    switch (status.kind) {
+        case "placed": return "placed";
+        case "shipped": return "shipped";
+        case "cancelled": return "cancelled";
+    }
+}
+// The order's status name, or "" for an unknown order.
+export function statusOf(store: Store, id: number): string {
+    const index = findOrder(store, id);
+    if (index < 0) { return ""; }
+    return statusName(store.orders[index].status);
+}
+
+// ----- Automations -----
+
+function describe(event: Event): string {
+    switch (event.kind) {
+        case "stockChanged": return "stock " + event.sku + " " + event.stock;
+        case "orderPlaced": return "placed " + event.id;
+        case "orderShipped": return "shipped " + event.id;
+        case "orderCancelled": return "cancelled " + event.id;
+    }
+}
+function hasOpenWork(store: Store, kind: string, subject: string): boolean {
+    for (const entry of store.work) {
+        if (entry.open && entry.kind === kind && entry.subject === subject) { return true; }
+    }
+    return false;
+}
+function openWork(store: Store, kind: string, subject: string): Store {
+    if (hasOpenWork(store, kind, subject)) { return store; }
+    return { ...store, work: [...store.work, { kind, subject, open: true }] };
+}
+// Log every event, then run the rules: low stock opens one reorder per sku,
+// and a large order opens a review.
+function automate(store: Store, event: Event): Store {
+    const logged = { ...store, log: [...store.log, describe(event)] };
+    switch (event.kind) {
+        case "stockChanged": {
+            const index = findItem(logged, event.sku);
+            if (event.stock <= logged.items[index].reorderAt) { return openWork(logged, "reorder", event.sku); }
+            return logged;
+        }
+        case "orderPlaced": {
+            if (orderTotal(logged, event.id) >= BULK_CENTS) { return openWork(logged, "review", String(event.id)); }
+            return logged;
+        }
+        case "orderShipped": return logged;
+        case "orderCancelled": return logged;
+    }
+}
+// Open work as "kind:subject", oldest first.
+export function openTasks(store: Store): string[] {
+    const names: string[] = [];
+    for (const entry of store.work) {
+        if (entry.open) { names.push(entry.kind + ":" + entry.subject); }
+    }
+    return names;
+}
+export function history(store: Store): string[] { return store.log; }
+
+// ----- Search, import, report -----
+
+// Skus of the items whose name starts with `text`, ignoring case, in stock order.
+export function search(store: Store, text: string): string[] {
+    const wanted = text.toLowerCase();
+    const found: string[] = [];
+    for (const entry of store.items) {
+        if (entry.name.toLowerCase().startsWith(wanted)) { found.push(entry.sku); }
+    }
+    return found;
+}
+function number(field: string, line: number): Result<number, string> {
+    const text = field.trim();
+    if (!/^-?[0-9]+$/.test(text)) { return err("line " + line + ": not a number: " + field); }
+    const value = Number(text);
+    if (!Number.isSafeInteger(value)) { return err("line " + line + ": number too large: " + field); }
+    return ok(value);
+}
+// Import "sku,name,stock,reorderAt,priceCents" lines. A bad line rejects the
+// whole import, naming its line number (from 1); blank lines are skipped.
+export function importCsv(store: Store, text: string): Result<Store, string> {
+    const rows = text.split("\n");
+    let next = store;
+    for (let index = 0; index < rows.length; index++) {
+        const row = rows[index].trim();
+        if (row.length > 0) {
+            const fields = row.split(",");
+            if (fields.length !== 5) { return err("line " + (index + 1) + ": expected 5 fields"); }
+            const stock = number(fields[2], index + 1);
+            if (stock.kind === "err") { return stock; }
+            const reorderAt = number(fields[3], index + 1);
+            if (reorderAt.kind === "err") { return reorderAt; }
+            const price = number(fields[4], index + 1);
+            if (price.kind === "err") { return price; }
+            const added = addItem(next, item(fields[0].trim(), fields[1].trim(), stock.value, reorderAt.value, price.value));
+            if (added.kind === "err") { return err("line " + (index + 1) + ": " + added.error); }
+            next = added.value;
+        }
+    }
+    return ok(next);
+}
+// Item lines sorted by sku, "sku name stock", then the order count.
+export function report(store: Store): string {
+    const sorted = [...store.items].sort((left, right) => (left.sku < right.sku ? -1 : left.sku > right.sku ? 1 : 0));
+    let text = "";
+    for (const entry of sorted) { text = text + entry.sku + " " + entry.name + " " + entry.stock + "\n"; }
+    return text + "orders " + store.orders.length + "\n";
+}

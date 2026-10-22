@@ -1,0 +1,4 @@
+function main(): i64
+{
+    return len("안녕");
+}

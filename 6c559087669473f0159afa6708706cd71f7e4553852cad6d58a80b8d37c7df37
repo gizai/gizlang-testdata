@@ -1,0 +1,76 @@
+type Point = {
+    x: f64,
+    y: f64,
+}
+
+type Choice =
+    | { kind: "Some"; value: i64; }
+    | { kind: "None";  }
+;
+
+export function choice(x: Choice): Choice
+{
+    return x;
+}
+
+export function add(x: i64, y: i64): i64
+{
+    return (x + y);
+}
+
+export function length(p: Point): f64
+{
+    return Math.sqrt((((p).x * (p).x) + ((p).y * (p).y)));
+}
+
+export function shift(p: Point): Point
+{
+    return Point(((p).x + 1.0), ((p).y + 2.0));
+}
+
+export function greet(name: string): string
+{
+    return (name + "!");
+}
+
+export function echo(data: bytes): bytes
+{
+    return data;
+}
+
+export function append(xs: Vec<i64>, v: i64): Vec<i64>
+{
+    return push(xs, v);
+}
+
+export function points(xs: Vec<Point>): Vec<Point>
+{
+    return xs;
+}
+
+export function dot(a: View<f64>, b: View<f64>): f64
+requires (len(a) === len(b))
+{
+    let sum = 0.0;
+    for (const i of range(0, len(a))) {
+        sum = (sum + (a[i] * b[i]));
+    }
+    return sum;
+}
+
+export function copy(a: View<f64>, out: MutableView<f64>): i64
+requires (len(a) === len(out))
+{
+    for (const i of range(0, len(a))) {
+        out[i] = a[i];
+    }
+    return len(a);
+}
+
+export function reentry(a: View<f64>, p: Point): f64
+{
+    return (a[0] + (p).x);
+}
+
+export { Choice };
+export { Point };

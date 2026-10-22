@@ -1,0 +1,8 @@
+function f(class: i64): i64
+{
+    return class;
+}
+
+export { f as binding0 };
+export { f as class };
+export { f as native };

@@ -1,0 +1,1 @@
+function g(a:MutableView<f64>):i64{a[0]=1.0;return 0;} function f(a:View<f64>):i64{return g(a);}

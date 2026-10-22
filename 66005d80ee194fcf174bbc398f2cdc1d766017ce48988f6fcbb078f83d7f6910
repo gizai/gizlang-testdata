@@ -1,0 +1,9 @@
+function testAccept02Restock(): void {
+    const low = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P2", 3)));
+    const restocked = hiddenMust(restock(low, "P2", 5));
+    const tasks = openTasks(restocked);
+    const events = history(restocked);
+    HiddenTest.check(openTasks(low).length === 1 && tasks.length === 0 && stockOf(restocked, "P2") === 7
+        && events[events.length - 1] === "stock P2 7"
+        && hiddenFailed(restock(low, "ZZ", 1)) && hiddenFailed(restock(low, "P2", 0)));
+}

@@ -1,0 +1,73 @@
+// Hidden regression suite: behavior no change request asks to change.
+// hidden.giz checks the same facts. Run by ../../run.py against shop.ts.
+import { cancel, history, importCsv, item, lastOrderId, newStore, openTasks, orderTotal, placeOrder, report,
+    search, ship, statusOf, stockOf, addItem, type Line, type Result, type Store } from "./shop.ts";
+
+function must(outcome: Result<Store, string>): Store {
+    if (outcome.kind !== "ok") { throw new Error(outcome.error); }
+    return outcome.value;
+}
+const failed = (outcome: Result<Store, string>): boolean => outcome.kind === "err";
+function shop(): Store {
+    let store = newStore();
+    store = must(addItem(store, item("P1", "Blue pen", 10, 2, 2500)));
+    store = must(addItem(store, item("P2", "black ink", 5, 3, 400)));
+    store = must(addItem(store, item("A9", "Red pen", 50, 0, 120)));
+    return store;
+}
+const lines = (sku: string, quantity: number): Line[] => [{ sku, quantity }];
+
+export const hidden: Record<string, () => boolean> = {
+    testHiddenCancelRestoresStock: () => {
+        const placed = must(placeOrder(shop(), "Ann", lines("P1", 4)));
+        const cancelled = must(cancel(placed, lastOrderId(placed)));
+        return stockOf(placed, "P1") === 6 && stockOf(cancelled, "P1") === 10 && statusOf(cancelled, lastOrderId(placed)) === "cancelled";
+    },
+    testHiddenNotEnoughStock: () => {
+        const store = shop();
+        return failed(placeOrder(store, "Ann", lines("P2", 6))) && failed(placeOrder(store, "Ann", lines("ZZ", 1)))
+            && stockOf(store, "P2") === 5 && lastOrderId(store) === 0;
+    },
+    testHiddenIdsIncrease: () => {
+        const first = must(placeOrder(shop(), "Ann", lines("A9", 1)));
+        const second = must(placeOrder(first, "Bo", lines("A9", 1)));
+        return lastOrderId(first) === 1 && lastOrderId(second) === 2;
+    },
+    testHiddenShippedIsFinal: () => {
+        const placed = must(placeOrder(shop(), "Ann", lines("A9", 2)));
+        const shipped = must(ship(placed, 1));
+        const cancelled = must(cancel(placed, 1));
+        return failed(cancel(shipped, 1)) && failed(ship(cancelled, 1)) && failed(ship(shipped, 1))
+            && stockOf(shipped, "A9") === 48 && statusOf(shipped, 1) === "shipped";
+    },
+    testHiddenImportRejectsBadLine: () => {
+        const outcome = importCsv(newStore(), "K1,Kettle,3,1,900\nK2,Kite,2,0,500\nK3,Knife,many,1,300\n");
+        return outcome.kind === "err" && outcome.error.startsWith("line 3");
+    },
+    testHiddenImportAddsItems: () => {
+        const store = must(importCsv(newStore(), "K1, Kettle ,3,1,900\n\nK2,Kite,2,0,500\n"));
+        return stockOf(store, "K1") === 3 && stockOf(store, "K2") === 2 && search(store, "kettle").length === 1;
+    },
+    testHiddenSearchByName: () => {
+        const found = search(shop(), "BL");
+        return found.length === 2 && found[0] === "P1" && found[1] === "P2" && search(shop(), "red")[0] === "A9";
+    },
+    testHiddenOneReorderPerSku: () => {
+        const first = must(placeOrder(shop(), "Ann", lines("P2", 2)));
+        const second = must(placeOrder(first, "Bo", lines("P2", 1)));
+        return openTasks(second).filter((task) => task === "reorder:P2").length === 1 && openTasks(shop()).length === 0;
+    },
+    testHiddenReportSortedBySku: () => {
+        const rows = report(shop()).split("\n");
+        return rows[0].startsWith("A9 Red pen 50") && rows[1].startsWith("P1 Blue pen 10") && rows[2].startsWith("P2 black ink 5");
+    },
+    testHiddenPlainTotal: () => {
+        const store = must(placeOrder(shop(), "Ann", lines("P1", 3)));
+        return orderTotal(store, 1) === 7500 && orderTotal(store, 99) === -1;
+    },
+    testHiddenHistoryOrder: () => {
+        const events = history(must(ship(must(placeOrder(shop(), "Ann", lines("A9", 1))), 1)));
+        const placed = events.indexOf("placed 1");
+        return placed >= 0 && events.lastIndexOf("shipped 1") > placed && events[0] === "stock P1 10";
+    },
+};

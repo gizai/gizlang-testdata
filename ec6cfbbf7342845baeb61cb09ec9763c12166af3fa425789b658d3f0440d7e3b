@@ -1,0 +1,5 @@
+interface Score { score(self:Self):i64 effects {fail};}
+type Entry = {value:i64}
+function Entry.score(self:Entry):bool{return true;}
+function score<T extends Score>(x:T):i64{return 0;}
+function main():i64{return score(Entry(41));}

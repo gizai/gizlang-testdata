@@ -1,0 +1,20 @@
+type Point = {
+    x: i64,
+    y: i64,
+    z: i64,
+}
+
+function Point.sum(p: Point): i64
+{
+    return ((p).x + (p).y);
+}
+
+function untouched(): i64
+{
+    return 42;
+}
+
+function upgrade(x: i64, y: i64): Point
+{
+    return Point(x, y, (x + y));
+}

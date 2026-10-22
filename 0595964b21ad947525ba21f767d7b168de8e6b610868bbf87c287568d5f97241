@@ -1,0 +1,4 @@
+function main(): u64
+{
+    return utf8("가")[0];
+}

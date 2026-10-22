@@ -1,0 +1,17 @@
+namespace lib {
+    function _ref_load(): i64
+    {
+        return 42;
+    }
+    
+    export function answer(): i64
+    {
+        return lib___ref_load();
+    }
+    
+}
+
+function main(): i64
+{
+    return lib__answer();
+}

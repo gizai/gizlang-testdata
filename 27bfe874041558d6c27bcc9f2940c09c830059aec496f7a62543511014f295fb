@@ -1,0 +1,41 @@
+<script>
+  // As js-framework-benchmark's keyed svelte (5) implementation.
+  import { labels, resumed } from "../../labels.js";
+  class Row {
+    label = $state("");
+    constructor(r) { this.id = r.id; this.label = r.label; }
+  }
+  const build = (n) => labels(n).map((r) => new Row(r));
+  // The rows to start with: none, or those a server rendered (ssr.js).
+  let { initial = [] } = $props();
+  let data = $state.raw(resumed(initial).map((r) => new Row(r)));
+  let selected = $state(0);
+  const run = () => { data = build(1000); selected = 0; };
+  const runLots = () => { data = build(10000); selected = 0; };
+  const add = () => { data = [...data, ...build(1000)]; };
+  const update = () => { for (let i = 0; i < data.length; i += 10) data[i].label += " !!!"; };
+  const clear = () => { data = []; selected = 0; };
+  const swapRows = () => {
+    if (data.length > 998) { const d = data.slice(); const t = d[1]; d[1] = d[998]; d[998] = t; data = d; }
+  };
+  const remove = (row) => { data = data.toSpliced(data.indexOf(row), 1); };
+</script>
+
+<div class="jumbotron">
+  <button id="run" onclick={run}>Create 1,000 rows</button>
+  <button id="runlots" onclick={runLots}>Create 10,000 rows</button>
+  <button id="add" onclick={add}>Append 1,000 rows</button>
+  <button id="update" onclick={update}>Update every 10th row</button>
+  <button id="clear" onclick={clear}>Clear</button>
+  <button id="swaprows" onclick={swapRows}>Swap Rows</button>
+</div>
+<table><tbody>
+  {#each data as row (row.id)}
+    <tr class={selected === row.id ? "danger" : ""}>
+      <td class="col-md-1">{row.id}</td>
+      <td class="col-md-4"><button onclick={() => (selected = row.id)}>{row.label}</button></td>
+      <td class="col-md-1"><button onclick={() => remove(row)} aria-label="remove"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+      <td class="col-md-6"></td>
+    </tr>
+  {/each}
+</tbody></table>

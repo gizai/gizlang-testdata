@@ -1,0 +1,211 @@
+-- PL/SQL, part three: collections in packages, parameters and results, TABLE(), MEMBER OF, nested subprograms, RETURNING INTO and dynamic SQL.
+create table p3_t (id number primary key, name varchar2(30), qty number);
+insert into p3_t values (1, 'a', 10);
+insert into p3_t values (2, 'b', 20);
+insert into p3_t values (3, 'c', 30);
+create table p3_log (n number, msg varchar2(200));
+create or replace package p3_pkg is
+  type num_list is table of number;
+  type name_map is table of varchar2(30) index by varchar2(10);
+  g_ids num_list := num_list(1, 2, 3);
+  g_names name_map;
+  cursor c_all is select id, name from p3_t order by id;
+  g_count number := 0;
+  function total(p num_list) return number;
+  function doubled(p num_list) return num_list;
+  procedure fill;
+  procedure show;
+end p3_pkg;
+/
+create or replace package body p3_pkg is
+  function total(p num_list) return number is
+    s number := 0;
+  begin
+    for i in 1 .. p.count loop s := s + p(i); end loop;
+    return s;
+  end;
+  function doubled(p num_list) return num_list is
+    r num_list := num_list();
+  begin
+    for i in 1 .. p.count loop r.extend; r(r.count) := p(i) * 2; end loop;
+    return r;
+  end;
+  procedure fill is
+  begin
+    g_names('x') := 'ex';
+    g_names('y') := 'why';
+    g_count := g_count + 1;
+  end;
+  procedure show is
+    k varchar2(10);
+  begin
+    k := g_names.first;
+    while k is not null loop
+      insert into p3_log values (g_count, k || '=' || g_names(k));
+      k := g_names.next(k);
+    end loop;
+    for r in c_all loop
+      insert into p3_log values (r.id, r.name);
+    end loop;
+  end;
+end p3_pkg;
+/
+declare
+  n number;
+begin
+  p3_pkg.fill;
+  p3_pkg.fill;
+  p3_pkg.show;
+  n := p3_pkg.total(p3_pkg.g_ids);
+  insert into p3_log values (n, 'total');
+  n := p3_pkg.total(p3_pkg.doubled(p3_pkg.g_ids));
+  insert into p3_log values (n, 'doubled');
+end;
+/
+select n, msg from p3_log order by msg, n;
+delete from p3_log;
+declare
+  type num_list is table of number;
+  l num_list := num_list(10, 20, 30);
+  v number := 20;
+  n number;
+begin
+  if v member of l then insert into p3_log values (1, 'member'); end if;
+  if 99 member of l then insert into p3_log values (2, 'not'); end if;
+  n := l.count; insert into p3_log values (n, 'count');
+  n := l.first; insert into p3_log values (n, 'first');
+  n := l.last; insert into p3_log values (n, 'last');
+  n := l.prior(3); insert into p3_log values (n, 'prior');
+  n := l.next(1); insert into p3_log values (n, 'next');
+  if l.exists(2) then insert into p3_log values (2, 'exists'); end if;
+end;
+/
+select n, msg from p3_log order by msg, n;
+delete from p3_log;
+create or replace type p3_nums as table of number;
+/
+create or replace function p3_rng(lo number, hi number) return p3_nums is
+  r p3_nums := p3_nums();
+begin
+  for i in lo .. hi loop r.extend; r(r.count) := i; end loop;
+  return r;
+end;
+/
+select column_value from table(p3_rng(3, 6)) order by 1;
+select t.name from p3_t t where t.id in (select column_value from table(p3_rng(2, 3))) order by 1;
+declare
+  l p3_nums := p3_nums(5, 6, 7);
+  n number;
+begin
+  select sum(column_value) into n from table(l);
+  insert into p3_log values (n, 'sum');
+  select count(*) into n from table(p3_rng(1, 10));
+  insert into p3_log values (n, 'count');
+end;
+/
+select n, msg from p3_log order by msg;
+delete from p3_log;
+declare
+  v_id number; v_name varchar2(30);
+begin
+  update p3_t set qty = qty + 1 where id = 2 returning id, name into v_id, v_name;
+  insert into p3_log values (v_id, v_name);
+  insert into p3_t values (4, 'd', 40) returning qty into v_id;
+  insert into p3_log values (v_id, 'ret');
+  delete from p3_t where id = 4 returning name into v_name;
+  v_id := sql%rowcount;
+  insert into p3_log values (v_id, v_name);
+end;
+/
+select n, msg from p3_log order by msg;
+delete from p3_log;
+declare
+  n number; s varchar2(30);
+begin
+  execute immediate 'select count(*) from p3_t' into n;
+  insert into p3_log values (n, 'dyn');
+  execute immediate 'select name from p3_t where id = :1' into s using 3;
+  insert into p3_log values (3, s);
+  execute immediate 'update p3_t set qty = :1 where id = :2' using 99, 1;
+  n := sql%rowcount;
+  insert into p3_log values (n, 'upd');
+end;
+/
+select n, msg from p3_log order by msg;
+delete from p3_log;
+declare
+  function fact(n number) return number is
+  begin
+    if n <= 1 then return 1; end if;
+    return n * fact(n - 1);
+  end;
+  procedure note(m varchar2) is
+    f number := fact(5);
+  begin
+    insert into p3_log values (f, m);
+  end;
+begin
+  note('nested');
+end;
+/
+select n, msg from p3_log;
+delete from p3_log;
+declare
+  cursor c is select id, qty from p3_t order by id for update;
+begin
+  for r in c loop
+    update p3_t set qty = r.qty * 2 where current of c;
+  end loop;
+end;
+/
+select id, qty from p3_t order by id;
+declare
+  type rec is record (id number, name varchar2(30));
+  type rec_tab is table of rec index by pls_integer;
+  t rec_tab;
+  r rec;
+  v number;
+begin
+  select id, name bulk collect into t from p3_t order by id;
+  for i in 1 .. t.count loop
+    r := t(i);
+    insert into p3_log values (r.id, r.name);
+  end loop;
+  r.id := 100; r.name := 'z';
+  t(t.count + 1) := r;
+  v := t.count;
+  insert into p3_log values (v, t(v).name);
+end;
+/
+select n, msg from p3_log order by n;
+delete from p3_log;
+declare
+  e_neg exception;
+  n number := -1;
+  c number;
+  m varchar2(200);
+begin
+  begin
+    if n < 0 then raise e_neg; end if;
+  exception
+    when e_neg then insert into p3_log values (1, 'neg');
+  end;
+  begin
+    n := 1 / 0;
+  exception
+    when zero_divide then m := sqlerrm; insert into p3_log values (2, m);
+  end;
+  begin
+    select id into n from p3_t where id = 999;
+  exception
+    when no_data_found then c := sqlcode; m := sqlerrm; insert into p3_log values (3, c || ' ' || m);
+  end;
+  begin
+    select id into n from p3_t;
+  exception
+    when too_many_rows then c := sqlcode; m := sqlerrm; insert into p3_log values (4, c || ' ' || m);
+  end;
+end;
+/
+select n, msg from p3_log order by n;
+delete from p3_log;

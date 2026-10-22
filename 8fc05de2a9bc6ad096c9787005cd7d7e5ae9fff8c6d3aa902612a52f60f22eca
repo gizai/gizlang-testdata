@@ -1,0 +1,1 @@
+type R = {x:i64} function f(r:R):bool{return r===r;}

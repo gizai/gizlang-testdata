@@ -1,0 +1,9999 @@
+function work_0(x: i64): i64
+{
+    return (x + 0);
+}
+
+function work_1(x: i64): i64
+{
+    return (x + 1);
+}
+
+function work_2(x: i64): i64
+{
+    return (x + 2);
+}
+
+function work_3(x: i64): i64
+{
+    return (x + 3);
+}
+
+function work_4(x: i64): i64
+{
+    return (x + 4);
+}
+
+function work_5(x: i64): i64
+{
+    return (x + 5);
+}
+
+function work_6(x: i64): i64
+{
+    return (x + 6);
+}
+
+function work_7(x: i64): i64
+{
+    return (x + 7);
+}
+
+function work_8(x: i64): i64
+{
+    return (x + 8);
+}
+
+function work_9(x: i64): i64
+{
+    return (x + 9);
+}
+
+function work_10(x: i64): i64
+{
+    return (x + 10);
+}
+
+function work_11(x: i64): i64
+{
+    return (x + 11);
+}
+
+function work_12(x: i64): i64
+{
+    return (x + 12);
+}
+
+function work_13(x: i64): i64
+{
+    return (x + 13);
+}
+
+function work_14(x: i64): i64
+{
+    return (x + 14);
+}
+
+function work_15(x: i64): i64
+{
+    return (x + 15);
+}
+
+function work_16(x: i64): i64
+{
+    return (x + 16);
+}
+
+function work_17(x: i64): i64
+{
+    return (x + 17);
+}
+
+function work_18(x: i64): i64
+{
+    return (x + 18);
+}
+
+function work_19(x: i64): i64
+{
+    return (x + 19);
+}
+
+function work_20(x: i64): i64
+{
+    return (x + 20);
+}
+
+function work_21(x: i64): i64
+{
+    return (x + 21);
+}
+
+function work_22(x: i64): i64
+{
+    return (x + 22);
+}
+
+function work_23(x: i64): i64
+{
+    return (x + 23);
+}
+
+function work_24(x: i64): i64
+{
+    return (x + 24);
+}
+
+function work_25(x: i64): i64
+{
+    return (x + 25);
+}
+
+function work_26(x: i64): i64
+{
+    return (x + 26);
+}
+
+function work_27(x: i64): i64
+{
+    return (x + 27);
+}
+
+function work_28(x: i64): i64
+{
+    return (x + 28);
+}
+
+function work_29(x: i64): i64
+{
+    return (x + 29);
+}
+
+function work_30(x: i64): i64
+{
+    return (x + 30);
+}
+
+function work_31(x: i64): i64
+{
+    return (x + 31);
+}
+
+function work_32(x: i64): i64
+{
+    return (x + 32);
+}
+
+function work_33(x: i64): i64
+{
+    return (x + 33);
+}
+
+function work_34(x: i64): i64
+{
+    return (x + 34);
+}
+
+function work_35(x: i64): i64
+{
+    return (x + 35);
+}
+
+function work_36(x: i64): i64
+{
+    return (x + 36);
+}
+
+function work_37(x: i64): i64
+{
+    return (x + 37);
+}
+
+function work_38(x: i64): i64
+{
+    return (x + 38);
+}
+
+function work_39(x: i64): i64
+{
+    return (x + 39);
+}
+
+function work_40(x: i64): i64
+{
+    return (x + 40);
+}
+
+function work_41(x: i64): i64
+{
+    return (x + 41);
+}
+
+function work_42(x: i64): i64
+{
+    return (x + 42);
+}
+
+function work_43(x: i64): i64
+{
+    return (x + 43);
+}
+
+function work_44(x: i64): i64
+{
+    return (x + 44);
+}
+
+function work_45(x: i64): i64
+{
+    return (x + 45);
+}
+
+function work_46(x: i64): i64
+{
+    return (x + 46);
+}
+
+function work_47(x: i64): i64
+{
+    return (x + 47);
+}
+
+function work_48(x: i64): i64
+{
+    return (x + 48);
+}
+
+function work_49(x: i64): i64
+{
+    return (x + 49);
+}
+
+function work_50(x: i64): i64
+{
+    return (x + 50);
+}
+
+function work_51(x: i64): i64
+{
+    return (x + 51);
+}
+
+function work_52(x: i64): i64
+{
+    return (x + 52);
+}
+
+function work_53(x: i64): i64
+{
+    return (x + 53);
+}
+
+function work_54(x: i64): i64
+{
+    return (x + 54);
+}
+
+function work_55(x: i64): i64
+{
+    return (x + 55);
+}
+
+function work_56(x: i64): i64
+{
+    return (x + 56);
+}
+
+function work_57(x: i64): i64
+{
+    return (x + 57);
+}
+
+function work_58(x: i64): i64
+{
+    return (x + 58);
+}
+
+function work_59(x: i64): i64
+{
+    return (x + 59);
+}
+
+function work_60(x: i64): i64
+{
+    return (x + 60);
+}
+
+function work_61(x: i64): i64
+{
+    return (x + 61);
+}
+
+function work_62(x: i64): i64
+{
+    return (x + 62);
+}
+
+function work_63(x: i64): i64
+{
+    return (x + 63);
+}
+
+function work_64(x: i64): i64
+{
+    return (x + 64);
+}
+
+function work_65(x: i64): i64
+{
+    return (x + 65);
+}
+
+function work_66(x: i64): i64
+{
+    return (x + 66);
+}
+
+function work_67(x: i64): i64
+{
+    return (x + 67);
+}
+
+function work_68(x: i64): i64
+{
+    return (x + 68);
+}
+
+function work_69(x: i64): i64
+{
+    return (x + 69);
+}
+
+function work_70(x: i64): i64
+{
+    return (x + 70);
+}
+
+function work_71(x: i64): i64
+{
+    return (x + 71);
+}
+
+function work_72(x: i64): i64
+{
+    return (x + 72);
+}
+
+function work_73(x: i64): i64
+{
+    return (x + 73);
+}
+
+function work_74(x: i64): i64
+{
+    return (x + 74);
+}
+
+function work_75(x: i64): i64
+{
+    return (x + 75);
+}
+
+function work_76(x: i64): i64
+{
+    return (x + 76);
+}
+
+function work_77(x: i64): i64
+{
+    return (x + 77);
+}
+
+function work_78(x: i64): i64
+{
+    return (x + 78);
+}
+
+function work_79(x: i64): i64
+{
+    return (x + 79);
+}
+
+function work_80(x: i64): i64
+{
+    return (x + 80);
+}
+
+function work_81(x: i64): i64
+{
+    return (x + 81);
+}
+
+function work_82(x: i64): i64
+{
+    return (x + 82);
+}
+
+function work_83(x: i64): i64
+{
+    return (x + 83);
+}
+
+function work_84(x: i64): i64
+{
+    return (x + 84);
+}
+
+function work_85(x: i64): i64
+{
+    return (x + 85);
+}
+
+function work_86(x: i64): i64
+{
+    return (x + 86);
+}
+
+function work_87(x: i64): i64
+{
+    return (x + 87);
+}
+
+function work_88(x: i64): i64
+{
+    return (x + 88);
+}
+
+function work_89(x: i64): i64
+{
+    return (x + 89);
+}
+
+function work_90(x: i64): i64
+{
+    return (x + 90);
+}
+
+function work_91(x: i64): i64
+{
+    return (x + 91);
+}
+
+function work_92(x: i64): i64
+{
+    return (x + 92);
+}
+
+function work_93(x: i64): i64
+{
+    return (x + 93);
+}
+
+function work_94(x: i64): i64
+{
+    return (x + 94);
+}
+
+function work_95(x: i64): i64
+{
+    return (x + 95);
+}
+
+function work_96(x: i64): i64
+{
+    return (x + 96);
+}
+
+function work_97(x: i64): i64
+{
+    return (x + 97);
+}
+
+function work_98(x: i64): i64
+{
+    return (x + 98);
+}
+
+function work_99(x: i64): i64
+{
+    return (x + 99);
+}
+
+function work_100(x: i64): i64
+{
+    return (x + 100);
+}
+
+function work_101(x: i64): i64
+{
+    return (x + 101);
+}
+
+function work_102(x: i64): i64
+{
+    return (x + 102);
+}
+
+function work_103(x: i64): i64
+{
+    return (x + 103);
+}
+
+function work_104(x: i64): i64
+{
+    return (x + 104);
+}
+
+function work_105(x: i64): i64
+{
+    return (x + 105);
+}
+
+function work_106(x: i64): i64
+{
+    return (x + 106);
+}
+
+function work_107(x: i64): i64
+{
+    return (x + 107);
+}
+
+function work_108(x: i64): i64
+{
+    return (x + 108);
+}
+
+function work_109(x: i64): i64
+{
+    return (x + 109);
+}
+
+function work_110(x: i64): i64
+{
+    return (x + 110);
+}
+
+function work_111(x: i64): i64
+{
+    return (x + 111);
+}
+
+function work_112(x: i64): i64
+{
+    return (x + 112);
+}
+
+function work_113(x: i64): i64
+{
+    return (x + 113);
+}
+
+function work_114(x: i64): i64
+{
+    return (x + 114);
+}
+
+function work_115(x: i64): i64
+{
+    return (x + 115);
+}
+
+function work_116(x: i64): i64
+{
+    return (x + 116);
+}
+
+function work_117(x: i64): i64
+{
+    return (x + 117);
+}
+
+function work_118(x: i64): i64
+{
+    return (x + 118);
+}
+
+function work_119(x: i64): i64
+{
+    return (x + 119);
+}
+
+function work_120(x: i64): i64
+{
+    return (x + 120);
+}
+
+function work_121(x: i64): i64
+{
+    return (x + 121);
+}
+
+function work_122(x: i64): i64
+{
+    return (x + 122);
+}
+
+function work_123(x: i64): i64
+{
+    return (x + 123);
+}
+
+function work_124(x: i64): i64
+{
+    return (x + 124);
+}
+
+function work_125(x: i64): i64
+{
+    return (x + 125);
+}
+
+function work_126(x: i64): i64
+{
+    return (x + 126);
+}
+
+function work_127(x: i64): i64
+{
+    return (x + 127);
+}
+
+function work_128(x: i64): i64
+{
+    return (x + 128);
+}
+
+function work_129(x: i64): i64
+{
+    return (x + 129);
+}
+
+function work_130(x: i64): i64
+{
+    return (x + 130);
+}
+
+function work_131(x: i64): i64
+{
+    return (x + 131);
+}
+
+function work_132(x: i64): i64
+{
+    return (x + 132);
+}
+
+function work_133(x: i64): i64
+{
+    return (x + 133);
+}
+
+function work_134(x: i64): i64
+{
+    return (x + 134);
+}
+
+function work_135(x: i64): i64
+{
+    return (x + 135);
+}
+
+function work_136(x: i64): i64
+{
+    return (x + 136);
+}
+
+function work_137(x: i64): i64
+{
+    return (x + 137);
+}
+
+function work_138(x: i64): i64
+{
+    return (x + 138);
+}
+
+function work_139(x: i64): i64
+{
+    return (x + 139);
+}
+
+function work_140(x: i64): i64
+{
+    return (x + 140);
+}
+
+function work_141(x: i64): i64
+{
+    return (x + 141);
+}
+
+function work_142(x: i64): i64
+{
+    return (x + 142);
+}
+
+function work_143(x: i64): i64
+{
+    return (x + 143);
+}
+
+function work_144(x: i64): i64
+{
+    return (x + 144);
+}
+
+function work_145(x: i64): i64
+{
+    return (x + 145);
+}
+
+function work_146(x: i64): i64
+{
+    return (x + 146);
+}
+
+function work_147(x: i64): i64
+{
+    return (x + 147);
+}
+
+function work_148(x: i64): i64
+{
+    return (x + 148);
+}
+
+function work_149(x: i64): i64
+{
+    return (x + 149);
+}
+
+function work_150(x: i64): i64
+{
+    return (x + 150);
+}
+
+function work_151(x: i64): i64
+{
+    return (x + 151);
+}
+
+function work_152(x: i64): i64
+{
+    return (x + 152);
+}
+
+function work_153(x: i64): i64
+{
+    return (x + 153);
+}
+
+function work_154(x: i64): i64
+{
+    return (x + 154);
+}
+
+function work_155(x: i64): i64
+{
+    return (x + 155);
+}
+
+function work_156(x: i64): i64
+{
+    return (x + 156);
+}
+
+function work_157(x: i64): i64
+{
+    return (x + 157);
+}
+
+function work_158(x: i64): i64
+{
+    return (x + 158);
+}
+
+function work_159(x: i64): i64
+{
+    return (x + 159);
+}
+
+function work_160(x: i64): i64
+{
+    return (x + 160);
+}
+
+function work_161(x: i64): i64
+{
+    return (x + 161);
+}
+
+function work_162(x: i64): i64
+{
+    return (x + 162);
+}
+
+function work_163(x: i64): i64
+{
+    return (x + 163);
+}
+
+function work_164(x: i64): i64
+{
+    return (x + 164);
+}
+
+function work_165(x: i64): i64
+{
+    return (x + 165);
+}
+
+function work_166(x: i64): i64
+{
+    return (x + 166);
+}
+
+function work_167(x: i64): i64
+{
+    return (x + 167);
+}
+
+function work_168(x: i64): i64
+{
+    return (x + 168);
+}
+
+function work_169(x: i64): i64
+{
+    return (x + 169);
+}
+
+function work_170(x: i64): i64
+{
+    return (x + 170);
+}
+
+function work_171(x: i64): i64
+{
+    return (x + 171);
+}
+
+function work_172(x: i64): i64
+{
+    return (x + 172);
+}
+
+function work_173(x: i64): i64
+{
+    return (x + 173);
+}
+
+function work_174(x: i64): i64
+{
+    return (x + 174);
+}
+
+function work_175(x: i64): i64
+{
+    return (x + 175);
+}
+
+function work_176(x: i64): i64
+{
+    return (x + 176);
+}
+
+function work_177(x: i64): i64
+{
+    return (x + 177);
+}
+
+function work_178(x: i64): i64
+{
+    return (x + 178);
+}
+
+function work_179(x: i64): i64
+{
+    return (x + 179);
+}
+
+function work_180(x: i64): i64
+{
+    return (x + 180);
+}
+
+function work_181(x: i64): i64
+{
+    return (x + 181);
+}
+
+function work_182(x: i64): i64
+{
+    return (x + 182);
+}
+
+function work_183(x: i64): i64
+{
+    return (x + 183);
+}
+
+function work_184(x: i64): i64
+{
+    return (x + 184);
+}
+
+function work_185(x: i64): i64
+{
+    return (x + 185);
+}
+
+function work_186(x: i64): i64
+{
+    return (x + 186);
+}
+
+function work_187(x: i64): i64
+{
+    return (x + 187);
+}
+
+function work_188(x: i64): i64
+{
+    return (x + 188);
+}
+
+function work_189(x: i64): i64
+{
+    return (x + 189);
+}
+
+function work_190(x: i64): i64
+{
+    return (x + 190);
+}
+
+function work_191(x: i64): i64
+{
+    return (x + 191);
+}
+
+function work_192(x: i64): i64
+{
+    return (x + 192);
+}
+
+function work_193(x: i64): i64
+{
+    return (x + 193);
+}
+
+function work_194(x: i64): i64
+{
+    return (x + 194);
+}
+
+function work_195(x: i64): i64
+{
+    return (x + 195);
+}
+
+function work_196(x: i64): i64
+{
+    return (x + 196);
+}
+
+function work_197(x: i64): i64
+{
+    return (x + 197);
+}
+
+function work_198(x: i64): i64
+{
+    return (x + 198);
+}
+
+function work_199(x: i64): i64
+{
+    return (x + 199);
+}
+
+function work_200(x: i64): i64
+{
+    return (x + 200);
+}
+
+function work_201(x: i64): i64
+{
+    return (x + 201);
+}
+
+function work_202(x: i64): i64
+{
+    return (x + 202);
+}
+
+function work_203(x: i64): i64
+{
+    return (x + 203);
+}
+
+function work_204(x: i64): i64
+{
+    return (x + 204);
+}
+
+function work_205(x: i64): i64
+{
+    return (x + 205);
+}
+
+function work_206(x: i64): i64
+{
+    return (x + 206);
+}
+
+function work_207(x: i64): i64
+{
+    return (x + 207);
+}
+
+function work_208(x: i64): i64
+{
+    return (x + 208);
+}
+
+function work_209(x: i64): i64
+{
+    return (x + 209);
+}
+
+function work_210(x: i64): i64
+{
+    return (x + 210);
+}
+
+function work_211(x: i64): i64
+{
+    return (x + 211);
+}
+
+function work_212(x: i64): i64
+{
+    return (x + 212);
+}
+
+function work_213(x: i64): i64
+{
+    return (x + 213);
+}
+
+function work_214(x: i64): i64
+{
+    return (x + 214);
+}
+
+function work_215(x: i64): i64
+{
+    return (x + 215);
+}
+
+function work_216(x: i64): i64
+{
+    return (x + 216);
+}
+
+function work_217(x: i64): i64
+{
+    return (x + 217);
+}
+
+function work_218(x: i64): i64
+{
+    return (x + 218);
+}
+
+function work_219(x: i64): i64
+{
+    return (x + 219);
+}
+
+function work_220(x: i64): i64
+{
+    return (x + 220);
+}
+
+function work_221(x: i64): i64
+{
+    return (x + 221);
+}
+
+function work_222(x: i64): i64
+{
+    return (x + 222);
+}
+
+function work_223(x: i64): i64
+{
+    return (x + 223);
+}
+
+function work_224(x: i64): i64
+{
+    return (x + 224);
+}
+
+function work_225(x: i64): i64
+{
+    return (x + 225);
+}
+
+function work_226(x: i64): i64
+{
+    return (x + 226);
+}
+
+function work_227(x: i64): i64
+{
+    return (x + 227);
+}
+
+function work_228(x: i64): i64
+{
+    return (x + 228);
+}
+
+function work_229(x: i64): i64
+{
+    return (x + 229);
+}
+
+function work_230(x: i64): i64
+{
+    return (x + 230);
+}
+
+function work_231(x: i64): i64
+{
+    return (x + 231);
+}
+
+function work_232(x: i64): i64
+{
+    return (x + 232);
+}
+
+function work_233(x: i64): i64
+{
+    return (x + 233);
+}
+
+function work_234(x: i64): i64
+{
+    return (x + 234);
+}
+
+function work_235(x: i64): i64
+{
+    return (x + 235);
+}
+
+function work_236(x: i64): i64
+{
+    return (x + 236);
+}
+
+function work_237(x: i64): i64
+{
+    return (x + 237);
+}
+
+function work_238(x: i64): i64
+{
+    return (x + 238);
+}
+
+function work_239(x: i64): i64
+{
+    return (x + 239);
+}
+
+function work_240(x: i64): i64
+{
+    return (x + 240);
+}
+
+function work_241(x: i64): i64
+{
+    return (x + 241);
+}
+
+function work_242(x: i64): i64
+{
+    return (x + 242);
+}
+
+function work_243(x: i64): i64
+{
+    return (x + 243);
+}
+
+function work_244(x: i64): i64
+{
+    return (x + 244);
+}
+
+function work_245(x: i64): i64
+{
+    return (x + 245);
+}
+
+function work_246(x: i64): i64
+{
+    return (x + 246);
+}
+
+function work_247(x: i64): i64
+{
+    return (x + 247);
+}
+
+function work_248(x: i64): i64
+{
+    return (x + 248);
+}
+
+function work_249(x: i64): i64
+{
+    return (x + 249);
+}
+
+function work_250(x: i64): i64
+{
+    return (x + 250);
+}
+
+function work_251(x: i64): i64
+{
+    return (x + 251);
+}
+
+function work_252(x: i64): i64
+{
+    return (x + 252);
+}
+
+function work_253(x: i64): i64
+{
+    return (x + 253);
+}
+
+function work_254(x: i64): i64
+{
+    return (x + 254);
+}
+
+function work_255(x: i64): i64
+{
+    return (x + 255);
+}
+
+function work_256(x: i64): i64
+{
+    return (x + 256);
+}
+
+function work_257(x: i64): i64
+{
+    return (x + 257);
+}
+
+function work_258(x: i64): i64
+{
+    return (x + 258);
+}
+
+function work_259(x: i64): i64
+{
+    return (x + 259);
+}
+
+function work_260(x: i64): i64
+{
+    return (x + 260);
+}
+
+function work_261(x: i64): i64
+{
+    return (x + 261);
+}
+
+function work_262(x: i64): i64
+{
+    return (x + 262);
+}
+
+function work_263(x: i64): i64
+{
+    return (x + 263);
+}
+
+function work_264(x: i64): i64
+{
+    return (x + 264);
+}
+
+function work_265(x: i64): i64
+{
+    return (x + 265);
+}
+
+function work_266(x: i64): i64
+{
+    return (x + 266);
+}
+
+function work_267(x: i64): i64
+{
+    return (x + 267);
+}
+
+function work_268(x: i64): i64
+{
+    return (x + 268);
+}
+
+function work_269(x: i64): i64
+{
+    return (x + 269);
+}
+
+function work_270(x: i64): i64
+{
+    return (x + 270);
+}
+
+function work_271(x: i64): i64
+{
+    return (x + 271);
+}
+
+function work_272(x: i64): i64
+{
+    return (x + 272);
+}
+
+function work_273(x: i64): i64
+{
+    return (x + 273);
+}
+
+function work_274(x: i64): i64
+{
+    return (x + 274);
+}
+
+function work_275(x: i64): i64
+{
+    return (x + 275);
+}
+
+function work_276(x: i64): i64
+{
+    return (x + 276);
+}
+
+function work_277(x: i64): i64
+{
+    return (x + 277);
+}
+
+function work_278(x: i64): i64
+{
+    return (x + 278);
+}
+
+function work_279(x: i64): i64
+{
+    return (x + 279);
+}
+
+function work_280(x: i64): i64
+{
+    return (x + 280);
+}
+
+function work_281(x: i64): i64
+{
+    return (x + 281);
+}
+
+function work_282(x: i64): i64
+{
+    return (x + 282);
+}
+
+function work_283(x: i64): i64
+{
+    return (x + 283);
+}
+
+function work_284(x: i64): i64
+{
+    return (x + 284);
+}
+
+function work_285(x: i64): i64
+{
+    return (x + 285);
+}
+
+function work_286(x: i64): i64
+{
+    return (x + 286);
+}
+
+function work_287(x: i64): i64
+{
+    return (x + 287);
+}
+
+function work_288(x: i64): i64
+{
+    return (x + 288);
+}
+
+function work_289(x: i64): i64
+{
+    return (x + 289);
+}
+
+function work_290(x: i64): i64
+{
+    return (x + 290);
+}
+
+function work_291(x: i64): i64
+{
+    return (x + 291);
+}
+
+function work_292(x: i64): i64
+{
+    return (x + 292);
+}
+
+function work_293(x: i64): i64
+{
+    return (x + 293);
+}
+
+function work_294(x: i64): i64
+{
+    return (x + 294);
+}
+
+function work_295(x: i64): i64
+{
+    return (x + 295);
+}
+
+function work_296(x: i64): i64
+{
+    return (x + 296);
+}
+
+function work_297(x: i64): i64
+{
+    return (x + 297);
+}
+
+function work_298(x: i64): i64
+{
+    return (x + 298);
+}
+
+function work_299(x: i64): i64
+{
+    return (x + 299);
+}
+
+function work_300(x: i64): i64
+{
+    return (x + 300);
+}
+
+function work_301(x: i64): i64
+{
+    return (x + 301);
+}
+
+function work_302(x: i64): i64
+{
+    return (x + 302);
+}
+
+function work_303(x: i64): i64
+{
+    return (x + 303);
+}
+
+function work_304(x: i64): i64
+{
+    return (x + 304);
+}
+
+function work_305(x: i64): i64
+{
+    return (x + 305);
+}
+
+function work_306(x: i64): i64
+{
+    return (x + 306);
+}
+
+function work_307(x: i64): i64
+{
+    return (x + 307);
+}
+
+function work_308(x: i64): i64
+{
+    return (x + 308);
+}
+
+function work_309(x: i64): i64
+{
+    return (x + 309);
+}
+
+function work_310(x: i64): i64
+{
+    return (x + 310);
+}
+
+function work_311(x: i64): i64
+{
+    return (x + 311);
+}
+
+function work_312(x: i64): i64
+{
+    return (x + 312);
+}
+
+function work_313(x: i64): i64
+{
+    return (x + 313);
+}
+
+function work_314(x: i64): i64
+{
+    return (x + 314);
+}
+
+function work_315(x: i64): i64
+{
+    return (x + 315);
+}
+
+function work_316(x: i64): i64
+{
+    return (x + 316);
+}
+
+function work_317(x: i64): i64
+{
+    return (x + 317);
+}
+
+function work_318(x: i64): i64
+{
+    return (x + 318);
+}
+
+function work_319(x: i64): i64
+{
+    return (x + 319);
+}
+
+function work_320(x: i64): i64
+{
+    return (x + 320);
+}
+
+function work_321(x: i64): i64
+{
+    return (x + 321);
+}
+
+function work_322(x: i64): i64
+{
+    return (x + 322);
+}
+
+function work_323(x: i64): i64
+{
+    return (x + 323);
+}
+
+function work_324(x: i64): i64
+{
+    return (x + 324);
+}
+
+function work_325(x: i64): i64
+{
+    return (x + 325);
+}
+
+function work_326(x: i64): i64
+{
+    return (x + 326);
+}
+
+function work_327(x: i64): i64
+{
+    return (x + 327);
+}
+
+function work_328(x: i64): i64
+{
+    return (x + 328);
+}
+
+function work_329(x: i64): i64
+{
+    return (x + 329);
+}
+
+function work_330(x: i64): i64
+{
+    return (x + 330);
+}
+
+function work_331(x: i64): i64
+{
+    return (x + 331);
+}
+
+function work_332(x: i64): i64
+{
+    return (x + 332);
+}
+
+function work_333(x: i64): i64
+{
+    return (x + 333);
+}
+
+function work_334(x: i64): i64
+{
+    return (x + 334);
+}
+
+function work_335(x: i64): i64
+{
+    return (x + 335);
+}
+
+function work_336(x: i64): i64
+{
+    return (x + 336);
+}
+
+function work_337(x: i64): i64
+{
+    return (x + 337);
+}
+
+function work_338(x: i64): i64
+{
+    return (x + 338);
+}
+
+function work_339(x: i64): i64
+{
+    return (x + 339);
+}
+
+function work_340(x: i64): i64
+{
+    return (x + 340);
+}
+
+function work_341(x: i64): i64
+{
+    return (x + 341);
+}
+
+function work_342(x: i64): i64
+{
+    return (x + 342);
+}
+
+function work_343(x: i64): i64
+{
+    return (x + 343);
+}
+
+function work_344(x: i64): i64
+{
+    return (x + 344);
+}
+
+function work_345(x: i64): i64
+{
+    return (x + 345);
+}
+
+function work_346(x: i64): i64
+{
+    return (x + 346);
+}
+
+function work_347(x: i64): i64
+{
+    return (x + 347);
+}
+
+function work_348(x: i64): i64
+{
+    return (x + 348);
+}
+
+function work_349(x: i64): i64
+{
+    return (x + 349);
+}
+
+function work_350(x: i64): i64
+{
+    return (x + 350);
+}
+
+function work_351(x: i64): i64
+{
+    return (x + 351);
+}
+
+function work_352(x: i64): i64
+{
+    return (x + 352);
+}
+
+function work_353(x: i64): i64
+{
+    return (x + 353);
+}
+
+function work_354(x: i64): i64
+{
+    return (x + 354);
+}
+
+function work_355(x: i64): i64
+{
+    return (x + 355);
+}
+
+function work_356(x: i64): i64
+{
+    return (x + 356);
+}
+
+function work_357(x: i64): i64
+{
+    return (x + 357);
+}
+
+function work_358(x: i64): i64
+{
+    return (x + 358);
+}
+
+function work_359(x: i64): i64
+{
+    return (x + 359);
+}
+
+function work_360(x: i64): i64
+{
+    return (x + 360);
+}
+
+function work_361(x: i64): i64
+{
+    return (x + 361);
+}
+
+function work_362(x: i64): i64
+{
+    return (x + 362);
+}
+
+function work_363(x: i64): i64
+{
+    return (x + 363);
+}
+
+function work_364(x: i64): i64
+{
+    return (x + 364);
+}
+
+function work_365(x: i64): i64
+{
+    return (x + 365);
+}
+
+function work_366(x: i64): i64
+{
+    return (x + 366);
+}
+
+function work_367(x: i64): i64
+{
+    return (x + 367);
+}
+
+function work_368(x: i64): i64
+{
+    return (x + 368);
+}
+
+function work_369(x: i64): i64
+{
+    return (x + 369);
+}
+
+function work_370(x: i64): i64
+{
+    return (x + 370);
+}
+
+function work_371(x: i64): i64
+{
+    return (x + 371);
+}
+
+function work_372(x: i64): i64
+{
+    return (x + 372);
+}
+
+function work_373(x: i64): i64
+{
+    return (x + 373);
+}
+
+function work_374(x: i64): i64
+{
+    return (x + 374);
+}
+
+function work_375(x: i64): i64
+{
+    return (x + 375);
+}
+
+function work_376(x: i64): i64
+{
+    return (x + 376);
+}
+
+function work_377(x: i64): i64
+{
+    return (x + 377);
+}
+
+function work_378(x: i64): i64
+{
+    return (x + 378);
+}
+
+function work_379(x: i64): i64
+{
+    return (x + 379);
+}
+
+function work_380(x: i64): i64
+{
+    return (x + 380);
+}
+
+function work_381(x: i64): i64
+{
+    return (x + 381);
+}
+
+function work_382(x: i64): i64
+{
+    return (x + 382);
+}
+
+function work_383(x: i64): i64
+{
+    return (x + 383);
+}
+
+function work_384(x: i64): i64
+{
+    return (x + 384);
+}
+
+function work_385(x: i64): i64
+{
+    return (x + 385);
+}
+
+function work_386(x: i64): i64
+{
+    return (x + 386);
+}
+
+function work_387(x: i64): i64
+{
+    return (x + 387);
+}
+
+function work_388(x: i64): i64
+{
+    return (x + 388);
+}
+
+function work_389(x: i64): i64
+{
+    return (x + 389);
+}
+
+function work_390(x: i64): i64
+{
+    return (x + 390);
+}
+
+function work_391(x: i64): i64
+{
+    return (x + 391);
+}
+
+function work_392(x: i64): i64
+{
+    return (x + 392);
+}
+
+function work_393(x: i64): i64
+{
+    return (x + 393);
+}
+
+function work_394(x: i64): i64
+{
+    return (x + 394);
+}
+
+function work_395(x: i64): i64
+{
+    return (x + 395);
+}
+
+function work_396(x: i64): i64
+{
+    return (x + 396);
+}
+
+function work_397(x: i64): i64
+{
+    return (x + 397);
+}
+
+function work_398(x: i64): i64
+{
+    return (x + 398);
+}
+
+function work_399(x: i64): i64
+{
+    return (x + 399);
+}
+
+function work_400(x: i64): i64
+{
+    return (x + 400);
+}
+
+function work_401(x: i64): i64
+{
+    return (x + 401);
+}
+
+function work_402(x: i64): i64
+{
+    return (x + 402);
+}
+
+function work_403(x: i64): i64
+{
+    return (x + 403);
+}
+
+function work_404(x: i64): i64
+{
+    return (x + 404);
+}
+
+function work_405(x: i64): i64
+{
+    return (x + 405);
+}
+
+function work_406(x: i64): i64
+{
+    return (x + 406);
+}
+
+function work_407(x: i64): i64
+{
+    return (x + 407);
+}
+
+function work_408(x: i64): i64
+{
+    return (x + 408);
+}
+
+function work_409(x: i64): i64
+{
+    return (x + 409);
+}
+
+function work_410(x: i64): i64
+{
+    return (x + 410);
+}
+
+function work_411(x: i64): i64
+{
+    return (x + 411);
+}
+
+function work_412(x: i64): i64
+{
+    return (x + 412);
+}
+
+function work_413(x: i64): i64
+{
+    return (x + 413);
+}
+
+function work_414(x: i64): i64
+{
+    return (x + 414);
+}
+
+function work_415(x: i64): i64
+{
+    return (x + 415);
+}
+
+function work_416(x: i64): i64
+{
+    return (x + 416);
+}
+
+function work_417(x: i64): i64
+{
+    return (x + 417);
+}
+
+function work_418(x: i64): i64
+{
+    return (x + 418);
+}
+
+function work_419(x: i64): i64
+{
+    return (x + 419);
+}
+
+function work_420(x: i64): i64
+{
+    return (x + 420);
+}
+
+function work_421(x: i64): i64
+{
+    return (x + 421);
+}
+
+function work_422(x: i64): i64
+{
+    return (x + 422);
+}
+
+function work_423(x: i64): i64
+{
+    return (x + 423);
+}
+
+function work_424(x: i64): i64
+{
+    return (x + 424);
+}
+
+function work_425(x: i64): i64
+{
+    return (x + 425);
+}
+
+function work_426(x: i64): i64
+{
+    return (x + 426);
+}
+
+function work_427(x: i64): i64
+{
+    return (x + 427);
+}
+
+function work_428(x: i64): i64
+{
+    return (x + 428);
+}
+
+function work_429(x: i64): i64
+{
+    return (x + 429);
+}
+
+function work_430(x: i64): i64
+{
+    return (x + 430);
+}
+
+function work_431(x: i64): i64
+{
+    return (x + 431);
+}
+
+function work_432(x: i64): i64
+{
+    return (x + 432);
+}
+
+function work_433(x: i64): i64
+{
+    return (x + 433);
+}
+
+function work_434(x: i64): i64
+{
+    return (x + 434);
+}
+
+function work_435(x: i64): i64
+{
+    return (x + 435);
+}
+
+function work_436(x: i64): i64
+{
+    return (x + 436);
+}
+
+function work_437(x: i64): i64
+{
+    return (x + 437);
+}
+
+function work_438(x: i64): i64
+{
+    return (x + 438);
+}
+
+function work_439(x: i64): i64
+{
+    return (x + 439);
+}
+
+function work_440(x: i64): i64
+{
+    return (x + 440);
+}
+
+function work_441(x: i64): i64
+{
+    return (x + 441);
+}
+
+function work_442(x: i64): i64
+{
+    return (x + 442);
+}
+
+function work_443(x: i64): i64
+{
+    return (x + 443);
+}
+
+function work_444(x: i64): i64
+{
+    return (x + 444);
+}
+
+function work_445(x: i64): i64
+{
+    return (x + 445);
+}
+
+function work_446(x: i64): i64
+{
+    return (x + 446);
+}
+
+function work_447(x: i64): i64
+{
+    return (x + 447);
+}
+
+function work_448(x: i64): i64
+{
+    return (x + 448);
+}
+
+function work_449(x: i64): i64
+{
+    return (x + 449);
+}
+
+function work_450(x: i64): i64
+{
+    return (x + 450);
+}
+
+function work_451(x: i64): i64
+{
+    return (x + 451);
+}
+
+function work_452(x: i64): i64
+{
+    return (x + 452);
+}
+
+function work_453(x: i64): i64
+{
+    return (x + 453);
+}
+
+function work_454(x: i64): i64
+{
+    return (x + 454);
+}
+
+function work_455(x: i64): i64
+{
+    return (x + 455);
+}
+
+function work_456(x: i64): i64
+{
+    return (x + 456);
+}
+
+function work_457(x: i64): i64
+{
+    return (x + 457);
+}
+
+function work_458(x: i64): i64
+{
+    return (x + 458);
+}
+
+function work_459(x: i64): i64
+{
+    return (x + 459);
+}
+
+function work_460(x: i64): i64
+{
+    return (x + 460);
+}
+
+function work_461(x: i64): i64
+{
+    return (x + 461);
+}
+
+function work_462(x: i64): i64
+{
+    return (x + 462);
+}
+
+function work_463(x: i64): i64
+{
+    return (x + 463);
+}
+
+function work_464(x: i64): i64
+{
+    return (x + 464);
+}
+
+function work_465(x: i64): i64
+{
+    return (x + 465);
+}
+
+function work_466(x: i64): i64
+{
+    return (x + 466);
+}
+
+function work_467(x: i64): i64
+{
+    return (x + 467);
+}
+
+function work_468(x: i64): i64
+{
+    return (x + 468);
+}
+
+function work_469(x: i64): i64
+{
+    return (x + 469);
+}
+
+function work_470(x: i64): i64
+{
+    return (x + 470);
+}
+
+function work_471(x: i64): i64
+{
+    return (x + 471);
+}
+
+function work_472(x: i64): i64
+{
+    return (x + 472);
+}
+
+function work_473(x: i64): i64
+{
+    return (x + 473);
+}
+
+function work_474(x: i64): i64
+{
+    return (x + 474);
+}
+
+function work_475(x: i64): i64
+{
+    return (x + 475);
+}
+
+function work_476(x: i64): i64
+{
+    return (x + 476);
+}
+
+function work_477(x: i64): i64
+{
+    return (x + 477);
+}
+
+function work_478(x: i64): i64
+{
+    return (x + 478);
+}
+
+function work_479(x: i64): i64
+{
+    return (x + 479);
+}
+
+function work_480(x: i64): i64
+{
+    return (x + 480);
+}
+
+function work_481(x: i64): i64
+{
+    return (x + 481);
+}
+
+function work_482(x: i64): i64
+{
+    return (x + 482);
+}
+
+function work_483(x: i64): i64
+{
+    return (x + 483);
+}
+
+function work_484(x: i64): i64
+{
+    return (x + 484);
+}
+
+function work_485(x: i64): i64
+{
+    return (x + 485);
+}
+
+function work_486(x: i64): i64
+{
+    return (x + 486);
+}
+
+function work_487(x: i64): i64
+{
+    return (x + 487);
+}
+
+function work_488(x: i64): i64
+{
+    return (x + 488);
+}
+
+function work_489(x: i64): i64
+{
+    return (x + 489);
+}
+
+function work_490(x: i64): i64
+{
+    return (x + 490);
+}
+
+function work_491(x: i64): i64
+{
+    return (x + 491);
+}
+
+function work_492(x: i64): i64
+{
+    return (x + 492);
+}
+
+function work_493(x: i64): i64
+{
+    return (x + 493);
+}
+
+function work_494(x: i64): i64
+{
+    return (x + 494);
+}
+
+function work_495(x: i64): i64
+{
+    return (x + 495);
+}
+
+function work_496(x: i64): i64
+{
+    return (x + 496);
+}
+
+function work_497(x: i64): i64
+{
+    return (x + 497);
+}
+
+function work_498(x: i64): i64
+{
+    return (x + 498);
+}
+
+function work_499(x: i64): i64
+{
+    return (x + 499);
+}
+
+function work_500(x: i64): i64
+{
+    return (x + 500);
+}
+
+function work_501(x: i64): i64
+{
+    return (x + 501);
+}
+
+function work_502(x: i64): i64
+{
+    return (x + 502);
+}
+
+function work_503(x: i64): i64
+{
+    return (x + 503);
+}
+
+function work_504(x: i64): i64
+{
+    return (x + 504);
+}
+
+function work_505(x: i64): i64
+{
+    return (x + 505);
+}
+
+function work_506(x: i64): i64
+{
+    return (x + 506);
+}
+
+function work_507(x: i64): i64
+{
+    return (x + 507);
+}
+
+function work_508(x: i64): i64
+{
+    return (x + 508);
+}
+
+function work_509(x: i64): i64
+{
+    return (x + 509);
+}
+
+function work_510(x: i64): i64
+{
+    return (x + 510);
+}
+
+function work_511(x: i64): i64
+{
+    return (x + 511);
+}
+
+function work_512(x: i64): i64
+{
+    return (x + 512);
+}
+
+function work_513(x: i64): i64
+{
+    return (x + 513);
+}
+
+function work_514(x: i64): i64
+{
+    return (x + 514);
+}
+
+function work_515(x: i64): i64
+{
+    return (x + 515);
+}
+
+function work_516(x: i64): i64
+{
+    return (x + 516);
+}
+
+function work_517(x: i64): i64
+{
+    return (x + 517);
+}
+
+function work_518(x: i64): i64
+{
+    return (x + 518);
+}
+
+function work_519(x: i64): i64
+{
+    return (x + 519);
+}
+
+function work_520(x: i64): i64
+{
+    return (x + 520);
+}
+
+function work_521(x: i64): i64
+{
+    return (x + 521);
+}
+
+function work_522(x: i64): i64
+{
+    return (x + 522);
+}
+
+function work_523(x: i64): i64
+{
+    return (x + 523);
+}
+
+function work_524(x: i64): i64
+{
+    return (x + 524);
+}
+
+function work_525(x: i64): i64
+{
+    return (x + 525);
+}
+
+function work_526(x: i64): i64
+{
+    return (x + 526);
+}
+
+function work_527(x: i64): i64
+{
+    return (x + 527);
+}
+
+function work_528(x: i64): i64
+{
+    return (x + 528);
+}
+
+function work_529(x: i64): i64
+{
+    return (x + 529);
+}
+
+function work_530(x: i64): i64
+{
+    return (x + 530);
+}
+
+function work_531(x: i64): i64
+{
+    return (x + 531);
+}
+
+function work_532(x: i64): i64
+{
+    return (x + 532);
+}
+
+function work_533(x: i64): i64
+{
+    return (x + 533);
+}
+
+function work_534(x: i64): i64
+{
+    return (x + 534);
+}
+
+function work_535(x: i64): i64
+{
+    return (x + 535);
+}
+
+function work_536(x: i64): i64
+{
+    return (x + 536);
+}
+
+function work_537(x: i64): i64
+{
+    return (x + 537);
+}
+
+function work_538(x: i64): i64
+{
+    return (x + 538);
+}
+
+function work_539(x: i64): i64
+{
+    return (x + 539);
+}
+
+function work_540(x: i64): i64
+{
+    return (x + 540);
+}
+
+function work_541(x: i64): i64
+{
+    return (x + 541);
+}
+
+function work_542(x: i64): i64
+{
+    return (x + 542);
+}
+
+function work_543(x: i64): i64
+{
+    return (x + 543);
+}
+
+function work_544(x: i64): i64
+{
+    return (x + 544);
+}
+
+function work_545(x: i64): i64
+{
+    return (x + 545);
+}
+
+function work_546(x: i64): i64
+{
+    return (x + 546);
+}
+
+function work_547(x: i64): i64
+{
+    return (x + 547);
+}
+
+function work_548(x: i64): i64
+{
+    return (x + 548);
+}
+
+function work_549(x: i64): i64
+{
+    return (x + 549);
+}
+
+function work_550(x: i64): i64
+{
+    return (x + 550);
+}
+
+function work_551(x: i64): i64
+{
+    return (x + 551);
+}
+
+function work_552(x: i64): i64
+{
+    return (x + 552);
+}
+
+function work_553(x: i64): i64
+{
+    return (x + 553);
+}
+
+function work_554(x: i64): i64
+{
+    return (x + 554);
+}
+
+function work_555(x: i64): i64
+{
+    return (x + 555);
+}
+
+function work_556(x: i64): i64
+{
+    return (x + 556);
+}
+
+function work_557(x: i64): i64
+{
+    return (x + 557);
+}
+
+function work_558(x: i64): i64
+{
+    return (x + 558);
+}
+
+function work_559(x: i64): i64
+{
+    return (x + 559);
+}
+
+function work_560(x: i64): i64
+{
+    return (x + 560);
+}
+
+function work_561(x: i64): i64
+{
+    return (x + 561);
+}
+
+function work_562(x: i64): i64
+{
+    return (x + 562);
+}
+
+function work_563(x: i64): i64
+{
+    return (x + 563);
+}
+
+function work_564(x: i64): i64
+{
+    return (x + 564);
+}
+
+function work_565(x: i64): i64
+{
+    return (x + 565);
+}
+
+function work_566(x: i64): i64
+{
+    return (x + 566);
+}
+
+function work_567(x: i64): i64
+{
+    return (x + 567);
+}
+
+function work_568(x: i64): i64
+{
+    return (x + 568);
+}
+
+function work_569(x: i64): i64
+{
+    return (x + 569);
+}
+
+function work_570(x: i64): i64
+{
+    return (x + 570);
+}
+
+function work_571(x: i64): i64
+{
+    return (x + 571);
+}
+
+function work_572(x: i64): i64
+{
+    return (x + 572);
+}
+
+function work_573(x: i64): i64
+{
+    return (x + 573);
+}
+
+function work_574(x: i64): i64
+{
+    return (x + 574);
+}
+
+function work_575(x: i64): i64
+{
+    return (x + 575);
+}
+
+function work_576(x: i64): i64
+{
+    return (x + 576);
+}
+
+function work_577(x: i64): i64
+{
+    return (x + 577);
+}
+
+function work_578(x: i64): i64
+{
+    return (x + 578);
+}
+
+function work_579(x: i64): i64
+{
+    return (x + 579);
+}
+
+function work_580(x: i64): i64
+{
+    return (x + 580);
+}
+
+function work_581(x: i64): i64
+{
+    return (x + 581);
+}
+
+function work_582(x: i64): i64
+{
+    return (x + 582);
+}
+
+function work_583(x: i64): i64
+{
+    return (x + 583);
+}
+
+function work_584(x: i64): i64
+{
+    return (x + 584);
+}
+
+function work_585(x: i64): i64
+{
+    return (x + 585);
+}
+
+function work_586(x: i64): i64
+{
+    return (x + 586);
+}
+
+function work_587(x: i64): i64
+{
+    return (x + 587);
+}
+
+function work_588(x: i64): i64
+{
+    return (x + 588);
+}
+
+function work_589(x: i64): i64
+{
+    return (x + 589);
+}
+
+function work_590(x: i64): i64
+{
+    return (x + 590);
+}
+
+function work_591(x: i64): i64
+{
+    return (x + 591);
+}
+
+function work_592(x: i64): i64
+{
+    return (x + 592);
+}
+
+function work_593(x: i64): i64
+{
+    return (x + 593);
+}
+
+function work_594(x: i64): i64
+{
+    return (x + 594);
+}
+
+function work_595(x: i64): i64
+{
+    return (x + 595);
+}
+
+function work_596(x: i64): i64
+{
+    return (x + 596);
+}
+
+function work_597(x: i64): i64
+{
+    return (x + 597);
+}
+
+function work_598(x: i64): i64
+{
+    return (x + 598);
+}
+
+function work_599(x: i64): i64
+{
+    return (x + 599);
+}
+
+function work_600(x: i64): i64
+{
+    return (x + 600);
+}
+
+function work_601(x: i64): i64
+{
+    return (x + 601);
+}
+
+function work_602(x: i64): i64
+{
+    return (x + 602);
+}
+
+function work_603(x: i64): i64
+{
+    return (x + 603);
+}
+
+function work_604(x: i64): i64
+{
+    return (x + 604);
+}
+
+function work_605(x: i64): i64
+{
+    return (x + 605);
+}
+
+function work_606(x: i64): i64
+{
+    return (x + 606);
+}
+
+function work_607(x: i64): i64
+{
+    return (x + 607);
+}
+
+function work_608(x: i64): i64
+{
+    return (x + 608);
+}
+
+function work_609(x: i64): i64
+{
+    return (x + 609);
+}
+
+function work_610(x: i64): i64
+{
+    return (x + 610);
+}
+
+function work_611(x: i64): i64
+{
+    return (x + 611);
+}
+
+function work_612(x: i64): i64
+{
+    return (x + 612);
+}
+
+function work_613(x: i64): i64
+{
+    return (x + 613);
+}
+
+function work_614(x: i64): i64
+{
+    return (x + 614);
+}
+
+function work_615(x: i64): i64
+{
+    return (x + 615);
+}
+
+function work_616(x: i64): i64
+{
+    return (x + 616);
+}
+
+function work_617(x: i64): i64
+{
+    return (x + 617);
+}
+
+function work_618(x: i64): i64
+{
+    return (x + 618);
+}
+
+function work_619(x: i64): i64
+{
+    return (x + 619);
+}
+
+function work_620(x: i64): i64
+{
+    return (x + 620);
+}
+
+function work_621(x: i64): i64
+{
+    return (x + 621);
+}
+
+function work_622(x: i64): i64
+{
+    return (x + 622);
+}
+
+function work_623(x: i64): i64
+{
+    return (x + 623);
+}
+
+function work_624(x: i64): i64
+{
+    return (x + 624);
+}
+
+function work_625(x: i64): i64
+{
+    return (x + 625);
+}
+
+function work_626(x: i64): i64
+{
+    return (x + 626);
+}
+
+function work_627(x: i64): i64
+{
+    return (x + 627);
+}
+
+function work_628(x: i64): i64
+{
+    return (x + 628);
+}
+
+function work_629(x: i64): i64
+{
+    return (x + 629);
+}
+
+function work_630(x: i64): i64
+{
+    return (x + 630);
+}
+
+function work_631(x: i64): i64
+{
+    return (x + 631);
+}
+
+function work_632(x: i64): i64
+{
+    return (x + 632);
+}
+
+function work_633(x: i64): i64
+{
+    return (x + 633);
+}
+
+function work_634(x: i64): i64
+{
+    return (x + 634);
+}
+
+function work_635(x: i64): i64
+{
+    return (x + 635);
+}
+
+function work_636(x: i64): i64
+{
+    return (x + 636);
+}
+
+function work_637(x: i64): i64
+{
+    return (x + 637);
+}
+
+function work_638(x: i64): i64
+{
+    return (x + 638);
+}
+
+function work_639(x: i64): i64
+{
+    return (x + 639);
+}
+
+function work_640(x: i64): i64
+{
+    return (x + 640);
+}
+
+function work_641(x: i64): i64
+{
+    return (x + 641);
+}
+
+function work_642(x: i64): i64
+{
+    return (x + 642);
+}
+
+function work_643(x: i64): i64
+{
+    return (x + 643);
+}
+
+function work_644(x: i64): i64
+{
+    return (x + 644);
+}
+
+function work_645(x: i64): i64
+{
+    return (x + 645);
+}
+
+function work_646(x: i64): i64
+{
+    return (x + 646);
+}
+
+function work_647(x: i64): i64
+{
+    return (x + 647);
+}
+
+function work_648(x: i64): i64
+{
+    return (x + 648);
+}
+
+function work_649(x: i64): i64
+{
+    return (x + 649);
+}
+
+function work_650(x: i64): i64
+{
+    return (x + 650);
+}
+
+function work_651(x: i64): i64
+{
+    return (x + 651);
+}
+
+function work_652(x: i64): i64
+{
+    return (x + 652);
+}
+
+function work_653(x: i64): i64
+{
+    return (x + 653);
+}
+
+function work_654(x: i64): i64
+{
+    return (x + 654);
+}
+
+function work_655(x: i64): i64
+{
+    return (x + 655);
+}
+
+function work_656(x: i64): i64
+{
+    return (x + 656);
+}
+
+function work_657(x: i64): i64
+{
+    return (x + 657);
+}
+
+function work_658(x: i64): i64
+{
+    return (x + 658);
+}
+
+function work_659(x: i64): i64
+{
+    return (x + 659);
+}
+
+function work_660(x: i64): i64
+{
+    return (x + 660);
+}
+
+function work_661(x: i64): i64
+{
+    return (x + 661);
+}
+
+function work_662(x: i64): i64
+{
+    return (x + 662);
+}
+
+function work_663(x: i64): i64
+{
+    return (x + 663);
+}
+
+function work_664(x: i64): i64
+{
+    return (x + 664);
+}
+
+function work_665(x: i64): i64
+{
+    return (x + 665);
+}
+
+function work_666(x: i64): i64
+{
+    return (x + 666);
+}
+
+function work_667(x: i64): i64
+{
+    return (x + 667);
+}
+
+function work_668(x: i64): i64
+{
+    return (x + 668);
+}
+
+function work_669(x: i64): i64
+{
+    return (x + 669);
+}
+
+function work_670(x: i64): i64
+{
+    return (x + 670);
+}
+
+function work_671(x: i64): i64
+{
+    return (x + 671);
+}
+
+function work_672(x: i64): i64
+{
+    return (x + 672);
+}
+
+function work_673(x: i64): i64
+{
+    return (x + 673);
+}
+
+function work_674(x: i64): i64
+{
+    return (x + 674);
+}
+
+function work_675(x: i64): i64
+{
+    return (x + 675);
+}
+
+function work_676(x: i64): i64
+{
+    return (x + 676);
+}
+
+function work_677(x: i64): i64
+{
+    return (x + 677);
+}
+
+function work_678(x: i64): i64
+{
+    return (x + 678);
+}
+
+function work_679(x: i64): i64
+{
+    return (x + 679);
+}
+
+function work_680(x: i64): i64
+{
+    return (x + 680);
+}
+
+function work_681(x: i64): i64
+{
+    return (x + 681);
+}
+
+function work_682(x: i64): i64
+{
+    return (x + 682);
+}
+
+function work_683(x: i64): i64
+{
+    return (x + 683);
+}
+
+function work_684(x: i64): i64
+{
+    return (x + 684);
+}
+
+function work_685(x: i64): i64
+{
+    return (x + 685);
+}
+
+function work_686(x: i64): i64
+{
+    return (x + 686);
+}
+
+function work_687(x: i64): i64
+{
+    return (x + 687);
+}
+
+function work_688(x: i64): i64
+{
+    return (x + 688);
+}
+
+function work_689(x: i64): i64
+{
+    return (x + 689);
+}
+
+function work_690(x: i64): i64
+{
+    return (x + 690);
+}
+
+function work_691(x: i64): i64
+{
+    return (x + 691);
+}
+
+function work_692(x: i64): i64
+{
+    return (x + 692);
+}
+
+function work_693(x: i64): i64
+{
+    return (x + 693);
+}
+
+function work_694(x: i64): i64
+{
+    return (x + 694);
+}
+
+function work_695(x: i64): i64
+{
+    return (x + 695);
+}
+
+function work_696(x: i64): i64
+{
+    return (x + 696);
+}
+
+function work_697(x: i64): i64
+{
+    return (x + 697);
+}
+
+function work_698(x: i64): i64
+{
+    return (x + 698);
+}
+
+function work_699(x: i64): i64
+{
+    return (x + 699);
+}
+
+function work_700(x: i64): i64
+{
+    return (x + 700);
+}
+
+function work_701(x: i64): i64
+{
+    return (x + 701);
+}
+
+function work_702(x: i64): i64
+{
+    return (x + 702);
+}
+
+function work_703(x: i64): i64
+{
+    return (x + 703);
+}
+
+function work_704(x: i64): i64
+{
+    return (x + 704);
+}
+
+function work_705(x: i64): i64
+{
+    return (x + 705);
+}
+
+function work_706(x: i64): i64
+{
+    return (x + 706);
+}
+
+function work_707(x: i64): i64
+{
+    return (x + 707);
+}
+
+function work_708(x: i64): i64
+{
+    return (x + 708);
+}
+
+function work_709(x: i64): i64
+{
+    return (x + 709);
+}
+
+function work_710(x: i64): i64
+{
+    return (x + 710);
+}
+
+function work_711(x: i64): i64
+{
+    return (x + 711);
+}
+
+function work_712(x: i64): i64
+{
+    return (x + 712);
+}
+
+function work_713(x: i64): i64
+{
+    return (x + 713);
+}
+
+function work_714(x: i64): i64
+{
+    return (x + 714);
+}
+
+function work_715(x: i64): i64
+{
+    return (x + 715);
+}
+
+function work_716(x: i64): i64
+{
+    return (x + 716);
+}
+
+function work_717(x: i64): i64
+{
+    return (x + 717);
+}
+
+function work_718(x: i64): i64
+{
+    return (x + 718);
+}
+
+function work_719(x: i64): i64
+{
+    return (x + 719);
+}
+
+function work_720(x: i64): i64
+{
+    return (x + 720);
+}
+
+function work_721(x: i64): i64
+{
+    return (x + 721);
+}
+
+function work_722(x: i64): i64
+{
+    return (x + 722);
+}
+
+function work_723(x: i64): i64
+{
+    return (x + 723);
+}
+
+function work_724(x: i64): i64
+{
+    return (x + 724);
+}
+
+function work_725(x: i64): i64
+{
+    return (x + 725);
+}
+
+function work_726(x: i64): i64
+{
+    return (x + 726);
+}
+
+function work_727(x: i64): i64
+{
+    return (x + 727);
+}
+
+function work_728(x: i64): i64
+{
+    return (x + 728);
+}
+
+function work_729(x: i64): i64
+{
+    return (x + 729);
+}
+
+function work_730(x: i64): i64
+{
+    return (x + 730);
+}
+
+function work_731(x: i64): i64
+{
+    return (x + 731);
+}
+
+function work_732(x: i64): i64
+{
+    return (x + 732);
+}
+
+function work_733(x: i64): i64
+{
+    return (x + 733);
+}
+
+function work_734(x: i64): i64
+{
+    return (x + 734);
+}
+
+function work_735(x: i64): i64
+{
+    return (x + 735);
+}
+
+function work_736(x: i64): i64
+{
+    return (x + 736);
+}
+
+function work_737(x: i64): i64
+{
+    return (x + 737);
+}
+
+function work_738(x: i64): i64
+{
+    return (x + 738);
+}
+
+function work_739(x: i64): i64
+{
+    return (x + 739);
+}
+
+function work_740(x: i64): i64
+{
+    return (x + 740);
+}
+
+function work_741(x: i64): i64
+{
+    return (x + 741);
+}
+
+function work_742(x: i64): i64
+{
+    return (x + 742);
+}
+
+function work_743(x: i64): i64
+{
+    return (x + 743);
+}
+
+function work_744(x: i64): i64
+{
+    return (x + 744);
+}
+
+function work_745(x: i64): i64
+{
+    return (x + 745);
+}
+
+function work_746(x: i64): i64
+{
+    return (x + 746);
+}
+
+function work_747(x: i64): i64
+{
+    return (x + 747);
+}
+
+function work_748(x: i64): i64
+{
+    return (x + 748);
+}
+
+function work_749(x: i64): i64
+{
+    return (x + 749);
+}
+
+function work_750(x: i64): i64
+{
+    return (x + 750);
+}
+
+function work_751(x: i64): i64
+{
+    return (x + 751);
+}
+
+function work_752(x: i64): i64
+{
+    return (x + 752);
+}
+
+function work_753(x: i64): i64
+{
+    return (x + 753);
+}
+
+function work_754(x: i64): i64
+{
+    return (x + 754);
+}
+
+function work_755(x: i64): i64
+{
+    return (x + 755);
+}
+
+function work_756(x: i64): i64
+{
+    return (x + 756);
+}
+
+function work_757(x: i64): i64
+{
+    return (x + 757);
+}
+
+function work_758(x: i64): i64
+{
+    return (x + 758);
+}
+
+function work_759(x: i64): i64
+{
+    return (x + 759);
+}
+
+function work_760(x: i64): i64
+{
+    return (x + 760);
+}
+
+function work_761(x: i64): i64
+{
+    return (x + 761);
+}
+
+function work_762(x: i64): i64
+{
+    return (x + 762);
+}
+
+function work_763(x: i64): i64
+{
+    return (x + 763);
+}
+
+function work_764(x: i64): i64
+{
+    return (x + 764);
+}
+
+function work_765(x: i64): i64
+{
+    return (x + 765);
+}
+
+function work_766(x: i64): i64
+{
+    return (x + 766);
+}
+
+function work_767(x: i64): i64
+{
+    return (x + 767);
+}
+
+function work_768(x: i64): i64
+{
+    return (x + 768);
+}
+
+function work_769(x: i64): i64
+{
+    return (x + 769);
+}
+
+function work_770(x: i64): i64
+{
+    return (x + 770);
+}
+
+function work_771(x: i64): i64
+{
+    return (x + 771);
+}
+
+function work_772(x: i64): i64
+{
+    return (x + 772);
+}
+
+function work_773(x: i64): i64
+{
+    return (x + 773);
+}
+
+function work_774(x: i64): i64
+{
+    return (x + 774);
+}
+
+function work_775(x: i64): i64
+{
+    return (x + 775);
+}
+
+function work_776(x: i64): i64
+{
+    return (x + 776);
+}
+
+function work_777(x: i64): i64
+{
+    return (x + 777);
+}
+
+function work_778(x: i64): i64
+{
+    return (x + 778);
+}
+
+function work_779(x: i64): i64
+{
+    return (x + 779);
+}
+
+function work_780(x: i64): i64
+{
+    return (x + 780);
+}
+
+function work_781(x: i64): i64
+{
+    return (x + 781);
+}
+
+function work_782(x: i64): i64
+{
+    return (x + 782);
+}
+
+function work_783(x: i64): i64
+{
+    return (x + 783);
+}
+
+function work_784(x: i64): i64
+{
+    return (x + 784);
+}
+
+function work_785(x: i64): i64
+{
+    return (x + 785);
+}
+
+function work_786(x: i64): i64
+{
+    return (x + 786);
+}
+
+function work_787(x: i64): i64
+{
+    return (x + 787);
+}
+
+function work_788(x: i64): i64
+{
+    return (x + 788);
+}
+
+function work_789(x: i64): i64
+{
+    return (x + 789);
+}
+
+function work_790(x: i64): i64
+{
+    return (x + 790);
+}
+
+function work_791(x: i64): i64
+{
+    return (x + 791);
+}
+
+function work_792(x: i64): i64
+{
+    return (x + 792);
+}
+
+function work_793(x: i64): i64
+{
+    return (x + 793);
+}
+
+function work_794(x: i64): i64
+{
+    return (x + 794);
+}
+
+function work_795(x: i64): i64
+{
+    return (x + 795);
+}
+
+function work_796(x: i64): i64
+{
+    return (x + 796);
+}
+
+function work_797(x: i64): i64
+{
+    return (x + 797);
+}
+
+function work_798(x: i64): i64
+{
+    return (x + 798);
+}
+
+function work_799(x: i64): i64
+{
+    return (x + 799);
+}
+
+function work_800(x: i64): i64
+{
+    return (x + 800);
+}
+
+function work_801(x: i64): i64
+{
+    return (x + 801);
+}
+
+function work_802(x: i64): i64
+{
+    return (x + 802);
+}
+
+function work_803(x: i64): i64
+{
+    return (x + 803);
+}
+
+function work_804(x: i64): i64
+{
+    return (x + 804);
+}
+
+function work_805(x: i64): i64
+{
+    return (x + 805);
+}
+
+function work_806(x: i64): i64
+{
+    return (x + 806);
+}
+
+function work_807(x: i64): i64
+{
+    return (x + 807);
+}
+
+function work_808(x: i64): i64
+{
+    return (x + 808);
+}
+
+function work_809(x: i64): i64
+{
+    return (x + 809);
+}
+
+function work_810(x: i64): i64
+{
+    return (x + 810);
+}
+
+function work_811(x: i64): i64
+{
+    return (x + 811);
+}
+
+function work_812(x: i64): i64
+{
+    return (x + 812);
+}
+
+function work_813(x: i64): i64
+{
+    return (x + 813);
+}
+
+function work_814(x: i64): i64
+{
+    return (x + 814);
+}
+
+function work_815(x: i64): i64
+{
+    return (x + 815);
+}
+
+function work_816(x: i64): i64
+{
+    return (x + 816);
+}
+
+function work_817(x: i64): i64
+{
+    return (x + 817);
+}
+
+function work_818(x: i64): i64
+{
+    return (x + 818);
+}
+
+function work_819(x: i64): i64
+{
+    return (x + 819);
+}
+
+function work_820(x: i64): i64
+{
+    return (x + 820);
+}
+
+function work_821(x: i64): i64
+{
+    return (x + 821);
+}
+
+function work_822(x: i64): i64
+{
+    return (x + 822);
+}
+
+function work_823(x: i64): i64
+{
+    return (x + 823);
+}
+
+function work_824(x: i64): i64
+{
+    return (x + 824);
+}
+
+function work_825(x: i64): i64
+{
+    return (x + 825);
+}
+
+function work_826(x: i64): i64
+{
+    return (x + 826);
+}
+
+function work_827(x: i64): i64
+{
+    return (x + 827);
+}
+
+function work_828(x: i64): i64
+{
+    return (x + 828);
+}
+
+function work_829(x: i64): i64
+{
+    return (x + 829);
+}
+
+function work_830(x: i64): i64
+{
+    return (x + 830);
+}
+
+function work_831(x: i64): i64
+{
+    return (x + 831);
+}
+
+function work_832(x: i64): i64
+{
+    return (x + 832);
+}
+
+function work_833(x: i64): i64
+{
+    return (x + 833);
+}
+
+function work_834(x: i64): i64
+{
+    return (x + 834);
+}
+
+function work_835(x: i64): i64
+{
+    return (x + 835);
+}
+
+function work_836(x: i64): i64
+{
+    return (x + 836);
+}
+
+function work_837(x: i64): i64
+{
+    return (x + 837);
+}
+
+function work_838(x: i64): i64
+{
+    return (x + 838);
+}
+
+function work_839(x: i64): i64
+{
+    return (x + 839);
+}
+
+function work_840(x: i64): i64
+{
+    return (x + 840);
+}
+
+function work_841(x: i64): i64
+{
+    return (x + 841);
+}
+
+function work_842(x: i64): i64
+{
+    return (x + 842);
+}
+
+function work_843(x: i64): i64
+{
+    return (x + 843);
+}
+
+function work_844(x: i64): i64
+{
+    return (x + 844);
+}
+
+function work_845(x: i64): i64
+{
+    return (x + 845);
+}
+
+function work_846(x: i64): i64
+{
+    return (x + 846);
+}
+
+function work_847(x: i64): i64
+{
+    return (x + 847);
+}
+
+function work_848(x: i64): i64
+{
+    return (x + 848);
+}
+
+function work_849(x: i64): i64
+{
+    return (x + 849);
+}
+
+function work_850(x: i64): i64
+{
+    return (x + 850);
+}
+
+function work_851(x: i64): i64
+{
+    return (x + 851);
+}
+
+function work_852(x: i64): i64
+{
+    return (x + 852);
+}
+
+function work_853(x: i64): i64
+{
+    return (x + 853);
+}
+
+function work_854(x: i64): i64
+{
+    return (x + 854);
+}
+
+function work_855(x: i64): i64
+{
+    return (x + 855);
+}
+
+function work_856(x: i64): i64
+{
+    return (x + 856);
+}
+
+function work_857(x: i64): i64
+{
+    return (x + 857);
+}
+
+function work_858(x: i64): i64
+{
+    return (x + 858);
+}
+
+function work_859(x: i64): i64
+{
+    return (x + 859);
+}
+
+function work_860(x: i64): i64
+{
+    return (x + 860);
+}
+
+function work_861(x: i64): i64
+{
+    return (x + 861);
+}
+
+function work_862(x: i64): i64
+{
+    return (x + 862);
+}
+
+function work_863(x: i64): i64
+{
+    return (x + 863);
+}
+
+function work_864(x: i64): i64
+{
+    return (x + 864);
+}
+
+function work_865(x: i64): i64
+{
+    return (x + 865);
+}
+
+function work_866(x: i64): i64
+{
+    return (x + 866);
+}
+
+function work_867(x: i64): i64
+{
+    return (x + 867);
+}
+
+function work_868(x: i64): i64
+{
+    return (x + 868);
+}
+
+function work_869(x: i64): i64
+{
+    return (x + 869);
+}
+
+function work_870(x: i64): i64
+{
+    return (x + 870);
+}
+
+function work_871(x: i64): i64
+{
+    return (x + 871);
+}
+
+function work_872(x: i64): i64
+{
+    return (x + 872);
+}
+
+function work_873(x: i64): i64
+{
+    return (x + 873);
+}
+
+function work_874(x: i64): i64
+{
+    return (x + 874);
+}
+
+function work_875(x: i64): i64
+{
+    return (x + 875);
+}
+
+function work_876(x: i64): i64
+{
+    return (x + 876);
+}
+
+function work_877(x: i64): i64
+{
+    return (x + 877);
+}
+
+function work_878(x: i64): i64
+{
+    return (x + 878);
+}
+
+function work_879(x: i64): i64
+{
+    return (x + 879);
+}
+
+function work_880(x: i64): i64
+{
+    return (x + 880);
+}
+
+function work_881(x: i64): i64
+{
+    return (x + 881);
+}
+
+function work_882(x: i64): i64
+{
+    return (x + 882);
+}
+
+function work_883(x: i64): i64
+{
+    return (x + 883);
+}
+
+function work_884(x: i64): i64
+{
+    return (x + 884);
+}
+
+function work_885(x: i64): i64
+{
+    return (x + 885);
+}
+
+function work_886(x: i64): i64
+{
+    return (x + 886);
+}
+
+function work_887(x: i64): i64
+{
+    return (x + 887);
+}
+
+function work_888(x: i64): i64
+{
+    return (x + 888);
+}
+
+function work_889(x: i64): i64
+{
+    return (x + 889);
+}
+
+function work_890(x: i64): i64
+{
+    return (x + 890);
+}
+
+function work_891(x: i64): i64
+{
+    return (x + 891);
+}
+
+function work_892(x: i64): i64
+{
+    return (x + 892);
+}
+
+function work_893(x: i64): i64
+{
+    return (x + 893);
+}
+
+function work_894(x: i64): i64
+{
+    return (x + 894);
+}
+
+function work_895(x: i64): i64
+{
+    return (x + 895);
+}
+
+function work_896(x: i64): i64
+{
+    return (x + 896);
+}
+
+function work_897(x: i64): i64
+{
+    return (x + 897);
+}
+
+function work_898(x: i64): i64
+{
+    return (x + 898);
+}
+
+function work_899(x: i64): i64
+{
+    return (x + 899);
+}
+
+function work_900(x: i64): i64
+{
+    return (x + 900);
+}
+
+function work_901(x: i64): i64
+{
+    return (x + 901);
+}
+
+function work_902(x: i64): i64
+{
+    return (x + 902);
+}
+
+function work_903(x: i64): i64
+{
+    return (x + 903);
+}
+
+function work_904(x: i64): i64
+{
+    return (x + 904);
+}
+
+function work_905(x: i64): i64
+{
+    return (x + 905);
+}
+
+function work_906(x: i64): i64
+{
+    return (x + 906);
+}
+
+function work_907(x: i64): i64
+{
+    return (x + 907);
+}
+
+function work_908(x: i64): i64
+{
+    return (x + 908);
+}
+
+function work_909(x: i64): i64
+{
+    return (x + 909);
+}
+
+function work_910(x: i64): i64
+{
+    return (x + 910);
+}
+
+function work_911(x: i64): i64
+{
+    return (x + 911);
+}
+
+function work_912(x: i64): i64
+{
+    return (x + 912);
+}
+
+function work_913(x: i64): i64
+{
+    return (x + 913);
+}
+
+function work_914(x: i64): i64
+{
+    return (x + 914);
+}
+
+function work_915(x: i64): i64
+{
+    return (x + 915);
+}
+
+function work_916(x: i64): i64
+{
+    return (x + 916);
+}
+
+function work_917(x: i64): i64
+{
+    return (x + 917);
+}
+
+function work_918(x: i64): i64
+{
+    return (x + 918);
+}
+
+function work_919(x: i64): i64
+{
+    return (x + 919);
+}
+
+function work_920(x: i64): i64
+{
+    return (x + 920);
+}
+
+function work_921(x: i64): i64
+{
+    return (x + 921);
+}
+
+function work_922(x: i64): i64
+{
+    return (x + 922);
+}
+
+function work_923(x: i64): i64
+{
+    return (x + 923);
+}
+
+function work_924(x: i64): i64
+{
+    return (x + 924);
+}
+
+function work_925(x: i64): i64
+{
+    return (x + 925);
+}
+
+function work_926(x: i64): i64
+{
+    return (x + 926);
+}
+
+function work_927(x: i64): i64
+{
+    return (x + 927);
+}
+
+function work_928(x: i64): i64
+{
+    return (x + 928);
+}
+
+function work_929(x: i64): i64
+{
+    return (x + 929);
+}
+
+function work_930(x: i64): i64
+{
+    return (x + 930);
+}
+
+function work_931(x: i64): i64
+{
+    return (x + 931);
+}
+
+function work_932(x: i64): i64
+{
+    return (x + 932);
+}
+
+function work_933(x: i64): i64
+{
+    return (x + 933);
+}
+
+function work_934(x: i64): i64
+{
+    return (x + 934);
+}
+
+function work_935(x: i64): i64
+{
+    return (x + 935);
+}
+
+function work_936(x: i64): i64
+{
+    return (x + 936);
+}
+
+function work_937(x: i64): i64
+{
+    return (x + 937);
+}
+
+function work_938(x: i64): i64
+{
+    return (x + 938);
+}
+
+function work_939(x: i64): i64
+{
+    return (x + 939);
+}
+
+function work_940(x: i64): i64
+{
+    return (x + 940);
+}
+
+function work_941(x: i64): i64
+{
+    return (x + 941);
+}
+
+function work_942(x: i64): i64
+{
+    return (x + 942);
+}
+
+function work_943(x: i64): i64
+{
+    return (x + 943);
+}
+
+function work_944(x: i64): i64
+{
+    return (x + 944);
+}
+
+function work_945(x: i64): i64
+{
+    return (x + 945);
+}
+
+function work_946(x: i64): i64
+{
+    return (x + 946);
+}
+
+function work_947(x: i64): i64
+{
+    return (x + 947);
+}
+
+function work_948(x: i64): i64
+{
+    return (x + 948);
+}
+
+function work_949(x: i64): i64
+{
+    return (x + 949);
+}
+
+function work_950(x: i64): i64
+{
+    return (x + 950);
+}
+
+function work_951(x: i64): i64
+{
+    return (x + 951);
+}
+
+function work_952(x: i64): i64
+{
+    return (x + 952);
+}
+
+function work_953(x: i64): i64
+{
+    return (x + 953);
+}
+
+function work_954(x: i64): i64
+{
+    return (x + 954);
+}
+
+function work_955(x: i64): i64
+{
+    return (x + 955);
+}
+
+function work_956(x: i64): i64
+{
+    return (x + 956);
+}
+
+function work_957(x: i64): i64
+{
+    return (x + 957);
+}
+
+function work_958(x: i64): i64
+{
+    return (x + 958);
+}
+
+function work_959(x: i64): i64
+{
+    return (x + 959);
+}
+
+function work_960(x: i64): i64
+{
+    return (x + 960);
+}
+
+function work_961(x: i64): i64
+{
+    return (x + 961);
+}
+
+function work_962(x: i64): i64
+{
+    return (x + 962);
+}
+
+function work_963(x: i64): i64
+{
+    return (x + 963);
+}
+
+function work_964(x: i64): i64
+{
+    return (x + 964);
+}
+
+function work_965(x: i64): i64
+{
+    return (x + 965);
+}
+
+function work_966(x: i64): i64
+{
+    return (x + 966);
+}
+
+function work_967(x: i64): i64
+{
+    return (x + 967);
+}
+
+function work_968(x: i64): i64
+{
+    return (x + 968);
+}
+
+function work_969(x: i64): i64
+{
+    return (x + 969);
+}
+
+function work_970(x: i64): i64
+{
+    return (x + 970);
+}
+
+function work_971(x: i64): i64
+{
+    return (x + 971);
+}
+
+function work_972(x: i64): i64
+{
+    return (x + 972);
+}
+
+function work_973(x: i64): i64
+{
+    return (x + 973);
+}
+
+function work_974(x: i64): i64
+{
+    return (x + 974);
+}
+
+function work_975(x: i64): i64
+{
+    return (x + 975);
+}
+
+function work_976(x: i64): i64
+{
+    return (x + 976);
+}
+
+function work_977(x: i64): i64
+{
+    return (x + 977);
+}
+
+function work_978(x: i64): i64
+{
+    return (x + 978);
+}
+
+function work_979(x: i64): i64
+{
+    return (x + 979);
+}
+
+function work_980(x: i64): i64
+{
+    return (x + 980);
+}
+
+function work_981(x: i64): i64
+{
+    return (x + 981);
+}
+
+function work_982(x: i64): i64
+{
+    return (x + 982);
+}
+
+function work_983(x: i64): i64
+{
+    return (x + 983);
+}
+
+function work_984(x: i64): i64
+{
+    return (x + 984);
+}
+
+function work_985(x: i64): i64
+{
+    return (x + 985);
+}
+
+function work_986(x: i64): i64
+{
+    return (x + 986);
+}
+
+function work_987(x: i64): i64
+{
+    return (x + 987);
+}
+
+function work_988(x: i64): i64
+{
+    return (x + 988);
+}
+
+function work_989(x: i64): i64
+{
+    return (x + 989);
+}
+
+function work_990(x: i64): i64
+{
+    return (x + 990);
+}
+
+function work_991(x: i64): i64
+{
+    return (x + 991);
+}
+
+function work_992(x: i64): i64
+{
+    return (x + 992);
+}
+
+function work_993(x: i64): i64
+{
+    return (x + 993);
+}
+
+function work_994(x: i64): i64
+{
+    return (x + 994);
+}
+
+function work_995(x: i64): i64
+{
+    return (x + 995);
+}
+
+function work_996(x: i64): i64
+{
+    return (x + 996);
+}
+
+function work_997(x: i64): i64
+{
+    return (x + 997);
+}
+
+function work_998(x: i64): i64
+{
+    return (x + 998);
+}
+
+function work_999(x: i64): i64
+{
+    return (x + 999);
+}
+
+function work_1000(x: i64): i64
+{
+    return (x + 1000);
+}
+
+function work_1001(x: i64): i64
+{
+    return (x + 1001);
+}
+
+function work_1002(x: i64): i64
+{
+    return (x + 1002);
+}
+
+function work_1003(x: i64): i64
+{
+    return (x + 1003);
+}
+
+function work_1004(x: i64): i64
+{
+    return (x + 1004);
+}
+
+function work_1005(x: i64): i64
+{
+    return (x + 1005);
+}
+
+function work_1006(x: i64): i64
+{
+    return (x + 1006);
+}
+
+function work_1007(x: i64): i64
+{
+    return (x + 1007);
+}
+
+function work_1008(x: i64): i64
+{
+    return (x + 1008);
+}
+
+function work_1009(x: i64): i64
+{
+    return (x + 1009);
+}
+
+function work_1010(x: i64): i64
+{
+    return (x + 1010);
+}
+
+function work_1011(x: i64): i64
+{
+    return (x + 1011);
+}
+
+function work_1012(x: i64): i64
+{
+    return (x + 1012);
+}
+
+function work_1013(x: i64): i64
+{
+    return (x + 1013);
+}
+
+function work_1014(x: i64): i64
+{
+    return (x + 1014);
+}
+
+function work_1015(x: i64): i64
+{
+    return (x + 1015);
+}
+
+function work_1016(x: i64): i64
+{
+    return (x + 1016);
+}
+
+function work_1017(x: i64): i64
+{
+    return (x + 1017);
+}
+
+function work_1018(x: i64): i64
+{
+    return (x + 1018);
+}
+
+function work_1019(x: i64): i64
+{
+    return (x + 1019);
+}
+
+function work_1020(x: i64): i64
+{
+    return (x + 1020);
+}
+
+function work_1021(x: i64): i64
+{
+    return (x + 1021);
+}
+
+function work_1022(x: i64): i64
+{
+    return (x + 1022);
+}
+
+function work_1023(x: i64): i64
+{
+    return (x + 1023);
+}
+
+function work_1024(x: i64): i64
+{
+    return (x + 1024);
+}
+
+function work_1025(x: i64): i64
+{
+    return (x + 1025);
+}
+
+function work_1026(x: i64): i64
+{
+    return (x + 1026);
+}
+
+function work_1027(x: i64): i64
+{
+    return (x + 1027);
+}
+
+function work_1028(x: i64): i64
+{
+    return (x + 1028);
+}
+
+function work_1029(x: i64): i64
+{
+    return (x + 1029);
+}
+
+function work_1030(x: i64): i64
+{
+    return (x + 1030);
+}
+
+function work_1031(x: i64): i64
+{
+    return (x + 1031);
+}
+
+function work_1032(x: i64): i64
+{
+    return (x + 1032);
+}
+
+function work_1033(x: i64): i64
+{
+    return (x + 1033);
+}
+
+function work_1034(x: i64): i64
+{
+    return (x + 1034);
+}
+
+function work_1035(x: i64): i64
+{
+    return (x + 1035);
+}
+
+function work_1036(x: i64): i64
+{
+    return (x + 1036);
+}
+
+function work_1037(x: i64): i64
+{
+    return (x + 1037);
+}
+
+function work_1038(x: i64): i64
+{
+    return (x + 1038);
+}
+
+function work_1039(x: i64): i64
+{
+    return (x + 1039);
+}
+
+function work_1040(x: i64): i64
+{
+    return (x + 1040);
+}
+
+function work_1041(x: i64): i64
+{
+    return (x + 1041);
+}
+
+function work_1042(x: i64): i64
+{
+    return (x + 1042);
+}
+
+function work_1043(x: i64): i64
+{
+    return (x + 1043);
+}
+
+function work_1044(x: i64): i64
+{
+    return (x + 1044);
+}
+
+function work_1045(x: i64): i64
+{
+    return (x + 1045);
+}
+
+function work_1046(x: i64): i64
+{
+    return (x + 1046);
+}
+
+function work_1047(x: i64): i64
+{
+    return (x + 1047);
+}
+
+function work_1048(x: i64): i64
+{
+    return (x + 1048);
+}
+
+function work_1049(x: i64): i64
+{
+    return (x + 1049);
+}
+
+function work_1050(x: i64): i64
+{
+    return (x + 1050);
+}
+
+function work_1051(x: i64): i64
+{
+    return (x + 1051);
+}
+
+function work_1052(x: i64): i64
+{
+    return (x + 1052);
+}
+
+function work_1053(x: i64): i64
+{
+    return (x + 1053);
+}
+
+function work_1054(x: i64): i64
+{
+    return (x + 1054);
+}
+
+function work_1055(x: i64): i64
+{
+    return (x + 1055);
+}
+
+function work_1056(x: i64): i64
+{
+    return (x + 1056);
+}
+
+function work_1057(x: i64): i64
+{
+    return (x + 1057);
+}
+
+function work_1058(x: i64): i64
+{
+    return (x + 1058);
+}
+
+function work_1059(x: i64): i64
+{
+    return (x + 1059);
+}
+
+function work_1060(x: i64): i64
+{
+    return (x + 1060);
+}
+
+function work_1061(x: i64): i64
+{
+    return (x + 1061);
+}
+
+function work_1062(x: i64): i64
+{
+    return (x + 1062);
+}
+
+function work_1063(x: i64): i64
+{
+    return (x + 1063);
+}
+
+function work_1064(x: i64): i64
+{
+    return (x + 1064);
+}
+
+function work_1065(x: i64): i64
+{
+    return (x + 1065);
+}
+
+function work_1066(x: i64): i64
+{
+    return (x + 1066);
+}
+
+function work_1067(x: i64): i64
+{
+    return (x + 1067);
+}
+
+function work_1068(x: i64): i64
+{
+    return (x + 1068);
+}
+
+function work_1069(x: i64): i64
+{
+    return (x + 1069);
+}
+
+function work_1070(x: i64): i64
+{
+    return (x + 1070);
+}
+
+function work_1071(x: i64): i64
+{
+    return (x + 1071);
+}
+
+function work_1072(x: i64): i64
+{
+    return (x + 1072);
+}
+
+function work_1073(x: i64): i64
+{
+    return (x + 1073);
+}
+
+function work_1074(x: i64): i64
+{
+    return (x + 1074);
+}
+
+function work_1075(x: i64): i64
+{
+    return (x + 1075);
+}
+
+function work_1076(x: i64): i64
+{
+    return (x + 1076);
+}
+
+function work_1077(x: i64): i64
+{
+    return (x + 1077);
+}
+
+function work_1078(x: i64): i64
+{
+    return (x + 1078);
+}
+
+function work_1079(x: i64): i64
+{
+    return (x + 1079);
+}
+
+function work_1080(x: i64): i64
+{
+    return (x + 1080);
+}
+
+function work_1081(x: i64): i64
+{
+    return (x + 1081);
+}
+
+function work_1082(x: i64): i64
+{
+    return (x + 1082);
+}
+
+function work_1083(x: i64): i64
+{
+    return (x + 1083);
+}
+
+function work_1084(x: i64): i64
+{
+    return (x + 1084);
+}
+
+function work_1085(x: i64): i64
+{
+    return (x + 1085);
+}
+
+function work_1086(x: i64): i64
+{
+    return (x + 1086);
+}
+
+function work_1087(x: i64): i64
+{
+    return (x + 1087);
+}
+
+function work_1088(x: i64): i64
+{
+    return (x + 1088);
+}
+
+function work_1089(x: i64): i64
+{
+    return (x + 1089);
+}
+
+function work_1090(x: i64): i64
+{
+    return (x + 1090);
+}
+
+function work_1091(x: i64): i64
+{
+    return (x + 1091);
+}
+
+function work_1092(x: i64): i64
+{
+    return (x + 1092);
+}
+
+function work_1093(x: i64): i64
+{
+    return (x + 1093);
+}
+
+function work_1094(x: i64): i64
+{
+    return (x + 1094);
+}
+
+function work_1095(x: i64): i64
+{
+    return (x + 1095);
+}
+
+function work_1096(x: i64): i64
+{
+    return (x + 1096);
+}
+
+function work_1097(x: i64): i64
+{
+    return (x + 1097);
+}
+
+function work_1098(x: i64): i64
+{
+    return (x + 1098);
+}
+
+function work_1099(x: i64): i64
+{
+    return (x + 1099);
+}
+
+function work_1100(x: i64): i64
+{
+    return (x + 1100);
+}
+
+function work_1101(x: i64): i64
+{
+    return (x + 1101);
+}
+
+function work_1102(x: i64): i64
+{
+    return (x + 1102);
+}
+
+function work_1103(x: i64): i64
+{
+    return (x + 1103);
+}
+
+function work_1104(x: i64): i64
+{
+    return (x + 1104);
+}
+
+function work_1105(x: i64): i64
+{
+    return (x + 1105);
+}
+
+function work_1106(x: i64): i64
+{
+    return (x + 1106);
+}
+
+function work_1107(x: i64): i64
+{
+    return (x + 1107);
+}
+
+function work_1108(x: i64): i64
+{
+    return (x + 1108);
+}
+
+function work_1109(x: i64): i64
+{
+    return (x + 1109);
+}
+
+function work_1110(x: i64): i64
+{
+    return (x + 1110);
+}
+
+function work_1111(x: i64): i64
+{
+    return (x + 1111);
+}
+
+function work_1112(x: i64): i64
+{
+    return (x + 1112);
+}
+
+function work_1113(x: i64): i64
+{
+    return (x + 1113);
+}
+
+function work_1114(x: i64): i64
+{
+    return (x + 1114);
+}
+
+function work_1115(x: i64): i64
+{
+    return (x + 1115);
+}
+
+function work_1116(x: i64): i64
+{
+    return (x + 1116);
+}
+
+function work_1117(x: i64): i64
+{
+    return (x + 1117);
+}
+
+function work_1118(x: i64): i64
+{
+    return (x + 1118);
+}
+
+function work_1119(x: i64): i64
+{
+    return (x + 1119);
+}
+
+function work_1120(x: i64): i64
+{
+    return (x + 1120);
+}
+
+function work_1121(x: i64): i64
+{
+    return (x + 1121);
+}
+
+function work_1122(x: i64): i64
+{
+    return (x + 1122);
+}
+
+function work_1123(x: i64): i64
+{
+    return (x + 1123);
+}
+
+function work_1124(x: i64): i64
+{
+    return (x + 1124);
+}
+
+function work_1125(x: i64): i64
+{
+    return (x + 1125);
+}
+
+function work_1126(x: i64): i64
+{
+    return (x + 1126);
+}
+
+function work_1127(x: i64): i64
+{
+    return (x + 1127);
+}
+
+function work_1128(x: i64): i64
+{
+    return (x + 1128);
+}
+
+function work_1129(x: i64): i64
+{
+    return (x + 1129);
+}
+
+function work_1130(x: i64): i64
+{
+    return (x + 1130);
+}
+
+function work_1131(x: i64): i64
+{
+    return (x + 1131);
+}
+
+function work_1132(x: i64): i64
+{
+    return (x + 1132);
+}
+
+function work_1133(x: i64): i64
+{
+    return (x + 1133);
+}
+
+function work_1134(x: i64): i64
+{
+    return (x + 1134);
+}
+
+function work_1135(x: i64): i64
+{
+    return (x + 1135);
+}
+
+function work_1136(x: i64): i64
+{
+    return (x + 1136);
+}
+
+function work_1137(x: i64): i64
+{
+    return (x + 1137);
+}
+
+function work_1138(x: i64): i64
+{
+    return (x + 1138);
+}
+
+function work_1139(x: i64): i64
+{
+    return (x + 1139);
+}
+
+function work_1140(x: i64): i64
+{
+    return (x + 1140);
+}
+
+function work_1141(x: i64): i64
+{
+    return (x + 1141);
+}
+
+function work_1142(x: i64): i64
+{
+    return (x + 1142);
+}
+
+function work_1143(x: i64): i64
+{
+    return (x + 1143);
+}
+
+function work_1144(x: i64): i64
+{
+    return (x + 1144);
+}
+
+function work_1145(x: i64): i64
+{
+    return (x + 1145);
+}
+
+function work_1146(x: i64): i64
+{
+    return (x + 1146);
+}
+
+function work_1147(x: i64): i64
+{
+    return (x + 1147);
+}
+
+function work_1148(x: i64): i64
+{
+    return (x + 1148);
+}
+
+function work_1149(x: i64): i64
+{
+    return (x + 1149);
+}
+
+function work_1150(x: i64): i64
+{
+    return (x + 1150);
+}
+
+function work_1151(x: i64): i64
+{
+    return (x + 1151);
+}
+
+function work_1152(x: i64): i64
+{
+    return (x + 1152);
+}
+
+function work_1153(x: i64): i64
+{
+    return (x + 1153);
+}
+
+function work_1154(x: i64): i64
+{
+    return (x + 1154);
+}
+
+function work_1155(x: i64): i64
+{
+    return (x + 1155);
+}
+
+function work_1156(x: i64): i64
+{
+    return (x + 1156);
+}
+
+function work_1157(x: i64): i64
+{
+    return (x + 1157);
+}
+
+function work_1158(x: i64): i64
+{
+    return (x + 1158);
+}
+
+function work_1159(x: i64): i64
+{
+    return (x + 1159);
+}
+
+function work_1160(x: i64): i64
+{
+    return (x + 1160);
+}
+
+function work_1161(x: i64): i64
+{
+    return (x + 1161);
+}
+
+function work_1162(x: i64): i64
+{
+    return (x + 1162);
+}
+
+function work_1163(x: i64): i64
+{
+    return (x + 1163);
+}
+
+function work_1164(x: i64): i64
+{
+    return (x + 1164);
+}
+
+function work_1165(x: i64): i64
+{
+    return (x + 1165);
+}
+
+function work_1166(x: i64): i64
+{
+    return (x + 1166);
+}
+
+function work_1167(x: i64): i64
+{
+    return (x + 1167);
+}
+
+function work_1168(x: i64): i64
+{
+    return (x + 1168);
+}
+
+function work_1169(x: i64): i64
+{
+    return (x + 1169);
+}
+
+function work_1170(x: i64): i64
+{
+    return (x + 1170);
+}
+
+function work_1171(x: i64): i64
+{
+    return (x + 1171);
+}
+
+function work_1172(x: i64): i64
+{
+    return (x + 1172);
+}
+
+function work_1173(x: i64): i64
+{
+    return (x + 1173);
+}
+
+function work_1174(x: i64): i64
+{
+    return (x + 1174);
+}
+
+function work_1175(x: i64): i64
+{
+    return (x + 1175);
+}
+
+function work_1176(x: i64): i64
+{
+    return (x + 1176);
+}
+
+function work_1177(x: i64): i64
+{
+    return (x + 1177);
+}
+
+function work_1178(x: i64): i64
+{
+    return (x + 1178);
+}
+
+function work_1179(x: i64): i64
+{
+    return (x + 1179);
+}
+
+function work_1180(x: i64): i64
+{
+    return (x + 1180);
+}
+
+function work_1181(x: i64): i64
+{
+    return (x + 1181);
+}
+
+function work_1182(x: i64): i64
+{
+    return (x + 1182);
+}
+
+function work_1183(x: i64): i64
+{
+    return (x + 1183);
+}
+
+function work_1184(x: i64): i64
+{
+    return (x + 1184);
+}
+
+function work_1185(x: i64): i64
+{
+    return (x + 1185);
+}
+
+function work_1186(x: i64): i64
+{
+    return (x + 1186);
+}
+
+function work_1187(x: i64): i64
+{
+    return (x + 1187);
+}
+
+function work_1188(x: i64): i64
+{
+    return (x + 1188);
+}
+
+function work_1189(x: i64): i64
+{
+    return (x + 1189);
+}
+
+function work_1190(x: i64): i64
+{
+    return (x + 1190);
+}
+
+function work_1191(x: i64): i64
+{
+    return (x + 1191);
+}
+
+function work_1192(x: i64): i64
+{
+    return (x + 1192);
+}
+
+function work_1193(x: i64): i64
+{
+    return (x + 1193);
+}
+
+function work_1194(x: i64): i64
+{
+    return (x + 1194);
+}
+
+function work_1195(x: i64): i64
+{
+    return (x + 1195);
+}
+
+function work_1196(x: i64): i64
+{
+    return (x + 1196);
+}
+
+function work_1197(x: i64): i64
+{
+    return (x + 1197);
+}
+
+function work_1198(x: i64): i64
+{
+    return (x + 1198);
+}
+
+function work_1199(x: i64): i64
+{
+    return (x + 1199);
+}
+
+function work_1200(x: i64): i64
+{
+    return (x + 1200);
+}
+
+function work_1201(x: i64): i64
+{
+    return (x + 1201);
+}
+
+function work_1202(x: i64): i64
+{
+    return (x + 1202);
+}
+
+function work_1203(x: i64): i64
+{
+    return (x + 1203);
+}
+
+function work_1204(x: i64): i64
+{
+    return (x + 1204);
+}
+
+function work_1205(x: i64): i64
+{
+    return (x + 1205);
+}
+
+function work_1206(x: i64): i64
+{
+    return (x + 1206);
+}
+
+function work_1207(x: i64): i64
+{
+    return (x + 1207);
+}
+
+function work_1208(x: i64): i64
+{
+    return (x + 1208);
+}
+
+function work_1209(x: i64): i64
+{
+    return (x + 1209);
+}
+
+function work_1210(x: i64): i64
+{
+    return (x + 1210);
+}
+
+function work_1211(x: i64): i64
+{
+    return (x + 1211);
+}
+
+function work_1212(x: i64): i64
+{
+    return (x + 1212);
+}
+
+function work_1213(x: i64): i64
+{
+    return (x + 1213);
+}
+
+function work_1214(x: i64): i64
+{
+    return (x + 1214);
+}
+
+function work_1215(x: i64): i64
+{
+    return (x + 1215);
+}
+
+function work_1216(x: i64): i64
+{
+    return (x + 1216);
+}
+
+function work_1217(x: i64): i64
+{
+    return (x + 1217);
+}
+
+function work_1218(x: i64): i64
+{
+    return (x + 1218);
+}
+
+function work_1219(x: i64): i64
+{
+    return (x + 1219);
+}
+
+function work_1220(x: i64): i64
+{
+    return (x + 1220);
+}
+
+function work_1221(x: i64): i64
+{
+    return (x + 1221);
+}
+
+function work_1222(x: i64): i64
+{
+    return (x + 1222);
+}
+
+function work_1223(x: i64): i64
+{
+    return (x + 1223);
+}
+
+function work_1224(x: i64): i64
+{
+    return (x + 1224);
+}
+
+function work_1225(x: i64): i64
+{
+    return (x + 1225);
+}
+
+function work_1226(x: i64): i64
+{
+    return (x + 1226);
+}
+
+function work_1227(x: i64): i64
+{
+    return (x + 1227);
+}
+
+function work_1228(x: i64): i64
+{
+    return (x + 1228);
+}
+
+function work_1229(x: i64): i64
+{
+    return (x + 1229);
+}
+
+function work_1230(x: i64): i64
+{
+    return (x + 1230);
+}
+
+function work_1231(x: i64): i64
+{
+    return (x + 1231);
+}
+
+function work_1232(x: i64): i64
+{
+    return (x + 1232);
+}
+
+function work_1233(x: i64): i64
+{
+    return (x + 1233);
+}
+
+function work_1234(x: i64): i64
+{
+    return (x + 1234);
+}
+
+function work_1235(x: i64): i64
+{
+    return (x + 1235);
+}
+
+function work_1236(x: i64): i64
+{
+    return (x + 1236);
+}
+
+function work_1237(x: i64): i64
+{
+    return (x + 1237);
+}
+
+function work_1238(x: i64): i64
+{
+    return (x + 1238);
+}
+
+function work_1239(x: i64): i64
+{
+    return (x + 1239);
+}
+
+function work_1240(x: i64): i64
+{
+    return (x + 1240);
+}
+
+function work_1241(x: i64): i64
+{
+    return (x + 1241);
+}
+
+function work_1242(x: i64): i64
+{
+    return (x + 1242);
+}
+
+function work_1243(x: i64): i64
+{
+    return (x + 1243);
+}
+
+function work_1244(x: i64): i64
+{
+    return (x + 1244);
+}
+
+function work_1245(x: i64): i64
+{
+    return (x + 1245);
+}
+
+function work_1246(x: i64): i64
+{
+    return (x + 1246);
+}
+
+function work_1247(x: i64): i64
+{
+    return (x + 1247);
+}
+
+function work_1248(x: i64): i64
+{
+    return (x + 1248);
+}
+
+function work_1249(x: i64): i64
+{
+    return (x + 1249);
+}
+
+function work_1250(x: i64): i64
+{
+    return (x + 1250);
+}
+
+function work_1251(x: i64): i64
+{
+    return (x + 1251);
+}
+
+function work_1252(x: i64): i64
+{
+    return (x + 1252);
+}
+
+function work_1253(x: i64): i64
+{
+    return (x + 1253);
+}
+
+function work_1254(x: i64): i64
+{
+    return (x + 1254);
+}
+
+function work_1255(x: i64): i64
+{
+    return (x + 1255);
+}
+
+function work_1256(x: i64): i64
+{
+    return (x + 1256);
+}
+
+function work_1257(x: i64): i64
+{
+    return (x + 1257);
+}
+
+function work_1258(x: i64): i64
+{
+    return (x + 1258);
+}
+
+function work_1259(x: i64): i64
+{
+    return (x + 1259);
+}
+
+function work_1260(x: i64): i64
+{
+    return (x + 1260);
+}
+
+function work_1261(x: i64): i64
+{
+    return (x + 1261);
+}
+
+function work_1262(x: i64): i64
+{
+    return (x + 1262);
+}
+
+function work_1263(x: i64): i64
+{
+    return (x + 1263);
+}
+
+function work_1264(x: i64): i64
+{
+    return (x + 1264);
+}
+
+function work_1265(x: i64): i64
+{
+    return (x + 1265);
+}
+
+function work_1266(x: i64): i64
+{
+    return (x + 1266);
+}
+
+function work_1267(x: i64): i64
+{
+    return (x + 1267);
+}
+
+function work_1268(x: i64): i64
+{
+    return (x + 1268);
+}
+
+function work_1269(x: i64): i64
+{
+    return (x + 1269);
+}
+
+function work_1270(x: i64): i64
+{
+    return (x + 1270);
+}
+
+function work_1271(x: i64): i64
+{
+    return (x + 1271);
+}
+
+function work_1272(x: i64): i64
+{
+    return (x + 1272);
+}
+
+function work_1273(x: i64): i64
+{
+    return (x + 1273);
+}
+
+function work_1274(x: i64): i64
+{
+    return (x + 1274);
+}
+
+function work_1275(x: i64): i64
+{
+    return (x + 1275);
+}
+
+function work_1276(x: i64): i64
+{
+    return (x + 1276);
+}
+
+function work_1277(x: i64): i64
+{
+    return (x + 1277);
+}
+
+function work_1278(x: i64): i64
+{
+    return (x + 1278);
+}
+
+function work_1279(x: i64): i64
+{
+    return (x + 1279);
+}
+
+function work_1280(x: i64): i64
+{
+    return (x + 1280);
+}
+
+function work_1281(x: i64): i64
+{
+    return (x + 1281);
+}
+
+function work_1282(x: i64): i64
+{
+    return (x + 1282);
+}
+
+function work_1283(x: i64): i64
+{
+    return (x + 1283);
+}
+
+function work_1284(x: i64): i64
+{
+    return (x + 1284);
+}
+
+function work_1285(x: i64): i64
+{
+    return (x + 1285);
+}
+
+function work_1286(x: i64): i64
+{
+    return (x + 1286);
+}
+
+function work_1287(x: i64): i64
+{
+    return (x + 1287);
+}
+
+function work_1288(x: i64): i64
+{
+    return (x + 1288);
+}
+
+function work_1289(x: i64): i64
+{
+    return (x + 1289);
+}
+
+function work_1290(x: i64): i64
+{
+    return (x + 1290);
+}
+
+function work_1291(x: i64): i64
+{
+    return (x + 1291);
+}
+
+function work_1292(x: i64): i64
+{
+    return (x + 1292);
+}
+
+function work_1293(x: i64): i64
+{
+    return (x + 1293);
+}
+
+function work_1294(x: i64): i64
+{
+    return (x + 1294);
+}
+
+function work_1295(x: i64): i64
+{
+    return (x + 1295);
+}
+
+function work_1296(x: i64): i64
+{
+    return (x + 1296);
+}
+
+function work_1297(x: i64): i64
+{
+    return (x + 1297);
+}
+
+function work_1298(x: i64): i64
+{
+    return (x + 1298);
+}
+
+function work_1299(x: i64): i64
+{
+    return (x + 1299);
+}
+
+function work_1300(x: i64): i64
+{
+    return (x + 1300);
+}
+
+function work_1301(x: i64): i64
+{
+    return (x + 1301);
+}
+
+function work_1302(x: i64): i64
+{
+    return (x + 1302);
+}
+
+function work_1303(x: i64): i64
+{
+    return (x + 1303);
+}
+
+function work_1304(x: i64): i64
+{
+    return (x + 1304);
+}
+
+function work_1305(x: i64): i64
+{
+    return (x + 1305);
+}
+
+function work_1306(x: i64): i64
+{
+    return (x + 1306);
+}
+
+function work_1307(x: i64): i64
+{
+    return (x + 1307);
+}
+
+function work_1308(x: i64): i64
+{
+    return (x + 1308);
+}
+
+function work_1309(x: i64): i64
+{
+    return (x + 1309);
+}
+
+function work_1310(x: i64): i64
+{
+    return (x + 1310);
+}
+
+function work_1311(x: i64): i64
+{
+    return (x + 1311);
+}
+
+function work_1312(x: i64): i64
+{
+    return (x + 1312);
+}
+
+function work_1313(x: i64): i64
+{
+    return (x + 1313);
+}
+
+function work_1314(x: i64): i64
+{
+    return (x + 1314);
+}
+
+function work_1315(x: i64): i64
+{
+    return (x + 1315);
+}
+
+function work_1316(x: i64): i64
+{
+    return (x + 1316);
+}
+
+function work_1317(x: i64): i64
+{
+    return (x + 1317);
+}
+
+function work_1318(x: i64): i64
+{
+    return (x + 1318);
+}
+
+function work_1319(x: i64): i64
+{
+    return (x + 1319);
+}
+
+function work_1320(x: i64): i64
+{
+    return (x + 1320);
+}
+
+function work_1321(x: i64): i64
+{
+    return (x + 1321);
+}
+
+function work_1322(x: i64): i64
+{
+    return (x + 1322);
+}
+
+function work_1323(x: i64): i64
+{
+    return (x + 1323);
+}
+
+function work_1324(x: i64): i64
+{
+    return (x + 1324);
+}
+
+function work_1325(x: i64): i64
+{
+    return (x + 1325);
+}
+
+function work_1326(x: i64): i64
+{
+    return (x + 1326);
+}
+
+function work_1327(x: i64): i64
+{
+    return (x + 1327);
+}
+
+function work_1328(x: i64): i64
+{
+    return (x + 1328);
+}
+
+function work_1329(x: i64): i64
+{
+    return (x + 1329);
+}
+
+function work_1330(x: i64): i64
+{
+    return (x + 1330);
+}
+
+function work_1331(x: i64): i64
+{
+    return (x + 1331);
+}
+
+function work_1332(x: i64): i64
+{
+    return (x + 1332);
+}
+
+function work_1333(x: i64): i64
+{
+    return (x + 1333);
+}
+
+function work_1334(x: i64): i64
+{
+    return (x + 1334);
+}
+
+function work_1335(x: i64): i64
+{
+    return (x + 1335);
+}
+
+function work_1336(x: i64): i64
+{
+    return (x + 1336);
+}
+
+function work_1337(x: i64): i64
+{
+    return (x + 1337);
+}
+
+function work_1338(x: i64): i64
+{
+    return (x + 1338);
+}
+
+function work_1339(x: i64): i64
+{
+    return (x + 1339);
+}
+
+function work_1340(x: i64): i64
+{
+    return (x + 1340);
+}
+
+function work_1341(x: i64): i64
+{
+    return (x + 1341);
+}
+
+function work_1342(x: i64): i64
+{
+    return (x + 1342);
+}
+
+function work_1343(x: i64): i64
+{
+    return (x + 1343);
+}
+
+function work_1344(x: i64): i64
+{
+    return (x + 1344);
+}
+
+function work_1345(x: i64): i64
+{
+    return (x + 1345);
+}
+
+function work_1346(x: i64): i64
+{
+    return (x + 1346);
+}
+
+function work_1347(x: i64): i64
+{
+    return (x + 1347);
+}
+
+function work_1348(x: i64): i64
+{
+    return (x + 1348);
+}
+
+function work_1349(x: i64): i64
+{
+    return (x + 1349);
+}
+
+function work_1350(x: i64): i64
+{
+    return (x + 1350);
+}
+
+function work_1351(x: i64): i64
+{
+    return (x + 1351);
+}
+
+function work_1352(x: i64): i64
+{
+    return (x + 1352);
+}
+
+function work_1353(x: i64): i64
+{
+    return (x + 1353);
+}
+
+function work_1354(x: i64): i64
+{
+    return (x + 1354);
+}
+
+function work_1355(x: i64): i64
+{
+    return (x + 1355);
+}
+
+function work_1356(x: i64): i64
+{
+    return (x + 1356);
+}
+
+function work_1357(x: i64): i64
+{
+    return (x + 1357);
+}
+
+function work_1358(x: i64): i64
+{
+    return (x + 1358);
+}
+
+function work_1359(x: i64): i64
+{
+    return (x + 1359);
+}
+
+function work_1360(x: i64): i64
+{
+    return (x + 1360);
+}
+
+function work_1361(x: i64): i64
+{
+    return (x + 1361);
+}
+
+function work_1362(x: i64): i64
+{
+    return (x + 1362);
+}
+
+function work_1363(x: i64): i64
+{
+    return (x + 1363);
+}
+
+function work_1364(x: i64): i64
+{
+    return (x + 1364);
+}
+
+function work_1365(x: i64): i64
+{
+    return (x + 1365);
+}
+
+function work_1366(x: i64): i64
+{
+    return (x + 1366);
+}
+
+function work_1367(x: i64): i64
+{
+    return (x + 1367);
+}
+
+function work_1368(x: i64): i64
+{
+    return (x + 1368);
+}
+
+function work_1369(x: i64): i64
+{
+    return (x + 1369);
+}
+
+function work_1370(x: i64): i64
+{
+    return (x + 1370);
+}
+
+function work_1371(x: i64): i64
+{
+    return (x + 1371);
+}
+
+function work_1372(x: i64): i64
+{
+    return (x + 1372);
+}
+
+function work_1373(x: i64): i64
+{
+    return (x + 1373);
+}
+
+function work_1374(x: i64): i64
+{
+    return (x + 1374);
+}
+
+function work_1375(x: i64): i64
+{
+    return (x + 1375);
+}
+
+function work_1376(x: i64): i64
+{
+    return (x + 1376);
+}
+
+function work_1377(x: i64): i64
+{
+    return (x + 1377);
+}
+
+function work_1378(x: i64): i64
+{
+    return (x + 1378);
+}
+
+function work_1379(x: i64): i64
+{
+    return (x + 1379);
+}
+
+function work_1380(x: i64): i64
+{
+    return (x + 1380);
+}
+
+function work_1381(x: i64): i64
+{
+    return (x + 1381);
+}
+
+function work_1382(x: i64): i64
+{
+    return (x + 1382);
+}
+
+function work_1383(x: i64): i64
+{
+    return (x + 1383);
+}
+
+function work_1384(x: i64): i64
+{
+    return (x + 1384);
+}
+
+function work_1385(x: i64): i64
+{
+    return (x + 1385);
+}
+
+function work_1386(x: i64): i64
+{
+    return (x + 1386);
+}
+
+function work_1387(x: i64): i64
+{
+    return (x + 1387);
+}
+
+function work_1388(x: i64): i64
+{
+    return (x + 1388);
+}
+
+function work_1389(x: i64): i64
+{
+    return (x + 1389);
+}
+
+function work_1390(x: i64): i64
+{
+    return (x + 1390);
+}
+
+function work_1391(x: i64): i64
+{
+    return (x + 1391);
+}
+
+function work_1392(x: i64): i64
+{
+    return (x + 1392);
+}
+
+function work_1393(x: i64): i64
+{
+    return (x + 1393);
+}
+
+function work_1394(x: i64): i64
+{
+    return (x + 1394);
+}
+
+function work_1395(x: i64): i64
+{
+    return (x + 1395);
+}
+
+function work_1396(x: i64): i64
+{
+    return (x + 1396);
+}
+
+function work_1397(x: i64): i64
+{
+    return (x + 1397);
+}
+
+function work_1398(x: i64): i64
+{
+    return (x + 1398);
+}
+
+function work_1399(x: i64): i64
+{
+    return (x + 1399);
+}
+
+function work_1400(x: i64): i64
+{
+    return (x + 1400);
+}
+
+function work_1401(x: i64): i64
+{
+    return (x + 1401);
+}
+
+function work_1402(x: i64): i64
+{
+    return (x + 1402);
+}
+
+function work_1403(x: i64): i64
+{
+    return (x + 1403);
+}
+
+function work_1404(x: i64): i64
+{
+    return (x + 1404);
+}
+
+function work_1405(x: i64): i64
+{
+    return (x + 1405);
+}
+
+function work_1406(x: i64): i64
+{
+    return (x + 1406);
+}
+
+function work_1407(x: i64): i64
+{
+    return (x + 1407);
+}
+
+function work_1408(x: i64): i64
+{
+    return (x + 1408);
+}
+
+function work_1409(x: i64): i64
+{
+    return (x + 1409);
+}
+
+function work_1410(x: i64): i64
+{
+    return (x + 1410);
+}
+
+function work_1411(x: i64): i64
+{
+    return (x + 1411);
+}
+
+function work_1412(x: i64): i64
+{
+    return (x + 1412);
+}
+
+function work_1413(x: i64): i64
+{
+    return (x + 1413);
+}
+
+function work_1414(x: i64): i64
+{
+    return (x + 1414);
+}
+
+function work_1415(x: i64): i64
+{
+    return (x + 1415);
+}
+
+function work_1416(x: i64): i64
+{
+    return (x + 1416);
+}
+
+function work_1417(x: i64): i64
+{
+    return (x + 1417);
+}
+
+function work_1418(x: i64): i64
+{
+    return (x + 1418);
+}
+
+function work_1419(x: i64): i64
+{
+    return (x + 1419);
+}
+
+function work_1420(x: i64): i64
+{
+    return (x + 1420);
+}
+
+function work_1421(x: i64): i64
+{
+    return (x + 1421);
+}
+
+function work_1422(x: i64): i64
+{
+    return (x + 1422);
+}
+
+function work_1423(x: i64): i64
+{
+    return (x + 1423);
+}
+
+function work_1424(x: i64): i64
+{
+    return (x + 1424);
+}
+
+function work_1425(x: i64): i64
+{
+    return (x + 1425);
+}
+
+function work_1426(x: i64): i64
+{
+    return (x + 1426);
+}
+
+function work_1427(x: i64): i64
+{
+    return (x + 1427);
+}
+
+function work_1428(x: i64): i64
+{
+    return (x + 1428);
+}
+
+function work_1429(x: i64): i64
+{
+    return (x + 1429);
+}
+
+function work_1430(x: i64): i64
+{
+    return (x + 1430);
+}
+
+function work_1431(x: i64): i64
+{
+    return (x + 1431);
+}
+
+function work_1432(x: i64): i64
+{
+    return (x + 1432);
+}
+
+function work_1433(x: i64): i64
+{
+    return (x + 1433);
+}
+
+function work_1434(x: i64): i64
+{
+    return (x + 1434);
+}
+
+function work_1435(x: i64): i64
+{
+    return (x + 1435);
+}
+
+function work_1436(x: i64): i64
+{
+    return (x + 1436);
+}
+
+function work_1437(x: i64): i64
+{
+    return (x + 1437);
+}
+
+function work_1438(x: i64): i64
+{
+    return (x + 1438);
+}
+
+function work_1439(x: i64): i64
+{
+    return (x + 1439);
+}
+
+function work_1440(x: i64): i64
+{
+    return (x + 1440);
+}
+
+function work_1441(x: i64): i64
+{
+    return (x + 1441);
+}
+
+function work_1442(x: i64): i64
+{
+    return (x + 1442);
+}
+
+function work_1443(x: i64): i64
+{
+    return (x + 1443);
+}
+
+function work_1444(x: i64): i64
+{
+    return (x + 1444);
+}
+
+function work_1445(x: i64): i64
+{
+    return (x + 1445);
+}
+
+function work_1446(x: i64): i64
+{
+    return (x + 1446);
+}
+
+function work_1447(x: i64): i64
+{
+    return (x + 1447);
+}
+
+function work_1448(x: i64): i64
+{
+    return (x + 1448);
+}
+
+function work_1449(x: i64): i64
+{
+    return (x + 1449);
+}
+
+function work_1450(x: i64): i64
+{
+    return (x + 1450);
+}
+
+function work_1451(x: i64): i64
+{
+    return (x + 1451);
+}
+
+function work_1452(x: i64): i64
+{
+    return (x + 1452);
+}
+
+function work_1453(x: i64): i64
+{
+    return (x + 1453);
+}
+
+function work_1454(x: i64): i64
+{
+    return (x + 1454);
+}
+
+function work_1455(x: i64): i64
+{
+    return (x + 1455);
+}
+
+function work_1456(x: i64): i64
+{
+    return (x + 1456);
+}
+
+function work_1457(x: i64): i64
+{
+    return (x + 1457);
+}
+
+function work_1458(x: i64): i64
+{
+    return (x + 1458);
+}
+
+function work_1459(x: i64): i64
+{
+    return (x + 1459);
+}
+
+function work_1460(x: i64): i64
+{
+    return (x + 1460);
+}
+
+function work_1461(x: i64): i64
+{
+    return (x + 1461);
+}
+
+function work_1462(x: i64): i64
+{
+    return (x + 1462);
+}
+
+function work_1463(x: i64): i64
+{
+    return (x + 1463);
+}
+
+function work_1464(x: i64): i64
+{
+    return (x + 1464);
+}
+
+function work_1465(x: i64): i64
+{
+    return (x + 1465);
+}
+
+function work_1466(x: i64): i64
+{
+    return (x + 1466);
+}
+
+function work_1467(x: i64): i64
+{
+    return (x + 1467);
+}
+
+function work_1468(x: i64): i64
+{
+    return (x + 1468);
+}
+
+function work_1469(x: i64): i64
+{
+    return (x + 1469);
+}
+
+function work_1470(x: i64): i64
+{
+    return (x + 1470);
+}
+
+function work_1471(x: i64): i64
+{
+    return (x + 1471);
+}
+
+function work_1472(x: i64): i64
+{
+    return (x + 1472);
+}
+
+function work_1473(x: i64): i64
+{
+    return (x + 1473);
+}
+
+function work_1474(x: i64): i64
+{
+    return (x + 1474);
+}
+
+function work_1475(x: i64): i64
+{
+    return (x + 1475);
+}
+
+function work_1476(x: i64): i64
+{
+    return (x + 1476);
+}
+
+function work_1477(x: i64): i64
+{
+    return (x + 1477);
+}
+
+function work_1478(x: i64): i64
+{
+    return (x + 1478);
+}
+
+function work_1479(x: i64): i64
+{
+    return (x + 1479);
+}
+
+function work_1480(x: i64): i64
+{
+    return (x + 1480);
+}
+
+function work_1481(x: i64): i64
+{
+    return (x + 1481);
+}
+
+function work_1482(x: i64): i64
+{
+    return (x + 1482);
+}
+
+function work_1483(x: i64): i64
+{
+    return (x + 1483);
+}
+
+function work_1484(x: i64): i64
+{
+    return (x + 1484);
+}
+
+function work_1485(x: i64): i64
+{
+    return (x + 1485);
+}
+
+function work_1486(x: i64): i64
+{
+    return (x + 1486);
+}
+
+function work_1487(x: i64): i64
+{
+    return (x + 1487);
+}
+
+function work_1488(x: i64): i64
+{
+    return (x + 1488);
+}
+
+function work_1489(x: i64): i64
+{
+    return (x + 1489);
+}
+
+function work_1490(x: i64): i64
+{
+    return (x + 1490);
+}
+
+function work_1491(x: i64): i64
+{
+    return (x + 1491);
+}
+
+function work_1492(x: i64): i64
+{
+    return (x + 1492);
+}
+
+function work_1493(x: i64): i64
+{
+    return (x + 1493);
+}
+
+function work_1494(x: i64): i64
+{
+    return (x + 1494);
+}
+
+function work_1495(x: i64): i64
+{
+    return (x + 1495);
+}
+
+function work_1496(x: i64): i64
+{
+    return (x + 1496);
+}
+
+function work_1497(x: i64): i64
+{
+    return (x + 1497);
+}
+
+function work_1498(x: i64): i64
+{
+    return (x + 1498);
+}
+
+function work_1499(x: i64): i64
+{
+    return (x + 1499);
+}
+
+function work_1500(x: i64): i64
+{
+    return (x + 1500);
+}
+
+function work_1501(x: i64): i64
+{
+    return (x + 1501);
+}
+
+function work_1502(x: i64): i64
+{
+    return (x + 1502);
+}
+
+function work_1503(x: i64): i64
+{
+    return (x + 1503);
+}
+
+function work_1504(x: i64): i64
+{
+    return (x + 1504);
+}
+
+function work_1505(x: i64): i64
+{
+    return (x + 1505);
+}
+
+function work_1506(x: i64): i64
+{
+    return (x + 1506);
+}
+
+function work_1507(x: i64): i64
+{
+    return (x + 1507);
+}
+
+function work_1508(x: i64): i64
+{
+    return (x + 1508);
+}
+
+function work_1509(x: i64): i64
+{
+    return (x + 1509);
+}
+
+function work_1510(x: i64): i64
+{
+    return (x + 1510);
+}
+
+function work_1511(x: i64): i64
+{
+    return (x + 1511);
+}
+
+function work_1512(x: i64): i64
+{
+    return (x + 1512);
+}
+
+function work_1513(x: i64): i64
+{
+    return (x + 1513);
+}
+
+function work_1514(x: i64): i64
+{
+    return (x + 1514);
+}
+
+function work_1515(x: i64): i64
+{
+    return (x + 1515);
+}
+
+function work_1516(x: i64): i64
+{
+    return (x + 1516);
+}
+
+function work_1517(x: i64): i64
+{
+    return (x + 1517);
+}
+
+function work_1518(x: i64): i64
+{
+    return (x + 1518);
+}
+
+function work_1519(x: i64): i64
+{
+    return (x + 1519);
+}
+
+function work_1520(x: i64): i64
+{
+    return (x + 1520);
+}
+
+function work_1521(x: i64): i64
+{
+    return (x + 1521);
+}
+
+function work_1522(x: i64): i64
+{
+    return (x + 1522);
+}
+
+function work_1523(x: i64): i64
+{
+    return (x + 1523);
+}
+
+function work_1524(x: i64): i64
+{
+    return (x + 1524);
+}
+
+function work_1525(x: i64): i64
+{
+    return (x + 1525);
+}
+
+function work_1526(x: i64): i64
+{
+    return (x + 1526);
+}
+
+function work_1527(x: i64): i64
+{
+    return (x + 1527);
+}
+
+function work_1528(x: i64): i64
+{
+    return (x + 1528);
+}
+
+function work_1529(x: i64): i64
+{
+    return (x + 1529);
+}
+
+function work_1530(x: i64): i64
+{
+    return (x + 1530);
+}
+
+function work_1531(x: i64): i64
+{
+    return (x + 1531);
+}
+
+function work_1532(x: i64): i64
+{
+    return (x + 1532);
+}
+
+function work_1533(x: i64): i64
+{
+    return (x + 1533);
+}
+
+function work_1534(x: i64): i64
+{
+    return (x + 1534);
+}
+
+function work_1535(x: i64): i64
+{
+    return (x + 1535);
+}
+
+function work_1536(x: i64): i64
+{
+    return (x + 1536);
+}
+
+function work_1537(x: i64): i64
+{
+    return (x + 1537);
+}
+
+function work_1538(x: i64): i64
+{
+    return (x + 1538);
+}
+
+function work_1539(x: i64): i64
+{
+    return (x + 1539);
+}
+
+function work_1540(x: i64): i64
+{
+    return (x + 1540);
+}
+
+function work_1541(x: i64): i64
+{
+    return (x + 1541);
+}
+
+function work_1542(x: i64): i64
+{
+    return (x + 1542);
+}
+
+function work_1543(x: i64): i64
+{
+    return (x + 1543);
+}
+
+function work_1544(x: i64): i64
+{
+    return (x + 1544);
+}
+
+function work_1545(x: i64): i64
+{
+    return (x + 1545);
+}
+
+function work_1546(x: i64): i64
+{
+    return (x + 1546);
+}
+
+function work_1547(x: i64): i64
+{
+    return (x + 1547);
+}
+
+function work_1548(x: i64): i64
+{
+    return (x + 1548);
+}
+
+function work_1549(x: i64): i64
+{
+    return (x + 1549);
+}
+
+function work_1550(x: i64): i64
+{
+    return (x + 1550);
+}
+
+function work_1551(x: i64): i64
+{
+    return (x + 1551);
+}
+
+function work_1552(x: i64): i64
+{
+    return (x + 1552);
+}
+
+function work_1553(x: i64): i64
+{
+    return (x + 1553);
+}
+
+function work_1554(x: i64): i64
+{
+    return (x + 1554);
+}
+
+function work_1555(x: i64): i64
+{
+    return (x + 1555);
+}
+
+function work_1556(x: i64): i64
+{
+    return (x + 1556);
+}
+
+function work_1557(x: i64): i64
+{
+    return (x + 1557);
+}
+
+function work_1558(x: i64): i64
+{
+    return (x + 1558);
+}
+
+function work_1559(x: i64): i64
+{
+    return (x + 1559);
+}
+
+function work_1560(x: i64): i64
+{
+    return (x + 1560);
+}
+
+function work_1561(x: i64): i64
+{
+    return (x + 1561);
+}
+
+function work_1562(x: i64): i64
+{
+    return (x + 1562);
+}
+
+function work_1563(x: i64): i64
+{
+    return (x + 1563);
+}
+
+function work_1564(x: i64): i64
+{
+    return (x + 1564);
+}
+
+function work_1565(x: i64): i64
+{
+    return (x + 1565);
+}
+
+function work_1566(x: i64): i64
+{
+    return (x + 1566);
+}
+
+function work_1567(x: i64): i64
+{
+    return (x + 1567);
+}
+
+function work_1568(x: i64): i64
+{
+    return (x + 1568);
+}
+
+function work_1569(x: i64): i64
+{
+    return (x + 1569);
+}
+
+function work_1570(x: i64): i64
+{
+    return (x + 1570);
+}
+
+function work_1571(x: i64): i64
+{
+    return (x + 1571);
+}
+
+function work_1572(x: i64): i64
+{
+    return (x + 1572);
+}
+
+function work_1573(x: i64): i64
+{
+    return (x + 1573);
+}
+
+function work_1574(x: i64): i64
+{
+    return (x + 1574);
+}
+
+function work_1575(x: i64): i64
+{
+    return (x + 1575);
+}
+
+function work_1576(x: i64): i64
+{
+    return (x + 1576);
+}
+
+function work_1577(x: i64): i64
+{
+    return (x + 1577);
+}
+
+function work_1578(x: i64): i64
+{
+    return (x + 1578);
+}
+
+function work_1579(x: i64): i64
+{
+    return (x + 1579);
+}
+
+function work_1580(x: i64): i64
+{
+    return (x + 1580);
+}
+
+function work_1581(x: i64): i64
+{
+    return (x + 1581);
+}
+
+function work_1582(x: i64): i64
+{
+    return (x + 1582);
+}
+
+function work_1583(x: i64): i64
+{
+    return (x + 1583);
+}
+
+function work_1584(x: i64): i64
+{
+    return (x + 1584);
+}
+
+function work_1585(x: i64): i64
+{
+    return (x + 1585);
+}
+
+function work_1586(x: i64): i64
+{
+    return (x + 1586);
+}
+
+function work_1587(x: i64): i64
+{
+    return (x + 1587);
+}
+
+function work_1588(x: i64): i64
+{
+    return (x + 1588);
+}
+
+function work_1589(x: i64): i64
+{
+    return (x + 1589);
+}
+
+function work_1590(x: i64): i64
+{
+    return (x + 1590);
+}
+
+function work_1591(x: i64): i64
+{
+    return (x + 1591);
+}
+
+function work_1592(x: i64): i64
+{
+    return (x + 1592);
+}
+
+function work_1593(x: i64): i64
+{
+    return (x + 1593);
+}
+
+function work_1594(x: i64): i64
+{
+    return (x + 1594);
+}
+
+function work_1595(x: i64): i64
+{
+    return (x + 1595);
+}
+
+function work_1596(x: i64): i64
+{
+    return (x + 1596);
+}
+
+function work_1597(x: i64): i64
+{
+    return (x + 1597);
+}
+
+function work_1598(x: i64): i64
+{
+    return (x + 1598);
+}
+
+function work_1599(x: i64): i64
+{
+    return (x + 1599);
+}
+
+function work_1600(x: i64): i64
+{
+    return (x + 1600);
+}
+
+function work_1601(x: i64): i64
+{
+    return (x + 1601);
+}
+
+function work_1602(x: i64): i64
+{
+    return (x + 1602);
+}
+
+function work_1603(x: i64): i64
+{
+    return (x + 1603);
+}
+
+function work_1604(x: i64): i64
+{
+    return (x + 1604);
+}
+
+function work_1605(x: i64): i64
+{
+    return (x + 1605);
+}
+
+function work_1606(x: i64): i64
+{
+    return (x + 1606);
+}
+
+function work_1607(x: i64): i64
+{
+    return (x + 1607);
+}
+
+function work_1608(x: i64): i64
+{
+    return (x + 1608);
+}
+
+function work_1609(x: i64): i64
+{
+    return (x + 1609);
+}
+
+function work_1610(x: i64): i64
+{
+    return (x + 1610);
+}
+
+function work_1611(x: i64): i64
+{
+    return (x + 1611);
+}
+
+function work_1612(x: i64): i64
+{
+    return (x + 1612);
+}
+
+function work_1613(x: i64): i64
+{
+    return (x + 1613);
+}
+
+function work_1614(x: i64): i64
+{
+    return (x + 1614);
+}
+
+function work_1615(x: i64): i64
+{
+    return (x + 1615);
+}
+
+function work_1616(x: i64): i64
+{
+    return (x + 1616);
+}
+
+function work_1617(x: i64): i64
+{
+    return (x + 1617);
+}
+
+function work_1618(x: i64): i64
+{
+    return (x + 1618);
+}
+
+function work_1619(x: i64): i64
+{
+    return (x + 1619);
+}
+
+function work_1620(x: i64): i64
+{
+    return (x + 1620);
+}
+
+function work_1621(x: i64): i64
+{
+    return (x + 1621);
+}
+
+function work_1622(x: i64): i64
+{
+    return (x + 1622);
+}
+
+function work_1623(x: i64): i64
+{
+    return (x + 1623);
+}
+
+function work_1624(x: i64): i64
+{
+    return (x + 1624);
+}
+
+function work_1625(x: i64): i64
+{
+    return (x + 1625);
+}
+
+function work_1626(x: i64): i64
+{
+    return (x + 1626);
+}
+
+function work_1627(x: i64): i64
+{
+    return (x + 1627);
+}
+
+function work_1628(x: i64): i64
+{
+    return (x + 1628);
+}
+
+function work_1629(x: i64): i64
+{
+    return (x + 1629);
+}
+
+function work_1630(x: i64): i64
+{
+    return (x + 1630);
+}
+
+function work_1631(x: i64): i64
+{
+    return (x + 1631);
+}
+
+function work_1632(x: i64): i64
+{
+    return (x + 1632);
+}
+
+function work_1633(x: i64): i64
+{
+    return (x + 1633);
+}
+
+function work_1634(x: i64): i64
+{
+    return (x + 1634);
+}
+
+function work_1635(x: i64): i64
+{
+    return (x + 1635);
+}
+
+function work_1636(x: i64): i64
+{
+    return (x + 1636);
+}
+
+function work_1637(x: i64): i64
+{
+    return (x + 1637);
+}
+
+function work_1638(x: i64): i64
+{
+    return (x + 1638);
+}
+
+function work_1639(x: i64): i64
+{
+    return (x + 1639);
+}
+
+function work_1640(x: i64): i64
+{
+    return (x + 1640);
+}
+
+function work_1641(x: i64): i64
+{
+    return (x + 1641);
+}
+
+function work_1642(x: i64): i64
+{
+    return (x + 1642);
+}
+
+function work_1643(x: i64): i64
+{
+    return (x + 1643);
+}
+
+function work_1644(x: i64): i64
+{
+    return (x + 1644);
+}
+
+function work_1645(x: i64): i64
+{
+    return (x + 1645);
+}
+
+function work_1646(x: i64): i64
+{
+    return (x + 1646);
+}
+
+function work_1647(x: i64): i64
+{
+    return (x + 1647);
+}
+
+function work_1648(x: i64): i64
+{
+    return (x + 1648);
+}
+
+function work_1649(x: i64): i64
+{
+    return (x + 1649);
+}
+
+function work_1650(x: i64): i64
+{
+    return (x + 1650);
+}
+
+function work_1651(x: i64): i64
+{
+    return (x + 1651);
+}
+
+function work_1652(x: i64): i64
+{
+    return (x + 1652);
+}
+
+function work_1653(x: i64): i64
+{
+    return (x + 1653);
+}
+
+function work_1654(x: i64): i64
+{
+    return (x + 1654);
+}
+
+function work_1655(x: i64): i64
+{
+    return (x + 1655);
+}
+
+function work_1656(x: i64): i64
+{
+    return (x + 1656);
+}
+
+function work_1657(x: i64): i64
+{
+    return (x + 1657);
+}
+
+function work_1658(x: i64): i64
+{
+    return (x + 1658);
+}
+
+function work_1659(x: i64): i64
+{
+    return (x + 1659);
+}
+
+function work_1660(x: i64): i64
+{
+    return (x + 1660);
+}
+
+function work_1661(x: i64): i64
+{
+    return (x + 1661);
+}
+
+function work_1662(x: i64): i64
+{
+    return (x + 1662);
+}
+
+function work_1663(x: i64): i64
+{
+    return (x + 1663);
+}
+
+function work_1664(x: i64): i64
+{
+    return (x + 1664);
+}
+
+function work_1665(x: i64): i64
+{
+    return (x + 1665);
+}
+
+function work_1666(x: i64): i64
+{
+    return (x + 1666);
+}
+
+function work_1667(x: i64): i64
+{
+    return (x + 1667);
+}
+
+function work_1668(x: i64): i64
+{
+    return (x + 1668);
+}
+
+function work_1669(x: i64): i64
+{
+    return (x + 1669);
+}
+
+function work_1670(x: i64): i64
+{
+    return (x + 1670);
+}
+
+function work_1671(x: i64): i64
+{
+    return (x + 1671);
+}
+
+function work_1672(x: i64): i64
+{
+    return (x + 1672);
+}
+
+function work_1673(x: i64): i64
+{
+    return (x + 1673);
+}
+
+function work_1674(x: i64): i64
+{
+    return (x + 1674);
+}
+
+function work_1675(x: i64): i64
+{
+    return (x + 1675);
+}
+
+function work_1676(x: i64): i64
+{
+    return (x + 1676);
+}
+
+function work_1677(x: i64): i64
+{
+    return (x + 1677);
+}
+
+function work_1678(x: i64): i64
+{
+    return (x + 1678);
+}
+
+function work_1679(x: i64): i64
+{
+    return (x + 1679);
+}
+
+function work_1680(x: i64): i64
+{
+    return (x + 1680);
+}
+
+function work_1681(x: i64): i64
+{
+    return (x + 1681);
+}
+
+function work_1682(x: i64): i64
+{
+    return (x + 1682);
+}
+
+function work_1683(x: i64): i64
+{
+    return (x + 1683);
+}
+
+function work_1684(x: i64): i64
+{
+    return (x + 1684);
+}
+
+function work_1685(x: i64): i64
+{
+    return (x + 1685);
+}
+
+function work_1686(x: i64): i64
+{
+    return (x + 1686);
+}
+
+function work_1687(x: i64): i64
+{
+    return (x + 1687);
+}
+
+function work_1688(x: i64): i64
+{
+    return (x + 1688);
+}
+
+function work_1689(x: i64): i64
+{
+    return (x + 1689);
+}
+
+function work_1690(x: i64): i64
+{
+    return (x + 1690);
+}
+
+function work_1691(x: i64): i64
+{
+    return (x + 1691);
+}
+
+function work_1692(x: i64): i64
+{
+    return (x + 1692);
+}
+
+function work_1693(x: i64): i64
+{
+    return (x + 1693);
+}
+
+function work_1694(x: i64): i64
+{
+    return (x + 1694);
+}
+
+function work_1695(x: i64): i64
+{
+    return (x + 1695);
+}
+
+function work_1696(x: i64): i64
+{
+    return (x + 1696);
+}
+
+function work_1697(x: i64): i64
+{
+    return (x + 1697);
+}
+
+function work_1698(x: i64): i64
+{
+    return (x + 1698);
+}
+
+function work_1699(x: i64): i64
+{
+    return (x + 1699);
+}
+
+function work_1700(x: i64): i64
+{
+    return (x + 1700);
+}
+
+function work_1701(x: i64): i64
+{
+    return (x + 1701);
+}
+
+function work_1702(x: i64): i64
+{
+    return (x + 1702);
+}
+
+function work_1703(x: i64): i64
+{
+    return (x + 1703);
+}
+
+function work_1704(x: i64): i64
+{
+    return (x + 1704);
+}
+
+function work_1705(x: i64): i64
+{
+    return (x + 1705);
+}
+
+function work_1706(x: i64): i64
+{
+    return (x + 1706);
+}
+
+function work_1707(x: i64): i64
+{
+    return (x + 1707);
+}
+
+function work_1708(x: i64): i64
+{
+    return (x + 1708);
+}
+
+function work_1709(x: i64): i64
+{
+    return (x + 1709);
+}
+
+function work_1710(x: i64): i64
+{
+    return (x + 1710);
+}
+
+function work_1711(x: i64): i64
+{
+    return (x + 1711);
+}
+
+function work_1712(x: i64): i64
+{
+    return (x + 1712);
+}
+
+function work_1713(x: i64): i64
+{
+    return (x + 1713);
+}
+
+function work_1714(x: i64): i64
+{
+    return (x + 1714);
+}
+
+function work_1715(x: i64): i64
+{
+    return (x + 1715);
+}
+
+function work_1716(x: i64): i64
+{
+    return (x + 1716);
+}
+
+function work_1717(x: i64): i64
+{
+    return (x + 1717);
+}
+
+function work_1718(x: i64): i64
+{
+    return (x + 1718);
+}
+
+function work_1719(x: i64): i64
+{
+    return (x + 1719);
+}
+
+function work_1720(x: i64): i64
+{
+    return (x + 1720);
+}
+
+function work_1721(x: i64): i64
+{
+    return (x + 1721);
+}
+
+function work_1722(x: i64): i64
+{
+    return (x + 1722);
+}
+
+function work_1723(x: i64): i64
+{
+    return (x + 1723);
+}
+
+function work_1724(x: i64): i64
+{
+    return (x + 1724);
+}
+
+function work_1725(x: i64): i64
+{
+    return (x + 1725);
+}
+
+function work_1726(x: i64): i64
+{
+    return (x + 1726);
+}
+
+function work_1727(x: i64): i64
+{
+    return (x + 1727);
+}
+
+function work_1728(x: i64): i64
+{
+    return (x + 1728);
+}
+
+function work_1729(x: i64): i64
+{
+    return (x + 1729);
+}
+
+function work_1730(x: i64): i64
+{
+    return (x + 1730);
+}
+
+function work_1731(x: i64): i64
+{
+    return (x + 1731);
+}
+
+function work_1732(x: i64): i64
+{
+    return (x + 1732);
+}
+
+function work_1733(x: i64): i64
+{
+    return (x + 1733);
+}
+
+function work_1734(x: i64): i64
+{
+    return (x + 1734);
+}
+
+function work_1735(x: i64): i64
+{
+    return (x + 1735);
+}
+
+function work_1736(x: i64): i64
+{
+    return (x + 1736);
+}
+
+function work_1737(x: i64): i64
+{
+    return (x + 1737);
+}
+
+function work_1738(x: i64): i64
+{
+    return (x + 1738);
+}
+
+function work_1739(x: i64): i64
+{
+    return (x + 1739);
+}
+
+function work_1740(x: i64): i64
+{
+    return (x + 1740);
+}
+
+function work_1741(x: i64): i64
+{
+    return (x + 1741);
+}
+
+function work_1742(x: i64): i64
+{
+    return (x + 1742);
+}
+
+function work_1743(x: i64): i64
+{
+    return (x + 1743);
+}
+
+function work_1744(x: i64): i64
+{
+    return (x + 1744);
+}
+
+function work_1745(x: i64): i64
+{
+    return (x + 1745);
+}
+
+function work_1746(x: i64): i64
+{
+    return (x + 1746);
+}
+
+function work_1747(x: i64): i64
+{
+    return (x + 1747);
+}
+
+function work_1748(x: i64): i64
+{
+    return (x + 1748);
+}
+
+function work_1749(x: i64): i64
+{
+    return (x + 1749);
+}
+
+function work_1750(x: i64): i64
+{
+    return (x + 1750);
+}
+
+function work_1751(x: i64): i64
+{
+    return (x + 1751);
+}
+
+function work_1752(x: i64): i64
+{
+    return (x + 1752);
+}
+
+function work_1753(x: i64): i64
+{
+    return (x + 1753);
+}
+
+function work_1754(x: i64): i64
+{
+    return (x + 1754);
+}
+
+function work_1755(x: i64): i64
+{
+    return (x + 1755);
+}
+
+function work_1756(x: i64): i64
+{
+    return (x + 1756);
+}
+
+function work_1757(x: i64): i64
+{
+    return (x + 1757);
+}
+
+function work_1758(x: i64): i64
+{
+    return (x + 1758);
+}
+
+function work_1759(x: i64): i64
+{
+    return (x + 1759);
+}
+
+function work_1760(x: i64): i64
+{
+    return (x + 1760);
+}
+
+function work_1761(x: i64): i64
+{
+    return (x + 1761);
+}
+
+function work_1762(x: i64): i64
+{
+    return (x + 1762);
+}
+
+function work_1763(x: i64): i64
+{
+    return (x + 1763);
+}
+
+function work_1764(x: i64): i64
+{
+    return (x + 1764);
+}
+
+function work_1765(x: i64): i64
+{
+    return (x + 1765);
+}
+
+function work_1766(x: i64): i64
+{
+    return (x + 1766);
+}
+
+function work_1767(x: i64): i64
+{
+    return (x + 1767);
+}
+
+function work_1768(x: i64): i64
+{
+    return (x + 1768);
+}
+
+function work_1769(x: i64): i64
+{
+    return (x + 1769);
+}
+
+function work_1770(x: i64): i64
+{
+    return (x + 1770);
+}
+
+function work_1771(x: i64): i64
+{
+    return (x + 1771);
+}
+
+function work_1772(x: i64): i64
+{
+    return (x + 1772);
+}
+
+function work_1773(x: i64): i64
+{
+    return (x + 1773);
+}
+
+function work_1774(x: i64): i64
+{
+    return (x + 1774);
+}
+
+function work_1775(x: i64): i64
+{
+    return (x + 1775);
+}
+
+function work_1776(x: i64): i64
+{
+    return (x + 1776);
+}
+
+function work_1777(x: i64): i64
+{
+    return (x + 1777);
+}
+
+function work_1778(x: i64): i64
+{
+    return (x + 1778);
+}
+
+function work_1779(x: i64): i64
+{
+    return (x + 1779);
+}
+
+function work_1780(x: i64): i64
+{
+    return (x + 1780);
+}
+
+function work_1781(x: i64): i64
+{
+    return (x + 1781);
+}
+
+function work_1782(x: i64): i64
+{
+    return (x + 1782);
+}
+
+function work_1783(x: i64): i64
+{
+    return (x + 1783);
+}
+
+function work_1784(x: i64): i64
+{
+    return (x + 1784);
+}
+
+function work_1785(x: i64): i64
+{
+    return (x + 1785);
+}
+
+function work_1786(x: i64): i64
+{
+    return (x + 1786);
+}
+
+function work_1787(x: i64): i64
+{
+    return (x + 1787);
+}
+
+function work_1788(x: i64): i64
+{
+    return (x + 1788);
+}
+
+function work_1789(x: i64): i64
+{
+    return (x + 1789);
+}
+
+function work_1790(x: i64): i64
+{
+    return (x + 1790);
+}
+
+function work_1791(x: i64): i64
+{
+    return (x + 1791);
+}
+
+function work_1792(x: i64): i64
+{
+    return (x + 1792);
+}
+
+function work_1793(x: i64): i64
+{
+    return (x + 1793);
+}
+
+function work_1794(x: i64): i64
+{
+    return (x + 1794);
+}
+
+function work_1795(x: i64): i64
+{
+    return (x + 1795);
+}
+
+function work_1796(x: i64): i64
+{
+    return (x + 1796);
+}
+
+function work_1797(x: i64): i64
+{
+    return (x + 1797);
+}
+
+function work_1798(x: i64): i64
+{
+    return (x + 1798);
+}
+
+function work_1799(x: i64): i64
+{
+    return (x + 1799);
+}
+
+function work_1800(x: i64): i64
+{
+    return (x + 1800);
+}
+
+function work_1801(x: i64): i64
+{
+    return (x + 1801);
+}
+
+function work_1802(x: i64): i64
+{
+    return (x + 1802);
+}
+
+function work_1803(x: i64): i64
+{
+    return (x + 1803);
+}
+
+function work_1804(x: i64): i64
+{
+    return (x + 1804);
+}
+
+function work_1805(x: i64): i64
+{
+    return (x + 1805);
+}
+
+function work_1806(x: i64): i64
+{
+    return (x + 1806);
+}
+
+function work_1807(x: i64): i64
+{
+    return (x + 1807);
+}
+
+function work_1808(x: i64): i64
+{
+    return (x + 1808);
+}
+
+function work_1809(x: i64): i64
+{
+    return (x + 1809);
+}
+
+function work_1810(x: i64): i64
+{
+    return (x + 1810);
+}
+
+function work_1811(x: i64): i64
+{
+    return (x + 1811);
+}
+
+function work_1812(x: i64): i64
+{
+    return (x + 1812);
+}
+
+function work_1813(x: i64): i64
+{
+    return (x + 1813);
+}
+
+function work_1814(x: i64): i64
+{
+    return (x + 1814);
+}
+
+function work_1815(x: i64): i64
+{
+    return (x + 1815);
+}
+
+function work_1816(x: i64): i64
+{
+    return (x + 1816);
+}
+
+function work_1817(x: i64): i64
+{
+    return (x + 1817);
+}
+
+function work_1818(x: i64): i64
+{
+    return (x + 1818);
+}
+
+function work_1819(x: i64): i64
+{
+    return (x + 1819);
+}
+
+function work_1820(x: i64): i64
+{
+    return (x + 1820);
+}
+
+function work_1821(x: i64): i64
+{
+    return (x + 1821);
+}
+
+function work_1822(x: i64): i64
+{
+    return (x + 1822);
+}
+
+function work_1823(x: i64): i64
+{
+    return (x + 1823);
+}
+
+function work_1824(x: i64): i64
+{
+    return (x + 1824);
+}
+
+function work_1825(x: i64): i64
+{
+    return (x + 1825);
+}
+
+function work_1826(x: i64): i64
+{
+    return (x + 1826);
+}
+
+function work_1827(x: i64): i64
+{
+    return (x + 1827);
+}
+
+function work_1828(x: i64): i64
+{
+    return (x + 1828);
+}
+
+function work_1829(x: i64): i64
+{
+    return (x + 1829);
+}
+
+function work_1830(x: i64): i64
+{
+    return (x + 1830);
+}
+
+function work_1831(x: i64): i64
+{
+    return (x + 1831);
+}
+
+function work_1832(x: i64): i64
+{
+    return (x + 1832);
+}
+
+function work_1833(x: i64): i64
+{
+    return (x + 1833);
+}
+
+function work_1834(x: i64): i64
+{
+    return (x + 1834);
+}
+
+function work_1835(x: i64): i64
+{
+    return (x + 1835);
+}
+
+function work_1836(x: i64): i64
+{
+    return (x + 1836);
+}
+
+function work_1837(x: i64): i64
+{
+    return (x + 1837);
+}
+
+function work_1838(x: i64): i64
+{
+    return (x + 1838);
+}
+
+function work_1839(x: i64): i64
+{
+    return (x + 1839);
+}
+
+function work_1840(x: i64): i64
+{
+    return (x + 1840);
+}
+
+function work_1841(x: i64): i64
+{
+    return (x + 1841);
+}
+
+function work_1842(x: i64): i64
+{
+    return (x + 1842);
+}
+
+function work_1843(x: i64): i64
+{
+    return (x + 1843);
+}
+
+function work_1844(x: i64): i64
+{
+    return (x + 1844);
+}
+
+function work_1845(x: i64): i64
+{
+    return (x + 1845);
+}
+
+function work_1846(x: i64): i64
+{
+    return (x + 1846);
+}
+
+function work_1847(x: i64): i64
+{
+    return (x + 1847);
+}
+
+function work_1848(x: i64): i64
+{
+    return (x + 1848);
+}
+
+function work_1849(x: i64): i64
+{
+    return (x + 1849);
+}
+
+function work_1850(x: i64): i64
+{
+    return (x + 1850);
+}
+
+function work_1851(x: i64): i64
+{
+    return (x + 1851);
+}
+
+function work_1852(x: i64): i64
+{
+    return (x + 1852);
+}
+
+function work_1853(x: i64): i64
+{
+    return (x + 1853);
+}
+
+function work_1854(x: i64): i64
+{
+    return (x + 1854);
+}
+
+function work_1855(x: i64): i64
+{
+    return (x + 1855);
+}
+
+function work_1856(x: i64): i64
+{
+    return (x + 1856);
+}
+
+function work_1857(x: i64): i64
+{
+    return (x + 1857);
+}
+
+function work_1858(x: i64): i64
+{
+    return (x + 1858);
+}
+
+function work_1859(x: i64): i64
+{
+    return (x + 1859);
+}
+
+function work_1860(x: i64): i64
+{
+    return (x + 1860);
+}
+
+function work_1861(x: i64): i64
+{
+    return (x + 1861);
+}
+
+function work_1862(x: i64): i64
+{
+    return (x + 1862);
+}
+
+function work_1863(x: i64): i64
+{
+    return (x + 1863);
+}
+
+function work_1864(x: i64): i64
+{
+    return (x + 1864);
+}
+
+function work_1865(x: i64): i64
+{
+    return (x + 1865);
+}
+
+function work_1866(x: i64): i64
+{
+    return (x + 1866);
+}
+
+function work_1867(x: i64): i64
+{
+    return (x + 1867);
+}
+
+function work_1868(x: i64): i64
+{
+    return (x + 1868);
+}
+
+function work_1869(x: i64): i64
+{
+    return (x + 1869);
+}
+
+function work_1870(x: i64): i64
+{
+    return (x + 1870);
+}
+
+function work_1871(x: i64): i64
+{
+    return (x + 1871);
+}
+
+function work_1872(x: i64): i64
+{
+    return (x + 1872);
+}
+
+function work_1873(x: i64): i64
+{
+    return (x + 1873);
+}
+
+function work_1874(x: i64): i64
+{
+    return (x + 1874);
+}
+
+function work_1875(x: i64): i64
+{
+    return (x + 1875);
+}
+
+function work_1876(x: i64): i64
+{
+    return (x + 1876);
+}
+
+function work_1877(x: i64): i64
+{
+    return (x + 1877);
+}
+
+function work_1878(x: i64): i64
+{
+    return (x + 1878);
+}
+
+function work_1879(x: i64): i64
+{
+    return (x + 1879);
+}
+
+function work_1880(x: i64): i64
+{
+    return (x + 1880);
+}
+
+function work_1881(x: i64): i64
+{
+    return (x + 1881);
+}
+
+function work_1882(x: i64): i64
+{
+    return (x + 1882);
+}
+
+function work_1883(x: i64): i64
+{
+    return (x + 1883);
+}
+
+function work_1884(x: i64): i64
+{
+    return (x + 1884);
+}
+
+function work_1885(x: i64): i64
+{
+    return (x + 1885);
+}
+
+function work_1886(x: i64): i64
+{
+    return (x + 1886);
+}
+
+function work_1887(x: i64): i64
+{
+    return (x + 1887);
+}
+
+function work_1888(x: i64): i64
+{
+    return (x + 1888);
+}
+
+function work_1889(x: i64): i64
+{
+    return (x + 1889);
+}
+
+function work_1890(x: i64): i64
+{
+    return (x + 1890);
+}
+
+function work_1891(x: i64): i64
+{
+    return (x + 1891);
+}
+
+function work_1892(x: i64): i64
+{
+    return (x + 1892);
+}
+
+function work_1893(x: i64): i64
+{
+    return (x + 1893);
+}
+
+function work_1894(x: i64): i64
+{
+    return (x + 1894);
+}
+
+function work_1895(x: i64): i64
+{
+    return (x + 1895);
+}
+
+function work_1896(x: i64): i64
+{
+    return (x + 1896);
+}
+
+function work_1897(x: i64): i64
+{
+    return (x + 1897);
+}
+
+function work_1898(x: i64): i64
+{
+    return (x + 1898);
+}
+
+function work_1899(x: i64): i64
+{
+    return (x + 1899);
+}
+
+function work_1900(x: i64): i64
+{
+    return (x + 1900);
+}
+
+function work_1901(x: i64): i64
+{
+    return (x + 1901);
+}
+
+function work_1902(x: i64): i64
+{
+    return (x + 1902);
+}
+
+function work_1903(x: i64): i64
+{
+    return (x + 1903);
+}
+
+function work_1904(x: i64): i64
+{
+    return (x + 1904);
+}
+
+function work_1905(x: i64): i64
+{
+    return (x + 1905);
+}
+
+function work_1906(x: i64): i64
+{
+    return (x + 1906);
+}
+
+function work_1907(x: i64): i64
+{
+    return (x + 1907);
+}
+
+function work_1908(x: i64): i64
+{
+    return (x + 1908);
+}
+
+function work_1909(x: i64): i64
+{
+    return (x + 1909);
+}
+
+function work_1910(x: i64): i64
+{
+    return (x + 1910);
+}
+
+function work_1911(x: i64): i64
+{
+    return (x + 1911);
+}
+
+function work_1912(x: i64): i64
+{
+    return (x + 1912);
+}
+
+function work_1913(x: i64): i64
+{
+    return (x + 1913);
+}
+
+function work_1914(x: i64): i64
+{
+    return (x + 1914);
+}
+
+function work_1915(x: i64): i64
+{
+    return (x + 1915);
+}
+
+function work_1916(x: i64): i64
+{
+    return (x + 1916);
+}
+
+function work_1917(x: i64): i64
+{
+    return (x + 1917);
+}
+
+function work_1918(x: i64): i64
+{
+    return (x + 1918);
+}
+
+function work_1919(x: i64): i64
+{
+    return (x + 1919);
+}
+
+function work_1920(x: i64): i64
+{
+    return (x + 1920);
+}
+
+function work_1921(x: i64): i64
+{
+    return (x + 1921);
+}
+
+function work_1922(x: i64): i64
+{
+    return (x + 1922);
+}
+
+function work_1923(x: i64): i64
+{
+    return (x + 1923);
+}
+
+function work_1924(x: i64): i64
+{
+    return (x + 1924);
+}
+
+function work_1925(x: i64): i64
+{
+    return (x + 1925);
+}
+
+function work_1926(x: i64): i64
+{
+    return (x + 1926);
+}
+
+function work_1927(x: i64): i64
+{
+    return (x + 1927);
+}
+
+function work_1928(x: i64): i64
+{
+    return (x + 1928);
+}
+
+function work_1929(x: i64): i64
+{
+    return (x + 1929);
+}
+
+function work_1930(x: i64): i64
+{
+    return (x + 1930);
+}
+
+function work_1931(x: i64): i64
+{
+    return (x + 1931);
+}
+
+function work_1932(x: i64): i64
+{
+    return (x + 1932);
+}
+
+function work_1933(x: i64): i64
+{
+    return (x + 1933);
+}
+
+function work_1934(x: i64): i64
+{
+    return (x + 1934);
+}
+
+function work_1935(x: i64): i64
+{
+    return (x + 1935);
+}
+
+function work_1936(x: i64): i64
+{
+    return (x + 1936);
+}
+
+function work_1937(x: i64): i64
+{
+    return (x + 1937);
+}
+
+function work_1938(x: i64): i64
+{
+    return (x + 1938);
+}
+
+function work_1939(x: i64): i64
+{
+    return (x + 1939);
+}
+
+function work_1940(x: i64): i64
+{
+    return (x + 1940);
+}
+
+function work_1941(x: i64): i64
+{
+    return (x + 1941);
+}
+
+function work_1942(x: i64): i64
+{
+    return (x + 1942);
+}
+
+function work_1943(x: i64): i64
+{
+    return (x + 1943);
+}
+
+function work_1944(x: i64): i64
+{
+    return (x + 1944);
+}
+
+function work_1945(x: i64): i64
+{
+    return (x + 1945);
+}
+
+function work_1946(x: i64): i64
+{
+    return (x + 1946);
+}
+
+function work_1947(x: i64): i64
+{
+    return (x + 1947);
+}
+
+function work_1948(x: i64): i64
+{
+    return (x + 1948);
+}
+
+function work_1949(x: i64): i64
+{
+    return (x + 1949);
+}
+
+function work_1950(x: i64): i64
+{
+    return (x + 1950);
+}
+
+function work_1951(x: i64): i64
+{
+    return (x + 1951);
+}
+
+function work_1952(x: i64): i64
+{
+    return (x + 1952);
+}
+
+function work_1953(x: i64): i64
+{
+    return (x + 1953);
+}
+
+function work_1954(x: i64): i64
+{
+    return (x + 1954);
+}
+
+function work_1955(x: i64): i64
+{
+    return (x + 1955);
+}
+
+function work_1956(x: i64): i64
+{
+    return (x + 1956);
+}
+
+function work_1957(x: i64): i64
+{
+    return (x + 1957);
+}
+
+function work_1958(x: i64): i64
+{
+    return (x + 1958);
+}
+
+function work_1959(x: i64): i64
+{
+    return (x + 1959);
+}
+
+function work_1960(x: i64): i64
+{
+    return (x + 1960);
+}
+
+function work_1961(x: i64): i64
+{
+    return (x + 1961);
+}
+
+function work_1962(x: i64): i64
+{
+    return (x + 1962);
+}
+
+function work_1963(x: i64): i64
+{
+    return (x + 1963);
+}
+
+function work_1964(x: i64): i64
+{
+    return (x + 1964);
+}
+
+function work_1965(x: i64): i64
+{
+    return (x + 1965);
+}
+
+function work_1966(x: i64): i64
+{
+    return (x + 1966);
+}
+
+function work_1967(x: i64): i64
+{
+    return (x + 1967);
+}
+
+function work_1968(x: i64): i64
+{
+    return (x + 1968);
+}
+
+function work_1969(x: i64): i64
+{
+    return (x + 1969);
+}
+
+function work_1970(x: i64): i64
+{
+    return (x + 1970);
+}
+
+function work_1971(x: i64): i64
+{
+    return (x + 1971);
+}
+
+function work_1972(x: i64): i64
+{
+    return (x + 1972);
+}
+
+function work_1973(x: i64): i64
+{
+    return (x + 1973);
+}
+
+function work_1974(x: i64): i64
+{
+    return (x + 1974);
+}
+
+function work_1975(x: i64): i64
+{
+    return (x + 1975);
+}
+
+function work_1976(x: i64): i64
+{
+    return (x + 1976);
+}
+
+function work_1977(x: i64): i64
+{
+    return (x + 1977);
+}
+
+function work_1978(x: i64): i64
+{
+    return (x + 1978);
+}
+
+function work_1979(x: i64): i64
+{
+    return (x + 1979);
+}
+
+function work_1980(x: i64): i64
+{
+    return (x + 1980);
+}
+
+function work_1981(x: i64): i64
+{
+    return (x + 1981);
+}
+
+function work_1982(x: i64): i64
+{
+    return (x + 1982);
+}
+
+function work_1983(x: i64): i64
+{
+    return (x + 1983);
+}
+
+function work_1984(x: i64): i64
+{
+    return (x + 1984);
+}
+
+function work_1985(x: i64): i64
+{
+    return (x + 1985);
+}
+
+function work_1986(x: i64): i64
+{
+    return (x + 1986);
+}
+
+function work_1987(x: i64): i64
+{
+    return (x + 1987);
+}
+
+function work_1988(x: i64): i64
+{
+    return (x + 1988);
+}
+
+function work_1989(x: i64): i64
+{
+    return (x + 1989);
+}
+
+function work_1990(x: i64): i64
+{
+    return (x + 1990);
+}
+
+function work_1991(x: i64): i64
+{
+    return (x + 1991);
+}
+
+function work_1992(x: i64): i64
+{
+    return (x + 1992);
+}
+
+function work_1993(x: i64): i64
+{
+    return (x + 1993);
+}
+
+function work_1994(x: i64): i64
+{
+    return (x + 1994);
+}
+
+function work_1995(x: i64): i64
+{
+    return (x + 1995);
+}
+
+function work_1996(x: i64): i64
+{
+    return (x + 1996);
+}
+
+function work_1997(x: i64): i64
+{
+    return (x + 1997);
+}
+
+function work_1998(x: i64): i64
+{
+    return (x + 1998);
+}
+
+function work_1999(x: i64): i64
+{
+    return (x + 1999);
+}

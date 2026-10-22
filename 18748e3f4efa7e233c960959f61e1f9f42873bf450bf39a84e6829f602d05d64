@@ -1,0 +1,8 @@
+function f(a: i64, b: i64): i64
+{
+    let x = a;
+    while ((x < b)) {
+        x = (x + 1);
+    }
+    return x;
+}

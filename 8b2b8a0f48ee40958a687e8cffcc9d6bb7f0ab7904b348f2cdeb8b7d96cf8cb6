@@ -1,0 +1,14 @@
+type Position = {
+    column: i64,
+    y: i64,
+}
+
+function Position.sum(p: Position): i64
+{
+    return ((p).column + (p).y);
+}
+
+function untouched(): i64
+{
+    return 42;
+}

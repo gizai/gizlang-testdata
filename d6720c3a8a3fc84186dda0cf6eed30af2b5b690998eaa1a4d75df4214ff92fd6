@@ -1,0 +1,9 @@
+function pure(x: i64): i64
+{
+    return x;
+}
+
+function impure(x: i64): i64
+{
+    print(string(x)); return x;
+}

@@ -1,0 +1,14 @@
+type P = {
+    x: i64,
+}
+
+type Q = {
+    y: i64,
+}
+
+export function read(value: P): i64
+{
+    return (value).x;
+}
+
+export { Q as P };

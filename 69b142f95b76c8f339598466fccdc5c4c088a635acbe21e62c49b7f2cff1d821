@@ -1,0 +1,9 @@
+function increment(x: i64): i64
+{
+    return (x + 1);
+}
+
+function main(): i64
+{
+    return increment(41);
+}

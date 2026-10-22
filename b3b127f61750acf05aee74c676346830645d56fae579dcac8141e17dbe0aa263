@@ -1,0 +1,1 @@
+namespace a {export function f():i64{return 1;}} namespace b {export function f():i64{return 2;}} export * from "a";export * from "b";

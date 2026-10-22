@@ -1,0 +1,5 @@
+function f(x: boolean): boolean
+ensures (result === x)
+{
+    return (!(!x));
+}

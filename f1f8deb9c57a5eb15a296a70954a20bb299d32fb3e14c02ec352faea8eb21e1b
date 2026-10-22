@@ -1,0 +1,5 @@
+function f(): i64
+ensures (result === 0)
+{
+    return 1;
+}

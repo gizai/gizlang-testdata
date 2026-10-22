@@ -1,0 +1,162 @@
+// Acceptance tests per change request; the NN.giz files check the same facts.
+// Functions a change adds are reached through the namespace, so an earlier
+// stage still loads (their tests run only after their change).
+import * as depot from "./depot.ts";
+import type { Depot, Line, Result } from "./depot.ts";
+const api = depot as Record<string, any>;
+
+function must(outcome: Result<Depot, string>): Depot {
+    if (outcome.kind !== "ok") { throw new Error(outcome.error); }
+    return outcome.value;
+}
+const failed = (outcome: Result<Depot, string>): boolean => outcome.kind === "err";
+const join = (parts: string[]): string => parts.join("|");
+const one = (sku: string, quantity: number): Line[] => [depot.line(sku, quantity)];
+const two = (a: string, qa: number, b: string, qb: number): Line[] => [depot.line(a, qa), depot.line(b, qb)];
+const last = (d: Depot, back: number): string => depot.history(d)[depot.history(d).length - back];
+function base(): Depot {
+    let d = depot.newDepot();
+    d = must(depot.addItem(d, depot.item("BOLT", "Bolt", 25, 100)));
+    d = must(depot.addItem(d, depot.item("NUT", "Nut", 10, 50)));
+    d = must(depot.addItem(d, depot.item("GEAR", "Gear", 12000, 2)));
+    d = must(depot.addItem(d, depot.item("PUMP", "Pump", 90000, 1)));
+    d = must(depot.receive(d, "BOLT", "A", 500));
+    d = must(depot.receive(d, "BOLT", "B", 200));
+    d = must(depot.receive(d, "NUT", "A", 300));
+    d = must(depot.receive(d, "GEAR", "B", 10));
+    d = must(depot.receive(d, "PUMP", "A", 5));
+    d = must(depot.addCustomer(d, "acme", "Acme Ltd", false, 300000));
+    d = must(depot.addCustomer(d, "zen", "Zen Co", true, 100000));
+    d = must(depot.addCustomer(d, "tiny", "Tiny", false, 1000));
+    return d;
+}
+const { orderCents, statusOf, stockAt, openTasks, owedBy, statement, history, placeOrder, ship, pay, cancel, receive, addCustomer } = depot;
+
+export const accept: Record<string, () => boolean>[] = [
+    { testAccept01GoldPromotions: () => {
+        let d = must(depot.addPromotion(base(), "BOLT", 100, 10));
+        d = must(api.addGoldPromotion(d, "BOLT", 100, 20));
+        d = must(api.addGoldPromotion(d, "NUT", 10, 50));
+        d = must(placeOrder(d, "zen", "A", two("BOLT", 200, "NUT", 10)));
+        d = must(placeOrder(d, "acme", "A", two("BOLT", 200, "NUT", 10)));
+        return orderCents(d, 1) === 3929 && orderCents(d, 2) === 4600 && depot.lineCents(d, depot.line("BOLT", 200)) === 4500
+            && failed(api.addGoldPromotion(d, "NOPE", 1, 5)) && failed(api.addGoldPromotion(d, "BOLT", 0, 5))
+            && failed(api.addGoldPromotion(d, "BOLT", 1, 101));
+    } },
+    { testAccept02PlatinumTier: () => {
+        let d = must(api.addPlatinumCustomer(base(), "plat", "Plat", 500000));
+        d = must(api.addGoldPromotion(d, "NUT", 10, 50));
+        d = must(placeOrder(d, "plat", "A", two("BOLT", 40, "NUT", 10)));
+        return orderCents(d, 1) === 998 && api.tierOf(d, "plat") === "platinum" && api.tierOf(d, "zen") === "gold"
+            && api.tierOf(d, "acme") === "regular" && api.tierOf(d, "nobody") === ""
+            && failed(api.addPlatinumCustomer(d, "acme", "x", 1)) && failed(api.addPlatinumCustomer(d, "", "x", 1))
+            && failed(api.addPlatinumCustomer(d, "p2", "x", -1));
+    } },
+    { testAccept03HoldReview: () => {
+        let d = must(receive(base(), "PUMP", "A", 10));
+        d = must(addCustomer(d, "big", "Big", false, 1000000));
+        d = must(placeOrder(d, "big", "A", one("PUMP", 6)));
+        const held = statusOf(d, 1) === "onHold" && stockAt(d, "PUMP", "A") === 9 && join(openTasks(d)) === "review:1"
+            && history(d)[7] === "held 1" && failed(ship(d, 1)) && failed(api.approve(d, 2));
+        d = must(placeOrder(d, "big", "A", one("NUT", 10)));
+        d = must(ship(d, 2));
+        d = must(pay(d, 1));
+        const unpaid = statusOf(d, 1) === "onHold";
+        d = must(api.approve(d, 1));
+        const placed = statusOf(d, 1) === "placed" && join(openTasks(d)) === "" && failed(api.approve(d, 1))
+            && last(d, 2) === "approved 1" && last(d, 1) === "placed 1";
+        let e = must(receive(base(), "PUMP", "A", 10));
+        e = must(addCustomer(e, "low", "Low", false, 600000));
+        e = must(placeOrder(e, "low", "B", one("GEAR", 9)));
+        e = must(placeOrder(e, "low", "A", one("PUMP", 6)));
+        e = must(api.approve(e, 2));
+        const credit = statusOf(e, 2) === "onHold" && join(openTasks(e)) === "reorder:GEAR|credit:low"
+            && last(e, 1) === "held 2" && failed(api.approve(e, 2));
+        e = must(ship(e, 1));
+        e = must(pay(e, 1));
+        return held && unpaid && placed && credit && statusOf(e, 2) === "placed" && join(openTasks(e)) === "reorder:GEAR";
+    } },
+    { testAccept04PartialPay: () => {
+        let d = must(placeOrder(base(), "tiny", "A", one("NUT", 90)));
+        d = must(ship(d, 1));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 50)));
+        d = must(api.payPart(d, 1, 300));
+        const part = owedBy(d, "tiny") === 600 && statusOf(d, 2) === "onHold" && statement(d, "tiny") === "#1 1 900 due 600\nowed 600\n";
+        d = must(api.payPart(d, 1, 100));
+        const released = statusOf(d, 2) === "placed" && join(openTasks(d)) === "" && last(d, 2) === "paid 1";
+        const bad = failed(api.payPart(d, 1, 0)) && failed(api.payPart(d, 1, 501)) && failed(api.payPart(d, 1, -5))
+            && failed(api.payPart(d, 7, 1));
+        d = must(pay(d, 1));
+        return part && released && bad && owedBy(d, "tiny") === 0 && statement(d, "tiny") === "#1 1 900 paid\nowed 0\n"
+            && failed(api.payPart(d, 1, 1)) && failed(pay(d, 1));
+    } },
+    { testAccept05ReturnGoods: () => {
+        let d = must(depot.addPromotion(base(), "BOLT", 100, 10));
+        d = must(placeOrder(d, "zen", "A", two("BOLT", 120, "NUT", 20)));
+        d = must(ship(d, 1));
+        d = must(placeOrder(d, "zen", "A", one("NUT", 1)));
+        const bad = failed(api.returnGoods(d, 9, "BOLT", 1)) && failed(api.returnGoods(d, 2, "NUT", 1))
+            && failed(api.returnGoods(d, 1, "GEAR", 1)) && failed(api.returnGoods(d, 1, "BOLT", 0))
+            && failed(api.returnGoods(d, 1, "BOLT", 121));
+        d = must(api.returnGoods(d, 1, "BOLT", 30));
+        const first = owedBy(d, "zen") === 2377 && stockAt(d, "BOLT", "A") === 410 && orderCents(d, 1) === 2813
+            && statement(d, "zen") === "#1 1 2813 due\n#2 1 -436 paid\nowed 2377\n" && depot.lastInvoiceNumber(d) === 2
+            && last(d, 2) === "stock BOLT" && last(d, 1) === "returned 1 BOLT 30";
+        const rest = failed(api.returnGoods(d, 1, "BOLT", 91)) && failed(api.returnGoods(must(api.returnGoods(d, 1, "BOLT", 90)), 1, "BOLT", 1));
+        let e = must(placeOrder(base(), "tiny", "A", one("NUT", 90)));
+        e = must(ship(e, 1));
+        e = must(placeOrder(e, "tiny", "A", one("NUT", 20)));
+        const held = statusOf(e, 2) === "onHold";
+        e = must(api.returnGoods(e, 1, "NUT", 10));
+        return bad && first && rest && held && statusOf(e, 2) === "placed" && owedBy(e, "tiny") === 800 && join(openTasks(e)) === "";
+    } },
+    { testAccept06ReorderPerLocation: () => {
+        let d = must(api.setReorder(base(), "BOLT", "B", 150));
+        const none = join(openTasks(d));
+        d = must(placeOrder(d, "acme", "B", one("BOLT", 60)));
+        const low = join(openTasks(d));
+        d = must(depot.transfer(d, "BOLT", "A", "B", 20));
+        const raised = join(openTasks(d));
+        const logged = history(d).length;
+        d = must(api.setReorder(d, "BOLT", "B", 170));
+        d = must(api.setReorder(d, "BOLT", "C", 0));
+        const set = join(openTasks(d)) === "reorder:BOLT@B|reorder:BOLT@C" && history(d).length === logged;
+        let e = must(api.setReorder(base(), "GEAR", "B", 5));
+        e = must(placeOrder(e, "acme", "B", one("GEAR", 8)));
+        const both = join(openTasks(e)) === "reorder:GEAR|reorder:GEAR@B";
+        e = must(cancel(e, 1));
+        return none === "" && low === "reorder:BOLT@B" && raised === "" && set && both && join(openTasks(e)) === ""
+            && failed(api.setReorder(d, "NOPE", "B", 1)) && failed(api.setReorder(d, "BOLT", "", 1))
+            && failed(api.setReorder(d, "BOLT", "B", -1));
+    } },
+    { testAccept07ChangeLine: () => {
+        let d = must(placeOrder(base(), "tiny", "A", one("NUT", 50)));
+        d = must(api.changeLine(d, 1, "NUT", 80));
+        const grown = statusOf(d, 1) === "placed" && stockAt(d, "NUT", "A") === 220 && orderCents(d, 1) === 800;
+        d = must(api.changeLine(d, 1, "BOLT", 10));
+        const held = statusOf(d, 1) === "onHold" && stockAt(d, "BOLT", "A") === 490 && join(openTasks(d)) === "credit:tiny"
+            && last(d, 2) === "stock BOLT" && last(d, 1) === "held 1";
+        d = must(api.changeLine(d, 1, "NUT", 70));
+        const placed = statusOf(d, 1) === "placed" && orderCents(d, 1) === 950 && stockAt(d, "NUT", "A") === 230
+            && join(openTasks(d)) === "" && last(d, 1) === "placed 1";
+        const bad = failed(api.changeLine(d, 1, "NUT", -1)) && failed(api.changeLine(d, 1, "NOPE", 1))
+            && failed(api.changeLine(d, 9, "NUT", 1)) && failed(api.changeLine(d, 1, "NUT", 301))
+            && failed(api.changeLine(must(ship(d, 1)), 1, "NUT", 1)) && stockAt(d, "NUT", "A") === 230;
+        d = must(api.changeLine(d, 1, "NUT", 0));
+        const kept = orderCents(d, 1) === 250 && stockAt(d, "NUT", "A") === 300;
+        d = must(api.changeLine(d, 1, "BOLT", 0));
+        const gone = statusOf(d, 1) === "cancelled" && stockAt(d, "BOLT", "A") === 500 && last(d, 1) === "cancelled 1";
+        let e = must(receive(base(), "PUMP", "A", 10));
+        e = must(addCustomer(e, "big", "Big", false, 1000000));
+        e = must(placeOrder(e, "big", "A", one("PUMP", 6)));
+        e = must(api.changeLine(e, 1, "PUMP", 5));
+        return grown && held && placed && bad && kept && gone && statusOf(e, 1) === "onHold" && stockAt(e, "PUMP", "A") === 10
+            && statusOf(must(api.approve(e, 1)), 1) === "placed";
+    } },
+    { testAccept08RenameCustomer: () => {
+        let d = must(placeOrder(base(), "acme", "A", one("NUT", 5)));
+        d = must(ship(d, 1));
+        const order = d.orders[0] as Record<string, unknown>, bill = d.invoices[0] as Record<string, unknown>;
+        return order.customerId === "acme" && bill.customerId === "acme" && !("customer" in order) && !("customer" in bill);
+    } },
+];

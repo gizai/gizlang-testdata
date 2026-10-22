@@ -1,0 +1,1 @@
+function bad(value:Ref<View<i64>>):i64{return 0;}

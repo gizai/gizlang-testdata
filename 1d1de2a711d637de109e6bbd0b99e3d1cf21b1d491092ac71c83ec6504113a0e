@@ -1,0 +1,1 @@
+function bad(value:Ref<Missing>):Ref<Missing>{return value;}

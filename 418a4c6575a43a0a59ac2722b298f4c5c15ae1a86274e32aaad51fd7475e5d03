@@ -1,0 +1,17 @@
+namespace a {
+    type Box<T> = {
+        value: T,
+    }
+    
+    export function get<T>(x: Box<T>): T
+    {
+        return (x).value;
+    }
+    
+    export { Box };
+}
+
+function main(): i64
+{
+    return a__get<i64>(a__Box<i64>(42));
+}

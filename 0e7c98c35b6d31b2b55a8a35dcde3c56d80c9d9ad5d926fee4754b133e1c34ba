@@ -1,0 +1,7 @@
+import { render, hydrate } from "solid-js/web";
+import { App } from "./app.jsx";
+// A page ssr.js rendered carries its rows; otherwise it starts empty.
+const target = document.getElementById("main");
+const rendered = document.getElementById("rows");
+if (rendered) { const initial = JSON.parse(rendered.textContent); hydrate(() => <App initial={initial} />, target); }
+else render(() => <App />, target);

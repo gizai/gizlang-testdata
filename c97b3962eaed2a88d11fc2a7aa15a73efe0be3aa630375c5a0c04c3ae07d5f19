@@ -1,0 +1,12 @@
+type Box<T> = {
+    value: T,
+}
+
+type Node<T> = {
+    next: Ref<Box<Node<T>>>,
+}
+
+function identity(value: Ref<Node<i64>>): Ref<Node<i64>>
+{
+    return value;
+}

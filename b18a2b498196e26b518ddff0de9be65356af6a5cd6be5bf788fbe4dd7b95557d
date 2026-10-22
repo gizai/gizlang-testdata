@@ -1,0 +1,1 @@
+function main():i64{const xs=vec(1);xs[0]=2;return xs[0];}

@@ -1,0 +1,4 @@
+function f(a: View<f64>, i: i64): f64
+{
+    return a[i];
+}

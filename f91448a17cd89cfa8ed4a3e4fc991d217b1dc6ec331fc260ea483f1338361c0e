@@ -1,0 +1,13 @@
+function main(): i64
+{
+    let xs = "0123456789";
+    for (const i of range(0, 30)) {
+        xs = (xs + xs);
+    }
+    return len(xs);
+}
+
+function healthy(): i64
+{
+    return 42;
+}

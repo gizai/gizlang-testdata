@@ -1,0 +1,16 @@
+namespace lib {
+    type len = {
+        value: i64,
+    }
+    
+    export function answer(): i64
+    {
+        return (lib__len(42)).value;
+    }
+    
+}
+
+function main(): i64
+{
+    return lib__answer();
+}

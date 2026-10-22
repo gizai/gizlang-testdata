@@ -1,0 +1,9 @@
+function f(a: boolean): boolean
+{
+    return (a && ((1 / 0) === 1));
+}
+
+function g(a: boolean): boolean
+{
+    return (a || ((1 / 0) === 1));
+}

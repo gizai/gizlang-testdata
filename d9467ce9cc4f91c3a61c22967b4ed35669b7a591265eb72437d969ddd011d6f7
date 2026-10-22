@@ -1,0 +1,4 @@
+function f(x: Vec<i64>): Vec<i64>
+{
+    return push(x, 42);
+}

@@ -1,0 +1,1 @@
+type Loop<T>={value:Loop<T>};function bad(value:Ref<Loop<i64>>):i64{return 0;}

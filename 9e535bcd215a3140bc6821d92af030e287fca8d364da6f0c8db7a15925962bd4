@@ -1,0 +1,5 @@
+function f(a: i64, b: i64): i64
+effects {}
+{
+    return wrapping_add(a, b);
+}

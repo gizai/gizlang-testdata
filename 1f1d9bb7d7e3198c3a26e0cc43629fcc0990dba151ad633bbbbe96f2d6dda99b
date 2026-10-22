@@ -1,0 +1,12 @@
+namespace lib {
+    type Box = {
+        value: i64,
+    }
+    
+    export { Box };
+}
+
+function main(): i64
+{
+    return (lib__Box(42)).value;
+}

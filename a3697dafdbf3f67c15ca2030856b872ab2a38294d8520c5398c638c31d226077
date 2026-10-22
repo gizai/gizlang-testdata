@@ -1,0 +1,1 @@
+function f(a:bool):i64{if (a){return 1;}}

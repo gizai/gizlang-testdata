@@ -1,0 +1,145 @@
+-- PL/SQL: anonymous blocks, functions, procedures, exceptions, cursors, packages and triggers.
+create table pl_log (id number, msg varchar2(100));
+create or replace function pl_double(x number) return number is
+begin
+  return x * 2;
+end;
+/
+select pl_double(21) from dual;
+create or replace function pl_fact(n number) return number is
+begin
+  if n <= 1 then return 1; end if;
+  return n * pl_fact(n - 1);
+end;
+/
+select pl_fact(10) from dual;
+create or replace procedure pl_add(p_id number, p_msg varchar2) is
+begin
+  insert into pl_log values (p_id, p_msg);
+end;
+/
+begin
+  pl_add(1, 'one');
+  pl_add(2, 'two');
+end;
+/
+select id, msg from pl_log order by id;
+declare
+  v number := 0;
+begin
+  for i in 1 .. 10 loop
+    v := v + i;
+  end loop;
+  insert into pl_log values (3, to_char(v));
+end;
+/
+select msg from pl_log where id = 3;
+declare
+  v number;
+begin
+  v := 1 / 0;
+exception
+  when zero_divide then insert into pl_log values (4, 'caught');
+end;
+/
+select msg from pl_log where id = 4;
+declare
+  v varchar2(100);
+begin
+  select msg into v from pl_log where id = 99;
+exception
+  when no_data_found then insert into pl_log values (5, 'none');
+end;
+/
+select msg from pl_log where id = 5;
+declare
+  n number := 0;
+begin
+  for r in (select id from pl_log order by id) loop
+    n := n + r.id;
+  end loop;
+  insert into pl_log values (6, to_char(n));
+end;
+/
+select msg from pl_log where id = 6;
+declare
+  cursor c is select id, msg from pl_log where id <= 2 order by id;
+  v_id number; v_msg varchar2(100); s varchar2(100) := '';
+begin
+  open c;
+  loop
+    fetch c into v_id, v_msg;
+    exit when c%notfound;
+    s := s || v_msg;
+  end loop;
+  close c;
+  insert into pl_log values (7, s);
+end;
+/
+select msg from pl_log where id = 7;
+begin
+  raise_application_error(-20001, 'custom failure');
+end;
+/
+declare
+  e exception;
+begin
+  raise e;
+exception
+  when e then insert into pl_log values (8, 'user exception');
+end;
+/
+select msg from pl_log where id = 8;
+declare
+  v pl_log.msg%type;
+begin
+  select msg into v from pl_log where id = 1;
+  if v = 'one' then insert into pl_log values (9, 'typed'); end if;
+end;
+/
+select msg from pl_log where id = 9;
+create or replace package pl_pkg is
+  function twice(x number) return number;
+end;
+/
+create or replace package body pl_pkg is
+  function twice(x number) return number is begin return x + x; end;
+end;
+/
+select pl_pkg.twice(4) from dual;
+create or replace trigger pl_trg before insert on pl_log for each row
+begin
+  :new.msg := upper(:new.msg);
+end;
+/
+insert into pl_log values (10, 'lower');
+select msg from pl_log where id = 10;
+declare
+  v number := 5;
+begin
+  case v when 5 then insert into pl_log values (11, 'five'); else null; end case;
+end;
+/
+select msg from pl_log where id = 11;
+declare
+  i number := 0;
+begin
+  while i < 3 loop i := i + 1; end loop;
+  insert into pl_log values (12, to_char(i));
+end;
+/
+select msg from pl_log where id = 12;
+begin
+  execute immediate 'insert into pl_log values (13, ''dynamic'')';
+end;
+/
+select msg from pl_log where id = 13;
+declare
+  n number;
+begin
+  update pl_log set msg = msg where id < 3;
+  n := sql%rowcount;
+  insert into pl_log values (14, to_char(n));
+end;
+/
+select msg from pl_log where id = 14;

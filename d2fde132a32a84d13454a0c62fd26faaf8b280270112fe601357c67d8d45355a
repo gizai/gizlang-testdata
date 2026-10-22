@@ -1,0 +1,5 @@
+function f(a: u64, b: u64): u64
+effects {}
+{
+    return wrapping_add(a, b);
+}

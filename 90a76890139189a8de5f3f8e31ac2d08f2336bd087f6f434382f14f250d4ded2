@@ -1,0 +1,1 @@
+type R = {x:i64} function f():R{return R(1,2);}

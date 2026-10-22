@@ -1,0 +1,4 @@
+function identity(value: Ref<i64>): Ref<i64>
+{
+    return value;
+}

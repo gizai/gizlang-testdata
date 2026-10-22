@@ -1,0 +1,10 @@
+CREATE TYPE "Status" AS ENUM ('open','doing','done');
+CREATE TABLE orgs(id INTEGER PRIMARY KEY, name TEXT NOT NULL);
+CREATE TABLE users(id INTEGER PRIMARY KEY, org_id INTEGER NOT NULL REFERENCES orgs(id), name TEXT NOT NULL, created_at TIMESTAMPTZ(3) NOT NULL);
+CREATE TABLE projects(id INTEGER PRIMARY KEY, org_id INTEGER NOT NULL REFERENCES orgs(id), name TEXT NOT NULL, created_at TIMESTAMPTZ(3) NOT NULL);
+CREATE TABLE tasks(id INTEGER PRIMARY KEY, project_id INTEGER NOT NULL REFERENCES projects(id), user_id INTEGER NOT NULL REFERENCES users(id), title TEXT NOT NULL, status "Status" NOT NULL, amount NUMERIC(18,2) NOT NULL, created_at TIMESTAMPTZ(3) NOT NULL, revision INTEGER NOT NULL);
+CREATE INDEX users_org_id_idx ON users(org_id);
+CREATE INDEX projects_org_id_idx ON projects(org_id);
+CREATE INDEX tasks_project_id_idx ON tasks(project_id);
+CREATE INDEX tasks_user_id_idx ON tasks(user_id);
+CREATE INDEX tasks_status_created_at_id_idx ON tasks(status,created_at,id);

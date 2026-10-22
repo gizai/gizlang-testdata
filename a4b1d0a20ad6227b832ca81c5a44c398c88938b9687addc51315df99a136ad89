@@ -1,0 +1,1 @@
+{"object":"list","has_more":false,"data":[{"id":"txn_one","object":"balance_transaction","created":180,"currency":"usd","amount":2500,"fee":103,"net":2397,"source":"ch_two","type":"charge","status":"available"}]}

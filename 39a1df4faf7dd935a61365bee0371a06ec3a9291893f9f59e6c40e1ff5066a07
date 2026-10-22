@@ -1,0 +1,4 @@
+function f(): i64
+{
+    return 0;
+}

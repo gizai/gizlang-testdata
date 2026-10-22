@@ -1,0 +1,9 @@
+function available(value: bytes): i64
+{
+    return 42;
+}
+
+function main(): i64
+{
+    return len(b"x");
+}

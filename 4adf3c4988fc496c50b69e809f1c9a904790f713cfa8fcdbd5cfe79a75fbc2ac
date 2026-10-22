@@ -1,0 +1,9 @@
+type Node<T> = {
+    value: T,
+    next: Ref<Node<T>>,
+}
+
+function identity(value: Ref<Node<i64>>): Ref<Node<i64>>
+{
+    return value;
+}

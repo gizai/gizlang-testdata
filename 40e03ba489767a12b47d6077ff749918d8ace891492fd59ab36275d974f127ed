@@ -1,0 +1,9 @@
+function f(): i64
+{
+    return -9223372036854775808;
+}
+
+function g(): u64
+{
+    return wrapping_add(18446744073709551615u, 1u);
+}

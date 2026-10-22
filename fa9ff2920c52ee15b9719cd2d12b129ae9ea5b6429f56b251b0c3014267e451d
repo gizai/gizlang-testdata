@@ -1,0 +1,383 @@
+-- PL/SQL beyond the basics: cursors, records, collections, bulk operations, dynamic SQL, exceptions, packages and triggers.
+create table p2_emp (id number primary key, name varchar2(30), dept number, sal number(8,2));
+insert into p2_emp values (1, 'ann', 10, 1000);
+insert into p2_emp values (2, 'bob', 10, 2000);
+insert into p2_emp values (3, 'cy', 20, 3000);
+insert into p2_emp values (4, 'di', 20, 4000);
+insert into p2_emp values (5, 'ed', 30, 5000);
+create table p2_log (n number, msg varchar2(200));
+declare
+  cursor c is select id, name from p2_emp order by id;
+  v_id number; v_name varchar2(30); v_rc number;
+begin
+  open c;
+  loop
+    fetch c into v_id, v_name;
+    exit when c%notfound;
+    v_rc := c%rowcount;
+    insert into p2_log values (v_id, v_name || ':' || v_rc);
+  end loop;
+  close c;
+end;
+/
+select n, msg from p2_log order by n;
+delete from p2_log;
+declare
+  cursor c(p_dept number) is select name, sal from p2_emp where dept = p_dept order by id;
+begin
+  for r in c(20) loop
+    insert into p2_log values (r.sal, r.name);
+  end loop;
+end;
+/
+select n, msg from p2_log order by n;
+delete from p2_log;
+declare
+  r p2_emp%rowtype;
+begin
+  select * into r from p2_emp where id = 3;
+  insert into p2_log values (r.id, r.name || r.dept);
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  type t_rec is record (a number, b varchar2(10));
+  r t_rec;
+begin
+  r.a := 5; r.b := 'x';
+  insert into p2_log values (r.a, r.b);
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  type t_nums is table of number;
+  v t_nums := t_nums(10, 20, 30);
+  c number; f number; l number;
+begin
+  v.extend; v(4) := 40;
+  c := v.count; f := v.first; l := v.last;
+  insert into p2_log values (c, 'count');
+  for i in 1 .. v.count loop
+    insert into p2_log values (v(i), 'item' || i);
+  end loop;
+  insert into p2_log values (f, 'first');
+  insert into p2_log values (l, 'last');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+declare
+  type t_map is table of number index by varchar2(10);
+  m t_map;
+  k varchar2(10); ea number; ez number;
+begin
+  m('b') := 2; m('a') := 1; m('c') := 3;
+  k := m.first;
+  while k is not null loop
+    insert into p2_log values (m(k), k);
+    k := m.next(k);
+  end loop;
+  if m.exists('a') then ea := 1; else ea := 0; end if;
+  if m.exists('z') then ez := 1; else ez := 0; end if;
+  insert into p2_log values (ea, 'exists a');
+  insert into p2_log values (ez, 'exists z');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+declare
+  type t_va is varray(3) of varchar2(5);
+  v t_va := t_va('x', 'y');
+  c number; l number;
+begin
+  c := v.count; l := v.limit;
+  insert into p2_log values (c, 'count');
+  insert into p2_log values (l, 'limit');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+declare
+  type t_ids is table of number;
+  ids t_ids; c number; r number;
+begin
+  select id bulk collect into ids from p2_emp where dept >= 20 order by id;
+  c := ids.count;
+  insert into p2_log values (c, 'bulk');
+  forall i in 1 .. ids.count
+    update p2_emp set sal = sal + 1 where id = ids(i);
+  r := sql%rowcount;
+  insert into p2_log values (r, 'forall');
+end;
+/
+select n, msg from p2_log order by msg;
+select id, sal from p2_emp order by id;
+delete from p2_log;
+declare
+  v number; r number;
+begin
+  execute immediate 'select count(*) from p2_emp where dept = :d' into v using 10;
+  insert into p2_log values (v, 'dyn');
+  execute immediate 'insert into p2_log values (:1, :2)' using 99, 'dml';
+  execute immediate 'update p2_emp set dept = dept where id = :1' using 1;
+  r := sql%rowcount;
+  insert into p2_log values (r, 'dynrows');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+declare
+  v number;
+begin
+  select id into v from p2_emp where id = 999;
+exception
+  when no_data_found then insert into p2_log values (1, 'nodata');
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  v number;
+begin
+  select id into v from p2_emp;
+exception
+  when too_many_rows then insert into p2_log values (1, 'toomany');
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  e_neg exception;
+  pragma exception_init(e_neg, -20100);
+  c number; m varchar2(200);
+begin
+  raise_application_error(-20100, 'negative');
+exception
+  when e_neg then c := sqlcode; m := sqlerrm; insert into p2_log values (c, m);
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  e_mine exception;
+begin
+  begin
+    raise e_mine;
+  exception
+    when e_mine then insert into p2_log values (1, 'inner'); raise;
+  end;
+exception
+  when others then insert into p2_log values (2, 'outer');
+end;
+/
+select n, msg from p2_log order by n;
+delete from p2_log;
+declare c number;
+begin
+  insert into p2_emp values (1, 'dup', 1, 1);
+exception
+  when dup_val_on_index then c := sqlcode; insert into p2_log values (c, 'dup');
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare n number;
+begin
+  n := to_number('abc');
+  insert into p2_log values (n, 'x');
+exception
+  when value_error then insert into p2_log values (1, 'value_error');
+  when invalid_number then insert into p2_log values (2, 'invalid_number');
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+declare
+  i number := 0;
+begin
+  loop
+    i := i + 1;
+    continue when mod(i, 2) = 0;
+    exit when i > 7;
+    insert into p2_log values (i, 'odd');
+  end loop;
+  while i > 5 loop i := i - 1; end loop;
+  insert into p2_log values (i, 'end');
+  for j in reverse 1 .. 3 loop insert into p2_log values (j, 'rev'); end loop;
+end;
+/
+select n, msg from p2_log order by msg, n;
+delete from p2_log;
+declare
+  g varchar2(10);
+  n number := 15;
+begin
+  g := case when n > 10 then 'big' when n > 5 then 'mid' else 'small' end;
+  case g
+    when 'big' then insert into p2_log values (1, 'big');
+    when 'mid' then insert into p2_log values (2, 'mid');
+    else insert into p2_log values (3, 'other');
+  end case;
+end;
+/
+select n, msg from p2_log;
+delete from p2_log;
+create or replace package p2_pkg is
+  counter number := 0;
+  function bump return number;
+  procedure bump(n number);
+  function describe(x number) return varchar2;
+  function describe(x varchar2) return varchar2;
+  c_limit constant number := 100;
+end p2_pkg;
+/
+create or replace package body p2_pkg is
+  function bump return number is begin counter := counter + 1; return counter; end;
+  procedure bump(n number) is begin counter := counter + n; end;
+  function describe(x number) return varchar2 is begin return 'num ' || x; end;
+  function describe(x varchar2) return varchar2 is begin return 'str ' || x; end;
+end p2_pkg;
+/
+select p2_pkg.bump from dual;
+begin p2_pkg.bump(10); end;
+/
+select p2_pkg.bump from dual;
+select p2_pkg.describe(5), p2_pkg.describe('a') from dual;
+create or replace function p2_ref(d number) return sys_refcursor is
+  rc sys_refcursor;
+begin
+  open rc for select id, name from p2_emp where dept = d order by id;
+  return rc;
+end;
+/
+declare
+  rc sys_refcursor; v_id number; v_name varchar2(30);
+begin
+  rc := p2_ref(10);
+  loop fetch rc into v_id, v_name; exit when rc%notfound; insert into p2_log values (v_id, v_name); end loop;
+  close rc;
+end;
+/
+select n, msg from p2_log order by n;
+delete from p2_log;
+create or replace procedure p2_out(a number, b out number, c in out number) is
+begin b := a * 2; c := c + a; end;
+/
+declare
+  x number; y number := 5;
+begin
+  p2_out(3, x, y);
+  insert into p2_log values (x, 'out');
+  insert into p2_log values (y, 'inout');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+create or replace procedure p2_auto is
+  pragma autonomous_transaction;
+begin
+  insert into p2_log values (7, 'auto');
+  commit;
+end;
+/
+begin
+  insert into p2_log values (1, 'main');
+  p2_auto;
+  rollback;
+end;
+/
+select n, msg from p2_log order by n;
+delete from p2_log;
+commit;
+create table p2_audit (op varchar2(10), id number, old_sal number, new_sal number);
+create or replace trigger p2_trg_row after insert or update or delete on p2_emp
+for each row
+begin
+  if inserting then insert into p2_audit values ('I', :new.id, null, :new.sal);
+  elsif updating then insert into p2_audit values ('U', :new.id, :old.sal, :new.sal);
+  else insert into p2_audit values ('D', :old.id, :old.sal, null);
+  end if;
+end;
+/
+insert into p2_emp values (6, 'flo', 30, 6000);
+update p2_emp set sal = sal * 2 where id = 6;
+delete from p2_emp where id = 6;
+select op, id, old_sal, new_sal from p2_audit order by op;
+create or replace trigger p2_trg_before before insert on p2_emp
+for each row
+begin
+  :new.name := upper(:new.name);
+  if :new.sal is null then :new.sal := 100; end if;
+end;
+/
+insert into p2_emp (id, name, dept) values (7, 'gus', 40);
+select name, sal from p2_emp where id = 7;
+create or replace trigger p2_trg_when before update of sal on p2_emp
+for each row when (new.sal < old.sal)
+begin
+  raise_application_error(-20001, 'no pay cut');
+end;
+/
+update p2_emp set sal = sal - 1 where id = 1;
+update p2_emp set sal = sal + 1 where id = 1;
+create table p2_stmt (n number);
+create or replace trigger p2_trg_stmt after update on p2_emp
+begin
+  insert into p2_stmt values (1);
+end;
+/
+update p2_emp set dept = dept where dept = 10;
+update p2_emp set dept = dept where dept = 99;
+select count(*) from p2_stmt;
+create or replace view p2_v as select id, name from p2_emp;
+create or replace trigger p2_trg_instead instead of insert on p2_v
+for each row
+begin
+  insert into p2_emp (id, name, dept, sal) values (:new.id, :new.name, 0, 0);
+end;
+/
+insert into p2_v values (50, 'via view');
+select id, name, dept from p2_emp where id = 50;
+create or replace trigger p2_trg_mut before delete on p2_emp
+for each row
+declare v number;
+begin
+  select count(*) into v from p2_emp;
+end;
+/
+delete from p2_emp where id = 50;
+drop trigger p2_trg_mut;
+select trigger_name, trigger_type, triggering_event, status from user_triggers order by trigger_name;
+create or replace function p2_sql_fn(x number) return number deterministic is begin return x * x; end;
+/
+select id, p2_sql_fn(id) from p2_emp where id <= 3 order by id;
+declare
+  v varchar2(100);
+begin
+  v := 'a,b,c';
+  insert into p2_log values (length(v), v);
+  insert into p2_log values (instr(v, ','), 'instr');
+  insert into p2_log values (regexp_count(v, ','), 'regexp');
+  insert into p2_log values (p2_pkg.counter, 'counter');
+  insert into p2_log values (p2_pkg.c_limit, 'limit');
+end;
+/
+select n, msg from p2_log order by msg;
+delete from p2_log;
+begin
+  dbms_output.put_line('hello');
+  insert into p2_log values (1, 'after dbms_output');
+end;
+/
+select n, msg from p2_log;
+begin
+  null;
+  goto done;
+  insert into p2_log values (2, 'skipped');
+  <<done>>
+  null;
+end;
+/
+select count(*) from p2_log;

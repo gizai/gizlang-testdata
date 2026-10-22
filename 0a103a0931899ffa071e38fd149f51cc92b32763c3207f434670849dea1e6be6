@@ -1,0 +1,1 @@
+namespace a {export function f():i64{return 1;}} import {f,f} from "a";

@@ -1,0 +1,76 @@
+// Acceptance tests per change request; the NN.giz files check the same facts.
+// Functions a change adds are reached through the namespace, so an earlier
+// stage still loads (their tests run only after their change).
+import * as shop from "./shop.ts";
+import type { Line, Result, Store } from "./shop.ts";
+const api = shop as Record<string, any>;
+
+function must(outcome: Result<Store, string>): Store {
+    if (outcome.kind !== "ok") { throw new Error(outcome.error); }
+    return outcome.value;
+}
+const failed = (outcome: Result<Store, string>): boolean => outcome.kind === "err";
+function base(): Store {
+    let store = shop.newStore();
+    store = must(shop.addItem(store, shop.item("P1", "Blue pen", 10, 2, 2500)));
+    store = must(shop.addItem(store, shop.item("P2", "black ink", 5, 3, 400)));
+    store = must(shop.addItem(store, shop.item("A9", "Red pen", 50, 0, 120)));
+    return store;
+}
+const lines = (sku: string, quantity: number): Line[] => [{ sku, quantity }];
+
+export const accept: Record<string, () => boolean>[] = [
+    { testAccept01VipDiscount: () => {
+        let store = must(shop.addItem(base(), shop.item("GOLD", "Gold bar", 5, 0, 100000)));
+        store = must(shop.placeOrder(store, "VIP-Ann", lines("P1", 4)));
+        store = must(shop.placeOrder(store, "VIP-Bo", lines("GOLD", 2)));
+        store = must(shop.placeOrder(store, "Vip-Cy", lines("P1", 4)));
+        return shop.orderTotal(store, 1) === 9500 && shop.orderTotal(store, 2) === 171000 && shop.orderTotal(store, 3) === 10000;
+    } },
+    { testAccept02Restock: () => {
+        const low = must(shop.placeOrder(base(), "Ann", lines("P2", 3)));
+        const restocked = must(api.restock(low, "P2", 5));
+        const events = shop.history(restocked);
+        return shop.openTasks(low).length === 1 && shop.openTasks(restocked).length === 0 && shop.stockOf(restocked, "P2") === 7
+            && events[events.length - 1] === "stock P2 7" && failed(api.restock(low, "ZZ", 1)) && failed(api.restock(low, "P2", 0));
+    } },
+    { testAccept03MergeLines: () => {
+        const store = must(shop.placeOrder(base(), "Ann", [{ sku: "P2", quantity: 2 }, { sku: "A9", quantity: 1 }, { sku: "P2", quantity: 2 }]));
+        const stored = store.orders[0].lines;
+        return failed(shop.placeOrder(base(), "Ann", [{ sku: "P2", quantity: 3 }, { sku: "P2", quantity: 3 }]))
+            && shop.stockOf(store, "P2") === 1 && shop.stockOf(store, "A9") === 49
+            && stored.length === 2 && stored[0].sku === "P2" && stored[0].quantity === 4 && stored[1].sku === "A9";
+    } },
+    { testAccept04OnHold: () => {
+        const start = must(shop.addItem(base(), shop.item("BIG", "Big press", 5, 0, 300000)));
+        const held = must(shop.placeOrder(start, "Ann", lines("BIG", 2)));
+        const released = must(api.release(held, 1));
+        const cancelled = must(shop.cancel(held, 1));
+        const small = must(shop.placeOrder(start, "Ann", lines("A9", 1)));
+        return shop.statusOf(held, 1) === "onHold" && shop.stockOf(held, "BIG") === 3 && failed(shop.ship(held, 1))
+            && shop.statusOf(released, 1) === "placed" && shop.statusOf(must(shop.ship(released, 1)), 1) === "shipped"
+            && shop.statusOf(cancelled, 1) === "cancelled" && shop.stockOf(cancelled, "BIG") === 5
+            && shop.statusOf(small, 1) === "placed" && failed(api.release(small, 1));
+    } },
+    { testAccept05SearchSku: () => {
+        const bySku = shop.search(base(), "p"), both = shop.search(base(), "a9");
+        return bySku.length === 2 && bySku[0] === "P1" && bySku[1] === "P2" && both.length === 1 && both[0] === "A9";
+    } },
+    { testAccept06CsvComments: () => {
+        const store = must(shop.importCsv(shop.newStore(), "# sku,name,stock,reorderAt,priceCents\nK1,Kettle,3,1,900\n  #K2,old\n"));
+        const outcome = shop.importCsv(shop.newStore(), "# header\nK1,Kettle,3,1,900\n#K2,bad\nK3,Knife,x,1,1\n");
+        return outcome.kind === "err" && outcome.error.startsWith("line 4") && shop.stockOf(store, "K1") === 3 && shop.stockOf(store, "K2") === -1;
+    } },
+    { testAccept07LowStockMark: () => shop.report(must(shop.placeOrder(base(), "Ann", lines("P2", 3)))) === "A9 Red pen 50\nP1 Blue pen 10\nP2 black ink 2 !\norders 1\n" },
+    { testAccept08VipFollowUp: () => {
+        const vip = must(shop.cancel(must(shop.placeOrder(base(), "VIP-Ann", lines("A9", 1))), 1));
+        const plain = must(shop.cancel(must(shop.placeOrder(base(), "Ann", lines("A9", 1))), 1));
+        const tasks = shop.openTasks(vip);
+        return tasks.length === 1 && tasks[0] === "followUp:1" && shop.openTasks(plain).length === 0;
+    } },
+    { testAccept09RenamePrice: () => (shop.item("Z", "z", 1, 0, 7) as Record<string, unknown>).unitCents === 7 },
+    { testAccept10Shipping: () => {
+        const store = must(shop.placeOrder(must(shop.placeOrder(base(), "Ann", lines("P2", 2))), "Bo", lines("P1", 2)));
+        return shop.orderTotal(store, 1) === 1300 && shop.orderTotal(store, 2) === 5000;
+    } },
+];

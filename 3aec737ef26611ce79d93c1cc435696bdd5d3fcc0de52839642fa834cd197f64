@@ -1,0 +1,1 @@
+namespace a {function hidden():i64{return 42;}} function main():i64{return a__hidden();}

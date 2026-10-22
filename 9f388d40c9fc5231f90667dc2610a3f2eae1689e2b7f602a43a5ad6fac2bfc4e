@@ -1,0 +1,1 @@
+function f():Ref<View<i64>>{return _ref_create(1);}

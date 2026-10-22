@@ -1,0 +1,30 @@
+CREATE SEQUENCE ticket_seq START 100 INCREMENT 5;
+CREATE TABLE customers (
+    id integer PRIMARY KEY,
+    name text NOT NULL,
+    email text UNIQUE,
+    balance numeric(12,2) DEFAULT 0,
+    born date,
+    active boolean DEFAULT true
+);
+CREATE TABLE orders (
+    id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    customer_id integer NOT NULL REFERENCES customers (id),
+    placed timestamp,
+    note text,
+    total double precision
+);
+CREATE INDEX orders_customer_idx ON orders (customer_id);
+CREATE TABLE tickets (
+    id integer PRIMARY KEY DEFAULT nextval('ticket_seq'),
+    body text
+);
+CREATE VIEW big_orders AS SELECT o.id, c.name, o.total FROM orders o JOIN customers c ON c.id = o.customer_id WHERE o.total > 50;
+INSERT INTO customers VALUES (1, 'Ada', 'ada@example.com', 10.50, '1990-02-03', true);
+INSERT INTO customers VALUES (2, 'Bo ''quoted''', NULL, 0, NULL, false);
+INSERT INTO customers VALUES (3, E'Tab\there', 'c@example.com', -3.25, '2001-12-31', NULL);
+INSERT INTO orders (customer_id, placed, note, total) VALUES (1, '2026-01-02 03:04:05', 'first', 99.5);
+INSERT INTO orders (customer_id, placed, note, total) VALUES (1, NULL, NULL, 12.25);
+INSERT INTO orders (customer_id, placed, note, total) VALUES (3, '2026-02-03 04:05:06.789', E'multi\nline', 75);
+INSERT INTO tickets (id, body) VALUES (1, 'one');
+INSERT INTO tickets (id, body) VALUES (2, 'two');

@@ -1,0 +1,488 @@
+// A wholesale depot: items, stock per location, customers on credit, orders,
+// invoices, promotions and automations. The Gizlang side of the depot agent
+// study (bench/agents/README.md); ../ts/depot.ts is the same program.
+import {Result} from "gizlang:core";
+import {findIndex, filter, sorted} from "gizlang:collections";
+import {parseI64, IntegerParse} from "gizlang:text";
+
+export type Item = { sku: string; name: string; priceCents: i64; reorderAt: i64; };
+// The quantity of one sku at one location.
+export type Stock = { sku: string; location: string; quantity: i64; };
+export type Tier = | { kind: "regular"; } | { kind: "gold"; } | { kind: "platinum"; };
+// `owedCents` is the sum of the customer's unpaid invoices.
+export type Customer = { id: string; name: string; tier: Tier; creditCents: i64; owedCents: i64; };
+export type Line = { sku: string; quantity: i64; };
+// `onHold` waits for credit, `inReview` for approval; both show as "onHold".
+export type Status = | { kind: "placed"; } | { kind: "onHold"; } | { kind: "inReview"; } | { kind: "shipped"; } | { kind: "cancelled"; };
+export type Order = { id: i64; customer: string; location: string; lines: Vec<Line>; status: Status; };
+export type Invoice = { number: i64; order: i64; customer: string; amountCents: i64; paid: bool; };
+// `percent` off a line of the sku with at least `minQuantity` units; a gold
+// promotion only for gold customers.
+export type Promotion = { sku: string; minQuantity: i64; percent: i64; gold: bool; };
+// Follow-up work an automation opened, such as "reorder" for a sku.
+export type Work = { kind: string; subject: string; open: bool; };
+export type Event =
+    | { kind: "stockChanged"; sku: string; }
+    | { kind: "orderPlaced"; id: i64; }
+    | { kind: "orderHeld"; id: i64; }
+    | { kind: "orderInReview"; id: i64; }
+    | { kind: "orderApproved"; id: i64; }
+    | { kind: "orderShipped"; id: i64; }
+    | { kind: "orderCancelled"; id: i64; }
+    | { kind: "invoicePaid"; number: i64; };
+export type Depot = {
+    items: Vec<Item>; stock: Vec<Stock>; customers: Vec<Customer>; orders: Vec<Order>;
+    invoices: Vec<Invoice>; promotions: Vec<Promotion>; work: Vec<Work>; log: Vec<string>;
+    nextOrder: i64; nextInvoice: i64;
+};
+
+// Gold customers get this much off an order's amount.
+export const GOLD_PERCENT = 3;
+// Platinum customers get this much off, and every gold promotion.
+export const PLATINUM_PERCENT = 5;
+// Orders of at least this amount open a review; from HOLD_CENTS on they are
+// held for it.
+export const REVIEW_CENTS = 200000;
+export const HOLD_CENTS = 500000;
+
+export function newDepot(): Depot {
+    const items: Vec<Item> = []; const stock: Vec<Stock> = []; const customers: Vec<Customer> = [];
+    const orders: Vec<Order> = []; const invoices: Vec<Invoice> = []; const promotions: Vec<Promotion> = [];
+    const work: Vec<Work> = []; const log: Vec<string> = [];
+    return Depot(items, stock, customers, orders, invoices, promotions, work, log, 1, 1);
+}
+export function item(sku: string, name: string, priceCents: i64, reorderAt: i64): Item {
+    return Item(sku, name, priceCents, reorderAt);
+}
+export function line(sku: string, quantity: i64): Line { return Line(sku, quantity); }
+
+// ----- Copies with one part changed -----
+
+function withStatus(order: Order, status: Status): Order {
+    return Order(order.id, order.customer, order.location, order.lines, status);
+}
+function setOrder(d: Depot, index: i64, order: Order): Depot {
+    let orders = d.orders;
+    orders[index] = order;
+    return { ...d, orders };
+}
+
+// ----- Items and stock -----
+
+export function findItem(d: Depot, sku: string): i64 {
+    return findIndex(d.items, (entry: Item): bool => { return entry.sku === sku; });
+}
+export function addItem(d: Depot, entry: Item): Result<Depot, string> {
+    if (entry.sku.length === 0) { return Result.err("empty sku"); }
+    if (findItem(d, entry.sku) >= 0) { return Result.err("duplicate sku " + entry.sku); }
+    if (entry.priceCents < 0 || entry.reorderAt < 0) { return Result.err("negative price or reorder level for " + entry.sku); }
+    let items = d.items;
+    items.push(entry);
+    return Result.ok({ ...d, items });
+}
+function findStock(d: Depot, sku: string, location: string): i64 {
+    return findIndex(d.stock, (entry: Stock): bool => { return entry.sku === sku && entry.location === location; });
+}
+// The quantity of a sku at a location: 0 where it has none, -1 for an unknown sku.
+export function stockAt(d: Depot, sku: string, location: string): i64 {
+    if (findItem(d, sku) < 0) { return -1; }
+    const index = findStock(d, sku, location);
+    if (index < 0) { return 0; }
+    return d.stock[index].quantity;
+}
+// The quantity of a sku over all locations, -1 for an unknown sku.
+export function totalStock(d: Depot, sku: string): i64 {
+    if (findItem(d, sku) < 0) { return -1; }
+    let sum = 0;
+    for (const index of range(0, d.stock.length)) {
+        if (d.stock[index].sku === sku) { sum = sum + d.stock[index].quantity; }
+    }
+    return sum;
+}
+// Change a known sku's quantity at a location by `delta` and run the automations.
+function adjust(d: Depot, sku: string, location: string, delta: i64): Depot {
+    let stock = d.stock;
+    const index = findStock(d, sku, location);
+    if (index < 0) { stock.push(Stock(sku, location, delta)); }
+    else { stock[index] = Stock(sku, location, stock[index].quantity + delta); }
+    return automate({ ...d, stock }, Event.stockChanged(sku));
+}
+// Receive `quantity` units of a known sku at a location.
+export function receive(d: Depot, sku: string, location: string, quantity: i64): Result<Depot, string> {
+    if (findItem(d, sku) < 0) { return Result.err("unknown sku " + sku); }
+    if (location.length === 0) { return Result.err("empty location"); }
+    if (quantity <= 0) { return Result.err("quantity must be positive"); }
+    return Result.ok(adjust(d, sku, location, quantity));
+}
+// Move units between two locations.
+export function transfer(d: Depot, sku: string, from: string, to: string, quantity: i64): Result<Depot, string> {
+    if (findItem(d, sku) < 0) { return Result.err("unknown sku " + sku); }
+    if (from === to || to.length === 0) { return Result.err("bad destination " + to); }
+    if (quantity <= 0) { return Result.err("quantity must be positive"); }
+    if (stockAt(d, sku, from) < quantity) { return Result.err("not enough " + sku + " at " + from); }
+    return Result.ok(adjust(adjust(d, sku, from, 0 - quantity), sku, to, quantity));
+}
+
+// ----- Customers and prices -----
+
+export function findCustomer(d: Depot, id: string): i64 {
+    return findIndex(d.customers, (entry: Customer): bool => { return entry.id === id; });
+}
+export function addCustomer(d: Depot, id: string, name: string, gold: bool, creditCents: i64): Result<Depot, string> {
+    let tier = Tier.regular();
+    if (gold) { tier = Tier.gold(); }
+    return enroll(d, id, name, tier, creditCents);
+}
+export function addPlatinumCustomer(d: Depot, id: string, name: string, creditCents: i64): Result<Depot, string> {
+    return enroll(d, id, name, Tier.platinum(), creditCents);
+}
+function enroll(d: Depot, id: string, name: string, tier: Tier, creditCents: i64): Result<Depot, string> {
+    if (id.length === 0) { return Result.err("empty customer id"); }
+    if (findCustomer(d, id) >= 0) { return Result.err("duplicate customer " + id); }
+    if (creditCents < 0) { return Result.err("negative credit for " + id); }
+    let customers = d.customers;
+    customers.push(Customer(id, name, tier, creditCents, 0));
+    return Result.ok({ ...d, customers });
+}
+// "regular", "gold" or "platinum", "" for an unknown customer.
+export function tierOf(d: Depot, id: string): string {
+    const index = findCustomer(d, id);
+    if (index < 0) { return ""; }
+    match (d.customers[index].tier) {
+        Tier.regular() => { return "regular"; }
+        Tier.gold() => { return "gold"; }
+        Tier.platinum() => { return "platinum"; }
+    }
+}
+// What the customer owes, -1 for an unknown customer.
+export function owedBy(d: Depot, id: string): i64 {
+    const index = findCustomer(d, id);
+    if (index < 0) { return -1; }
+    return d.customers[index].owedCents;
+}
+function promote(d: Depot, sku: string, minQuantity: i64, percent: i64, gold: bool): Result<Depot, string> {
+    if (findItem(d, sku) < 0) { return Result.err("unknown sku " + sku); }
+    if (minQuantity <= 0 || percent <= 0 || percent > 100) { return Result.err("bad promotion for " + sku); }
+    let promotions = d.promotions;
+    promotions.push(Promotion(sku, minQuantity, percent, gold));
+    return Result.ok({ ...d, promotions });
+}
+export function addPromotion(d: Depot, sku: string, minQuantity: i64, percent: i64): Result<Depot, string> {
+    return promote(d, sku, minQuantity, percent, false);
+}
+export function addGoldPromotion(d: Depot, sku: string, minQuantity: i64, percent: i64): Result<Depot, string> {
+    return promote(d, sku, minQuantity, percent, true);
+}
+// A line's price for a customer who is not gold.
+export function lineCents(d: Depot, entry: Line): i64 { return linePrice(d, entry, false); }
+// A line's price: the unit price times the quantity, less the best promotion
+// the line qualifies for (gold ones only when `gold`), truncated to whole cents.
+function linePrice(d: Depot, entry: Line, gold: bool): i64 {
+    const gross = d.items[findItem(d, entry.sku)].priceCents * entry.quantity;
+    let best = 0;
+    for (const promotion of d.promotions) {
+        if (promotion.sku === entry.sku && (gold || !promotion.gold) && entry.quantity >= promotion.minQuantity && promotion.percent > best) { best = promotion.percent; }
+    }
+    return gross - gross * best / 100;
+}
+// The amount of a customer's lines: the line prices' sum, less GOLD_PERCENT
+// for a gold customer or PLATINUM_PERCENT for a platinum one, truncated.
+function amountFor(d: Depot, customer: Customer, lines: Vec<Line>): i64 {
+    let percent = 0;
+    match (customer.tier) {
+        Tier.gold() => { percent = GOLD_PERCENT; }
+        Tier.platinum() => { percent = PLATINUM_PERCENT; }
+        Tier.regular() => {}
+    }
+    let sum = 0;
+    for (const index of range(0, lines.length)) { sum = sum + linePrice(d, lines[index], percent > 0); }
+    return sum - sum * percent / 100;
+}
+// An order's amount in cents, -1 for an unknown order.
+export function orderCents(d: Depot, id: i64): i64 {
+    const index = findOrder(d, id);
+    if (index < 0) { return -1; }
+    const order = d.orders[index];
+    return amountFor(d, d.customers[findCustomer(d, order.customer)], order.lines);
+}
+
+// ----- Orders -----
+
+export function findOrder(d: Depot, id: i64): i64 {
+    return findIndex(d.orders, (entry: Order): bool => { return entry.id === id; });
+}
+// The customer's placed orders' amounts, not yet invoiced.
+function placedCents(d: Depot, customer: string): i64 {
+    let sum = 0;
+    for (const order of d.orders) {
+        if (order.customer === customer) {
+            if (order.status.kind === "placed") { sum = sum + orderCents(d, order.id); }
+        }
+    }
+    return sum;
+}
+// Whether `cents` more fits the customer's credit: what it owes, plus its
+// placed orders, plus `cents`, at most its credit.
+function fitsCredit(d: Depot, customer: string, cents: i64): bool {
+    const buyer = d.customers[findCustomer(d, customer)];
+    return buyer.owedCents + placedCents(d, customer) + cents <= buyer.creditCents;
+}
+// Place an order from one location. Every line names a known sku, at most
+// once, with a positive quantity the location has; the stock is reserved at
+// once. An order of HOLD_CENTS or more is held for review; one that does not
+// fit the customer's credit is held for it.
+export function placeOrder(d: Depot, customer: string, location: string, lines: Vec<Line>): Result<Depot, string> {
+    const at = findCustomer(d, customer);
+    if (at < 0) { return Result.err("unknown customer " + customer); }
+    if (lines.length === 0) { return Result.err("an order needs lines"); }
+    for (const index of range(0, lines.length)) {
+        const entry = lines[index];
+        if (entry.quantity <= 0) { return Result.err("quantity must be positive for " + entry.sku); }
+        if (findItem(d, entry.sku) < 0) { return Result.err("unknown sku " + entry.sku); }
+        for (const earlier of range(0, index)) {
+            if (lines[earlier].sku === entry.sku) { return Result.err("sku " + entry.sku + " twice"); }
+        }
+        if (stockAt(d, entry.sku, location) < entry.quantity) { return Result.err("not enough " + entry.sku + " at " + location); }
+    }
+    const id = d.nextOrder;
+    const amount = amountFor(d, d.customers[at], lines);
+    let status = Status.placed();
+    let event = Event.orderPlaced(id);
+    if (amount >= HOLD_CENTS) { status = Status.inReview(); event = Event.orderInReview(id); }
+    else if (!fitsCredit(d, customer, amount)) { status = Status.onHold(); event = Event.orderHeld(id); }
+    let orders = d.orders;
+    orders.push(Order(id, customer, location, lines, status));
+    let next: Depot = { ...d, orders, nextOrder: id + 1 };
+    for (const index of range(0, lines.length)) { next = adjust(next, lines[index].sku, location, 0 - lines[index].quantity); }
+    return Result.ok(automate(next, event));
+}
+export function lastOrderId(d: Depot): i64 { return d.nextOrder - 1; }
+// The order's status name, or "" for an unknown order.
+export function statusOf(d: Depot, id: i64): string {
+    const index = findOrder(d, id);
+    if (index < 0) { return ""; }
+    return statusName(d.orders[index].status);
+}
+export function statusName(status: Status): string {
+    match (status) {
+        Status.placed() => { return "placed"; }
+        Status.onHold() => { return "onHold"; }
+        Status.inReview() => { return "onHold"; }
+        Status.shipped() => { return "shipped"; }
+        Status.cancelled() => { return "cancelled"; }
+    }
+}
+// Ship a placed order: it is invoiced for its amount, which the customer now owes.
+export function ship(d: Depot, id: i64): Result<Depot, string> {
+    const index = findOrder(d, id);
+    if (index < 0) { return Result.err("unknown order " + string(id)); }
+    const order = d.orders[index];
+    match (order.status) {
+        Status.placed() => {}
+        Status.onHold() => { return Result.err("order " + string(id) + " is on hold"); }
+        Status.inReview() => { return Result.err("order " + string(id) + " is on hold"); }
+        Status.shipped() => { return Result.err("order " + string(id) + " already shipped"); }
+        Status.cancelled() => { return Result.err("order " + string(id) + " is cancelled"); }
+    }
+    const amount = orderCents(d, id);
+    let invoices = d.invoices;
+    invoices.push(Invoice(d.nextInvoice, id, order.customer, amount, false));
+    const shipped = setOrder(d, index, { ...order, status: Status.shipped() });
+    const at = findCustomer(shipped, order.customer);
+    let customers = shipped.customers;
+    const buyer = customers[at];
+    customers[at] = { ...buyer, owedCents: buyer.owedCents + amount };
+    return Result.ok(automate({ ...shipped, invoices, nextInvoice: d.nextInvoice + 1, customers }, Event.orderShipped(id)));
+}
+// Approve an order held for review: it is placed, or held for credit when it
+// does not fit.
+export function approve(d: Depot, id: i64): Result<Depot, string> {
+    const index = findOrder(d, id);
+    if (index < 0) { return Result.err("unknown order " + string(id)); }
+    const order = d.orders[index];
+    let waiting = false;
+    if (order.status.kind === "inReview") { waiting = true; }
+    if (!waiting) { return Result.err("order " + string(id) + " is not held for review"); }
+    const approved = automate(d, Event.orderApproved(id));
+    if (fitsCredit(approved, order.customer, orderCents(approved, id))) {
+        return Result.ok(automate(setOrder(approved, index, withStatus(order, Status.placed())), Event.orderPlaced(id)));
+    }
+    return Result.ok(automate(setOrder(approved, index, withStatus(order, Status.onHold())), Event.orderHeld(id)));
+}
+// Cancel a placed or held order and return its stock to its location.
+export function cancel(d: Depot, id: i64): Result<Depot, string> {
+    const index = findOrder(d, id);
+    if (index < 0) { return Result.err("unknown order " + string(id)); }
+    const order = d.orders[index];
+    match (order.status) {
+        Status.placed() => {}
+        Status.onHold() => {}
+        Status.inReview() => {}
+        Status.shipped() => { return Result.err("order " + string(id) + " already shipped"); }
+        Status.cancelled() => { return Result.err("order " + string(id) + " is cancelled"); }
+    }
+    let next = setOrder(d, index, { ...order, status: Status.cancelled() });
+    for (const at of range(0, order.lines.length)) { next = adjust(next, order.lines[at].sku, order.location, order.lines[at].quantity); }
+    return Result.ok(automate(next, Event.orderCancelled(id)));
+}
+
+// ----- Invoices -----
+
+export function findInvoice(d: Depot, number: i64): i64 {
+    return findIndex(d.invoices, (entry: Invoice): bool => { return entry.number === number; });
+}
+export function lastInvoiceNumber(d: Depot): i64 { return d.nextInvoice - 1; }
+// Mark an unpaid invoice paid; the customer owes that much less.
+export function pay(d: Depot, number: i64): Result<Depot, string> {
+    const index = findInvoice(d, number);
+    if (index < 0) { return Result.err("unknown invoice " + string(number)); }
+    const bill = d.invoices[index];
+    if (bill.paid) { return Result.err("invoice " + string(number) + " already paid"); }
+    let invoices = d.invoices;
+    invoices[index] = { ...bill, paid: true };
+    const at = findCustomer(d, bill.customer);
+    let customers = d.customers;
+    const buyer = customers[at];
+    customers[at] = { ...buyer, owedCents: buyer.owedCents - bill.amountCents };
+    return Result.ok(automate({ ...d, invoices, customers }, Event.invoicePaid(number)));
+}
+// The customer's invoices, "#number order amount paid|due" each, then "owed amount".
+export function statement(d: Depot, customer: string): string {
+    let text = "";
+    for (const bill of d.invoices) {
+        if (bill.customer === customer) {
+            let state = "due";
+            if (bill.paid) { state = "paid"; }
+            text = text + "#" + string(bill.number) + " " + string(bill.order) + " " + string(bill.amountCents) + " " + state + "\n";
+        }
+    }
+    return text + "owed " + string(owedBy(d, customer)) + "\n";
+}
+
+// ----- Automations -----
+
+function describe(event: Event): string {
+    match (event) {
+        Event.stockChanged(sku) => { return "stock " + sku; }
+        Event.orderPlaced(id) => { return "placed " + string(id); }
+        Event.orderHeld(id) => { return "held " + string(id); }
+        Event.orderInReview(id) => { return "held " + string(id); }
+        Event.orderApproved(id) => { return "approved " + string(id); }
+        Event.orderShipped(id) => { return "shipped " + string(id); }
+        Event.orderCancelled(id) => { return "cancelled " + string(id); }
+        Event.invoicePaid(number) => { return "paid " + string(number); }
+    }
+}
+function findWork(d: Depot, kind: string, subject: string): i64 {
+    return findIndex(d.work, (entry: Work): bool => { return entry.open && entry.kind === kind && entry.subject === subject; });
+}
+function openWork(d: Depot, kind: string, subject: string): Depot {
+    if (findWork(d, kind, subject) >= 0) { return d; }
+    let work = d.work;
+    work.push(Work(kind, subject, true));
+    return { ...d, work };
+}
+function closeWork(d: Depot, kind: string, subject: string): Depot {
+    const index = findWork(d, kind, subject);
+    if (index < 0) { return d; }
+    let work = d.work;
+    work[index] = Work(kind, subject, false);
+    return { ...d, work };
+}
+// Release the customer's held orders, oldest first, while each fits its
+// credit; when none is left held, close its credit work.
+function release(d: Depot, customer: string): Depot {
+    let next = d;
+    for (const index of range(0, d.orders.length)) {
+        const order = next.orders[index];
+        if (order.status.kind === "onHold" && order.customer === customer && fitsCredit(next, customer, orderCents(next, order.id))) {
+            next = automate(setOrder(next, index, { ...order, status: Status.placed() }), Event.orderPlaced(order.id));
+        }
+    }
+    for (const order of next.orders) {
+        if (order.status.kind === "onHold") { if (order.customer === customer) { return next; } }
+    }
+    return closeWork(next, "credit", customer);
+}
+// Log every event, then run the rules: a sku at or below its reorder level
+// over all locations has one open reorder, closed when it rises above; a
+// large order opens a review (an order held for review opens it when held,
+// and approving closes it); a held order opens credit work for its customer;
+// a payment releases what it can of the customer's held orders.
+function automate(d: Depot, event: Event): Depot {
+    let log = d.log;
+    log.push(describe(event));
+    const logged: Depot = { ...d, log };
+    match (event) {
+        Event.stockChanged(sku) => {
+            if (totalStock(logged, sku) <= logged.items[findItem(logged, sku)].reorderAt) { return openWork(logged, "reorder", sku); }
+            return closeWork(logged, "reorder", sku);
+        }
+        Event.orderPlaced(id) => {
+            const amount = orderCents(logged, id);
+            if (amount >= REVIEW_CENTS && amount < HOLD_CENTS) { return openWork(logged, "review", string(id)); }
+            return logged;
+        }
+        Event.orderInReview(id) => { return openWork(logged, "review", string(id)); }
+        Event.orderApproved(id) => { return closeWork(logged, "review", string(id)); }
+        Event.orderHeld(id) => { return openWork(logged, "credit", logged.orders[findOrder(logged, id)].customer); }
+        Event.orderShipped(id) => { return logged; }
+        Event.orderCancelled(id) => {
+            const order = logged.orders[findOrder(logged, id)];
+            return release(closeWork(logged, "review", string(id)), order.customer);
+        }
+        Event.invoicePaid(number) => { return release(logged, logged.invoices[findInvoice(logged, number)].customer); }
+    }
+}
+// Open work as "kind:subject", oldest first.
+export function openTasks(d: Depot): Vec<string> {
+    let names: Vec<string> = [];
+    for (const index of range(0, d.work.length)) {
+        const entry = d.work[index];
+        if (entry.open) { names.push(entry.kind + ":" + entry.subject); }
+    }
+    return names;
+}
+export function history(d: Depot): Vec<string> { return d.log; }
+
+// ----- Import and reports -----
+
+function number(field: string, row: i64): Result<i64, string> {
+    match (parseI64(field.trim())) {
+        IntegerParse.ok(value) => { return Result.ok(value); }
+        IntegerParse.invalid(at) => { return Result.err("line " + string(row) + ": not a number: " + field); }
+        IntegerParse.overflow(at) => { return Result.err("line " + string(row) + ": number too large: " + field); }
+    }
+}
+// Receive "sku,location,quantity" lines. A bad line rejects the whole import,
+// naming its line number (from 1); blank lines are skipped.
+export function importStock(d: Depot, text: string): Result<Depot, string> {
+    const rows = text.split("\n");
+    let next = d;
+    for (const index of range(0, rows.length)) {
+        const row = rows[index].trim();
+        if (row.length > 0) {
+            const fields = row.split(",");
+            if (fields.length !== 3) { return Result.err("line " + string(index + 1) + ": expected 3 fields"); }
+            const quantity = try number(fields[2], index + 1);
+            match (receive(next, fields[0].trim(), fields[1].trim(), quantity)) {
+                Result.ok(received) => { next = received; }
+                Result.err(problem) => { return Result.err("line " + string(index + 1) + ": " + problem); }
+            }
+        }
+    }
+    return Result.ok(next);
+}
+// One line per item sorted by sku: "sku total", then " location:quantity" for
+// each location holding any, sorted by location.
+export function stockReport(d: Depot): string {
+    let text = "";
+    for (const entry of sorted(d.items, (a: Item, b: Item): bool => { return a.sku < b.sku; })) {
+        const sku = entry.sku;
+        const places = sorted(filter(d.stock, (s: Stock): bool => { return s.sku === sku && s.quantity > 0; }), (a: Stock, b: Stock): bool => { return a.location < b.location; });
+        text = text + sku + " " + string(totalStock(d, sku));
+        for (const place of places) { text = text + " " + place.location + ":" + string(place.quantity); }
+        text = text + "\n";
+    }
+    return text;
+}

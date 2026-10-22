@@ -1,0 +1,10 @@
+function write(a: MutableView<i64>): i64
+{
+    a[0] = 1;
+    return 1;
+}
+
+function emit_one(): i64
+{
+    print(string(1)); return 1;
+}

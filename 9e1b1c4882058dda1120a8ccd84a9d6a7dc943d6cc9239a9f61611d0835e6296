@@ -1,0 +1,1 @@
+namespace a {export {f} from "b";} namespace b {export {f} from "a";}

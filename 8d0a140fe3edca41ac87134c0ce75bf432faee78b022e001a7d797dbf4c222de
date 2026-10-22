@@ -1,0 +1,25 @@
+function sum(a: View<f64>): f64
+{
+    let total = 0.0;
+    for (const i of range(0, len(a))) {
+        total = (total + a[i]);
+    }
+    return total;
+}
+
+function scale(a: MutableView<f64>, factor: f64): i64
+{
+    for (const i of range(0, len(a))) {
+        a[i] = (a[i] * factor);
+    }
+    return len(a);
+}
+
+function copy(a: View<f64>, out: MutableView<f64>): i64
+requires (len(a) === len(out))
+{
+    for (const i of range(0, len(a))) {
+        out[i] = a[i];
+    }
+    return len(a);
+}

@@ -1,0 +1,9 @@
+function main(): i64
+{
+    const x = 7;
+    const f = (y: i64): i64 => {
+    return (x + y);
+};
+    const g = f;
+    return g(35);
+}

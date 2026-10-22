@@ -1,0 +1,2 @@
+{ "private": true, "type": "module", "scripts": { "build": "vite build" },
+  "devDependencies": { "solid-js": "1", "vite-plugin-solid": "2", "vite": "7" } }

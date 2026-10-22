@@ -1,0 +1,12 @@
+type Point = {
+    horizontal: i64,
+}
+
+type Scene = {
+    points: Vec<Point>,
+}
+
+function main(): i64
+{
+    return 42;
+}

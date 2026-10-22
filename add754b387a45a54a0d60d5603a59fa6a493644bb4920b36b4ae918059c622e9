@@ -1,0 +1,293 @@
+{
+ "comment": "Experiment A set: the 50 most downloaded JavaScript-source packages of candidates.txt (2026-10-12) whose own tests run. Excluded on the way: TypeScript-source packages, native or wasm code (source-map), data-only packages (mime-db, color-name, emoji-regex), monorepos without a per-package test (eslint-visitor-keys) packages without tests (tslib) and packages whose test runner no longer loads on Node 24 (json5 and inherits use the `esm` loader). 'lib' replaces the npm pack file list where the tests load another build: lodash tests its monolithic lodash.js (also published) at the source tag 4.17.21, as the npm 4.18 tag has no tests. 'test' is the package's own test command without lint, type and coverage steps; 'prep' builds files that the tests load; 'dir' is the published package inside a monorepo.",
+ "packages": [
+  {
+   "name": "semver",
+   "test": "tap"
+  },
+  {
+   "name": "ansi-styles",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "debug",
+   "test": "mocha test.js test.node.js"
+  },
+  {
+   "name": "ms",
+   "test": "mocha tests.js"
+  },
+  {
+   "name": "commander",
+   "test": "node --test"
+  },
+  {
+   "name": "strip-ansi",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "string-width",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "picomatch",
+   "test": "mocha --reporter dot"
+  },
+  {
+   "name": "ansi-regex",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "chalk",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "wrap-ansi",
+   "test": "node --test"
+  },
+  {
+   "name": "supports-color",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "which",
+   "test": "tap"
+  },
+  {
+   "name": "escape-string-regexp",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "readable-stream",
+   "test": "tap --rcfile=./tap.yml test/parallel/test-*.js test/ours/test-*.js"
+  },
+  {
+   "name": "json-schema-traverse",
+   "test": "mocha spec -R spec"
+  },
+  {
+   "name": "color-convert",
+   "test": "node test/basic.js"
+  },
+  {
+   "name": "find-up",
+   "test": "ava --no-worker-threads test/findup.js test/finddown.js"
+  },
+  {
+   "name": "glob-parent",
+   "test": "mocha --async-only"
+  },
+  {
+   "name": "safe-buffer",
+   "test": "tape test/*.js"
+  },
+  {
+   "name": "locate-path",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "p-locate",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "path-key",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "has-flag",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "iconv-lite",
+   "test": "mocha --check-leaks --grep ."
+  },
+  {
+   "name": "mime-types",
+   "test": "mocha test/test.js"
+  },
+  {
+   "name": "ws",
+   "test": "mocha --throw-deprecation test/*.test.js"
+  },
+  {
+   "name": "p-limit",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "is-fullwidth-code-point",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "string_decoder",
+   "test": "tap test/parallel/*.js"
+  },
+  {
+   "name": "shebang-command",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "shebang-regex",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "isarray",
+   "test": "tape test.js"
+  },
+  {
+   "name": "picocolors",
+   "test": "node tests/test.js"
+  },
+  {
+   "name": "hasown",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "resolve",
+   "test": "tape test/*.js"
+  },
+  {
+   "name": "estraverse",
+   "test": "mocha --compilers js:babel-register"
+  },
+  {
+   "name": "cross-spawn",
+   "test": "jest --env node"
+  },
+  {
+   "name": "punycode",
+   "test": "mocha tests"
+  },
+  {
+   "name": "negotiator",
+   "test": "mocha --check-leaks test/"
+  },
+  {
+   "name": "function-bind",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "argparse",
+   "test": "node --test"
+  },
+  {
+   "name": "graceful-fs",
+   "test": "node test.js"
+  },
+  {
+   "name": "acorn",
+   "dir": "acorn",
+   "prep": "npm run build:main && npm run build:loose",
+   "test": "node test/run.js"
+  },
+  {
+   "name": "get-intrinsic",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "es-errors",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "has-symbols",
+   "test": "node test && node test/shams/core-js.js && node test/shams/get-own-property-symbols.js"
+  },
+  {
+   "name": "statuses",
+   "test": "mocha --check-leaks test/"
+  },
+  {
+   "name": "gopd",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "is-glob",
+   "test": "mocha"
+  },
+  {
+   "name": "es-define-property",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "qs",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "path-exists",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "is-extglob",
+   "test": "mocha"
+  },
+  {
+   "name": "jsesc",
+   "test": "mocha tests"
+  },
+  {
+   "name": "http-errors",
+   "test": "mocha"
+  },
+  {
+   "name": "is-number",
+   "test": "mocha"
+  },
+  {
+   "name": "fast-deep-equal",
+   "prep": "npm run build",
+   "test": "mocha spec/*.spec.js -R spec"
+  },
+  {
+   "name": "minimist",
+   "test": "tape 'test/**/*.js'"
+  },
+  {
+   "name": "braces",
+   "test": "mocha"
+  },
+  {
+   "name": "lodash",
+   "test": "node test/test.js",
+   "repo": "https://github.com/lodash/lodash",
+   "ref": "4.17.21",
+   "lib": [
+    "lodash.js"
+   ]
+  },
+  {
+   "name": "object-assign",
+   "test": "ava --no-worker-threads"
+  },
+  {
+   "name": "micromatch",
+   "test": "mocha"
+  },
+  {
+   "name": "fill-range",
+   "test": "mocha"
+  },
+  {
+   "name": "to-regex-range",
+   "test": "mocha"
+  },
+  {
+   "name": "kind-of",
+   "test": "mocha"
+  },
+  {
+   "name": "object-inspect",
+   "test": "tape 'test/*.js'"
+  },
+  {
+   "name": "depd",
+   "test": "mocha --bail test/"
+  },
+  {
+   "name": "bytes",
+   "test": "mocha --check-leaks"
+  },
+  {
+   "name": "express",
+   "test": "mocha --require test/support/env --check-leaks test/ test/acceptance/"
+  }
+ ]
+}

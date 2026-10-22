@@ -1,0 +1,1 @@
+function read(value:Ref<i64>):i64{return _ref_load(value);} function f(value:Ref<i64>):i64 requires read(value)>0 {return 42;}

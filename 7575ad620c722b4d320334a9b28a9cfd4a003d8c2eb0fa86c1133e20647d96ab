@@ -1,0 +1,8 @@
+type Answer =
+    | { kind: "Value"; value0: i64; }
+;
+
+function f(x: i64): i64
+{
+    return x;
+}

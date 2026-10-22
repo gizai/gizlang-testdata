@@ -1,0 +1,44 @@
+import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { cookies, headers } from "next/headers";
+import { dbPath } from "./db";
+
+// The session secret kept beside the store, so sessions survive a restart;
+// read at first use, not while the build evaluates this module.
+let secret: Buffer | undefined;
+function key() {
+  const path = dbPath + ".secret";
+  if (!secret && existsSync(path)) secret = readFileSync(path);
+  if (!secret) writeFileSync(path, (secret = randomBytes(32)), { mode: 0o600 });
+  return secret;
+}
+
+const sign = (body: string) => createHmac("sha256", key()).update(body).digest("hex");
+// The same token as web/app.giz: principal.issued.mac, refused after 30 days.
+const LIFE = 2592000000;
+
+export const sessionToken = (principal: string) => {
+  const body = `${principal}.${Date.now()}`;
+  return `${body}.${sign(body)}`;
+};
+
+function verified(token: string): string {
+  const dot = token.lastIndexOf(".");
+  if (dot <= 0) return "";
+  const body = token.slice(0, dot);
+  const given = Buffer.from(token.slice(dot + 1));
+  const expected = Buffer.from(sign(body));
+  if (given.length !== expected.length || !timingSafeEqual(given, expected)) return "";
+  const at = body.lastIndexOf(".");
+  const issued = Number(body.slice(at + 1));
+  if (at <= 0 || !Number.isSafeInteger(issued) || issued > Date.now() + 60000 || Date.now() - issued >= LIFE) return "";
+  return body.slice(0, at);
+}
+
+// The principal of the request's valid Bearer token or session cookie, or "".
+export async function principal(): Promise<string> {
+  const authorization = (await headers()).get("authorization");
+  if (authorization?.startsWith("Bearer ")) return verified(authorization.slice(7).trim());
+  const cookie = (await cookies()).get("s");
+  return cookie ? verified(cookie.value) : "";
+}

@@ -1,0 +1,1 @@
+function f(value:Ref<i64>):i64 effects {} {return _ref_load(value);}

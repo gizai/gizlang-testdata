@@ -1,0 +1,7 @@
+function testAccept06CsvComments(): void {
+    const store = hiddenMust(importCsv(newStore(), "# sku,name,stock,reorderAt,priceCents\nK1,Kettle,3,1,900\n  #K2,old\n"));
+    match (importCsv(newStore(), "# header\nK1,Kettle,3,1,900\n#K2,bad\nK3,Knife,x,1,1\n")) {
+        Result.ok(value) => { HiddenTest.check(false); return; }
+        Result.err(problem) => { HiddenTest.check(problem.startsWith("line 4") && stockOf(store, "K1") === 3 && stockOf(store, "K2") === -1); return; }
+    }
+}

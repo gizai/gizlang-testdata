@@ -1,0 +1,42 @@
+import { randomBytes } from "node:crypto";
+import { access, canWrite, mayRemove } from "./acl";
+import { find, insert, markRemoved } from "./db";
+import { publish } from "./feed";
+import { reject, type AddComment, type Comment, type RemoveComment } from "./model";
+
+// The actions, shared by the server actions (app/actions.ts) and the agent
+// route (app/api/a/[name]/route.ts).
+export function addComment(principal: string, input: AddComment): Comment {
+  const a = access(principal, input.target);
+  if (!principal) throw reject(401, "", "로그인이 필요합니다.");
+  if (!canWrite(a)) throw reject(403, "", "이 문서에 댓글을 쓸 권한이 없습니다.");
+  if (input.parent) {
+    const parent = find(input.target, input.parent);
+    if (!parent) throw reject(422, "parent", "답글을 달 댓글이 없습니다.");
+    if (parent.removed) throw reject(422, "parent", "삭제된 댓글에는 답글을 달 수 없습니다.");
+  }
+  const c: Comment = {
+    id: randomBytes(8).toString("hex"),
+    target: input.target,
+    created: Date.now(),
+    parent: input.parent,
+    author: principal,
+    body: input.body,
+    removed: null,
+  };
+  insert(c);
+  publish(c);
+  return c;
+}
+
+export function removeComment(principal: string, input: RemoveComment): Comment {
+  const a = access(principal, input.target);
+  const c = find(input.target, input.id);
+  if (!c) throw reject(404, "", "댓글이 없습니다.");
+  if (!mayRemove(a, c.author)) throw reject(403, "", "작성자나 관리자만 삭제할 수 있습니다.");
+  if (c.removed) return c;
+  const gone = { ...c, body: "", removed: Date.now() };
+  markRemoved(c.target, c.id, gone.removed);
+  publish(gone);
+  return gone;
+}

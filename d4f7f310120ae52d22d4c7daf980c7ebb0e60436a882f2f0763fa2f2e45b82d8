@@ -1,0 +1,23 @@
+namespace lib {
+    type Box<T> = {
+        value: T,
+    }
+    
+    export function read<T>(box: Box<T>): T
+    {
+        return (box).value;
+    }
+    
+    export { Box };
+}
+
+namespace api {
+    
+    export * as API from "lib";
+}
+
+export function main(): i64
+{
+    const box: lib__Box<i64> = lib__Box<i64>(lib__read<i64>(lib__Box<i64>(42)));
+    return lib__read<i64>(box);
+}

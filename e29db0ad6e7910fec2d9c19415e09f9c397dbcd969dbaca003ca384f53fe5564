@@ -1,0 +1,17 @@
+namespace lib {
+    export function answer(): i64
+    {
+        return lib__sqrt(41);
+    }
+    
+    function sqrt(value: i64): i64
+    {
+        return (value + 1);
+    }
+    
+}
+
+function main(): i64
+{
+    return lib__answer();
+}

@@ -1,0 +1,6 @@
+function work(value: Ref<i64>, other: Ref<i64>): i64
+{
+    (value).set(42);
+    assert((value).sameIdentity(other));
+    return (value).get();
+}

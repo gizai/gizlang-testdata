@@ -1,0 +1,9 @@
+function f(x: u64): u64
+{
+    return (x * 2u);
+}
+
+function main(): u64
+{
+    return f(21u);
+}

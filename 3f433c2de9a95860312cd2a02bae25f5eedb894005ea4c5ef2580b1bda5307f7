@@ -1,0 +1,69 @@
+function sum(a: View<f64>): f64
+{
+    let total = 0.0;
+    for (const i of range(0, len(a))) {
+        total = (total + a[i]);
+    }
+    return total;
+}
+
+function dot(a: View<f64>, b: View<f64>): f64
+requires (len(a) === len(b))
+{
+    let total = 0.0;
+    for (const i of range(0, len(a))) {
+        total = (total + (a[i] * b[i]));
+    }
+    return total;
+}
+
+function axpy(a: View<f64>, out: MutableView<f64>, scale: f64): i64
+requires (len(a) === len(out))
+{
+    for (const i of range(0, len(a))) {
+        out[i] = ((scale * a[i]) + out[i]);
+    }
+    return len(out);
+}
+
+function mix(seed: u64, n: i64): u64
+requires (n >= 0)
+{
+    let x = seed;
+    for (const i of range(0, n)) {
+        x = (x ^ (x << 13u));
+        x = (x ^ (x >> 7u));
+        x = (x ^ (x << 17u));
+    }
+    return x;
+}
+
+function sum_i64(a: View<i64>): i64
+{
+    let total = 0;
+    for (const i of range(0, len(a))) {
+        total = (total + a[i]);
+    }
+    return total;
+}
+
+function main(): i64
+{
+    return 42;
+}
+
+function matvec(a: View<f64>, x: View<f64>, out: MutableView<f64>, rows: i64, cols: i64): i64
+requires (rows >= 0)
+requires (cols >= 0)
+requires (len(x) === cols)
+requires (len(out) === rows)
+{
+    for (const r of range(0, rows)) {
+        let total = 0.0;
+        for (const c of range(0, cols)) {
+            total = (total + (a[((r * cols) + c)] * x[c]));
+        }
+        out[r] = total;
+    }
+    return rows;
+}

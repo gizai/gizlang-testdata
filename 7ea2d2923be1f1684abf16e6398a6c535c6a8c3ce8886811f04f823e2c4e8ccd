@@ -1,0 +1,9 @@
+function f(x: u64): u64
+{
+    return (x + 1u);
+}
+
+function g(): i64
+{
+    return 3;
+}

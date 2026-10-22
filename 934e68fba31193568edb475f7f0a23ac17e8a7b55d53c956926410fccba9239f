@@ -1,0 +1,13 @@
+import { EventEmitter } from "node:events";
+import type { Comment } from "./model";
+
+// Committed changes per target, to every open stream in this process.
+const cache = globalThis as unknown as { feed?: EventEmitter };
+const feed = (cache.feed ??= new EventEmitter().setMaxListeners(0));
+
+export const publish = (c: Comment) => feed.emit(c.target, c);
+
+export function subscribe(target: string, listener: (c: Comment) => void) {
+  feed.on(target, listener);
+  return () => feed.off(target, listener);
+}

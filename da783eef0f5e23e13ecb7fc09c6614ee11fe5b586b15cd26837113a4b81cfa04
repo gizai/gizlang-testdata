@@ -1,0 +1,1 @@
+function f():u64{return _gc_collect(1);}

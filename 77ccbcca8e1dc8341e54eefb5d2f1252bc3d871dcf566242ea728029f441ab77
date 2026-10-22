@@ -1,0 +1,1 @@
+function f(x:View<i64>):Vec<View<i64>>{return vec(x);}

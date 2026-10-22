@@ -1,0 +1,1 @@
+function f(a:View<f64>):View<f64>{return a;}

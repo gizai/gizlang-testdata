@@ -1,0 +1,1 @@
+function f(a:View<f64>):f64{a[0]=1.0;return a[0];}

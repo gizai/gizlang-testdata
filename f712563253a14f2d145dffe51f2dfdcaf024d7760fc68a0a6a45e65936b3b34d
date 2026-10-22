@@ -1,0 +1,1 @@
+function f():i64{var x=1;return x;}

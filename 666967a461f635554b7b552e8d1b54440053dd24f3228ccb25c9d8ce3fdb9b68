@@ -1,0 +1,4 @@
+function f(x: f64): u64
+{
+    return 1u;
+}

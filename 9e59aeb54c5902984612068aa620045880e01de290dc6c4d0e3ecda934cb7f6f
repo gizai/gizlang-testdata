@@ -1,0 +1,19 @@
+type Node = {
+    next: Ref<Node>,
+}
+
+type Cell =
+    | { kind: "empty";  }
+    | { kind: "item"; value: Ref<Node>; }
+;
+
+type Box = {
+    flag: boolean,
+    items: Vec<Cell>,
+    name: string,
+}
+
+function identity(value: Box): Box
+{
+    return value;
+}

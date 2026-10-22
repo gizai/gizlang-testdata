@@ -1,0 +1,4 @@
+function answer(): i64
+{
+    return 42;
+}

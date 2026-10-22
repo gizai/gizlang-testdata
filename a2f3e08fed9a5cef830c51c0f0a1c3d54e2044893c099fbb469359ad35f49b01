@@ -1,0 +1,39 @@
+type Box<T> = {
+    value: T,
+}
+
+function choose(x: i64): i64
+{
+    if ((x < 0)) {
+        return 1;
+    }
+    else {
+        if ((x === 0)) {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
+}
+
+function main(): i64
+{
+    let n = 0;
+    while ((n < 2)) {
+        n = (n + 1);
+    }
+    return choose(n);
+}
+
+function nested(): Vec<Box<Vec<i64>>>
+{
+    return [Box<Vec<i64>>([1, 2])];
+}
+
+function run(xs: Vec<i64>): Vec<i64>
+{
+    return (xs).map((x: i64) => {
+    return choose(x);
+});
+}

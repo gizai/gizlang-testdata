@@ -1,0 +1,1 @@
+namespace a {export function f():i64{return 42;}} namespace b {export * as API from "a";} import {API} from "b";function main():i64{const value=API;return 42;}

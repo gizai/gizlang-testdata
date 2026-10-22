@@ -1,0 +1,2 @@
+function apply<F>(f:F,x:i64):i64 effects {}{return f(x);}
+function main():i64{const offset=2;const add=(x:i64): i64 => {return x+offset;};return apply(add,40);}

@@ -1,0 +1,7 @@
+import { mount, hydrate } from "svelte";
+import App from "./App.svelte";
+// A page ssr.js rendered carries its rows; ?rows=N starts empty-handed with N.
+const target = document.getElementById("main");
+const rendered = document.getElementById("rows");
+if (rendered) hydrate(App, { target, props: { initial: JSON.parse(rendered.textContent) } });
+else mount(App, { target });

@@ -1,0 +1,1 @@
+function f():i64 requires _gc_live()>0u {return 42;}

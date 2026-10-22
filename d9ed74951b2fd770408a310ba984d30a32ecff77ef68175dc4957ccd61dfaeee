@@ -1,0 +1,410 @@
+> select count(*) from employees
+@ COUNT(*)
+107
+> select count(*), min(hire_date), max(hire_date), sum(salary), round(avg(salary), 2) from employees
+@ COUNT(*)|MIN(HIRE_DATE)|MAX(HIRE_DATE)|SUM(SALARY)|ROUND(AVG(SALARY),2)
+107|2011-01-13 00:00:00|2018-04-21 00:00:00|691416|6461.83
+> select region_id, region_name from regions order by region_id
+@ REGION_ID|REGION_NAME
+10|Europe
+20|Americas
+30|Asia
+40|Oceania
+50|Africa
+> select country_id, country_name from countries where region_id = 1 order by country_id
+@ COUNTRY_ID|COUNTRY_NAME
+> select employee_id, first_name || ' ' || last_name name, salary from employees where salary > 12000 order by salary desc, employee_id
+@ EMPLOYEE_ID|NAME|SALARY
+100|Steven King|24000
+101|Neena Yang|17000
+102|Lex Garcia|17000
+145|John Singh|14000
+146|Karen Partners|13500
+201|Michael Martinez|13000
+108|Nancy Gruenberg|12008
+205|Shelley Higgins|12008
+> select e.last_name, d.department_name from employees e join departments d on e.department_id = d.department_id where d.department_id in (10, 20, 110) order by e.last_name
+@ LAST_NAME|DEPARTMENT_NAME
+Davis|Marketing
+Gietz|Accounting
+Higgins|Accounting
+Martinez|Marketing
+Whalen|Administration
+> select e.last_name, d.department_name from employees e, departments d where e.department_id = d.department_id(+) and e.employee_id in (178, 100) order by e.last_name
+@ LAST_NAME|DEPARTMENT_NAME
+Grant|NULL
+King|Executive
+> select d.department_name, count(e.employee_id) from departments d left outer join employees e on e.department_id = d.department_id group by d.department_name having count(e.employee_id) > 5 order by 2 desc, 1
+@ DEPARTMENT_NAME|COUNT(E.EMPLOYEE_ID)
+Shipping|45
+Sales|34
+Finance|6
+Purchasing|6
+> select e.last_name, l.city, c.country_name from employees e join departments d using (department_id) join locations l using (location_id) join countries c using (country_id) where e.employee_id in (100, 145, 201) order by e.last_name
+@ LAST_NAME|CITY|COUNTRY_NAME
+King|Seattle|United States of America
+Martinez|Toronto|Canada
+Singh|Oxford|United Kingdom of Great Britain and Northern Ireland
+> select department_id, count(*), max(salary), min(salary) from employees group by department_id order by department_id nulls first
+@ DEPARTMENT_ID|COUNT(*)|MAX(SALARY)|MIN(SALARY)
+NULL|1|7000|7000
+10|1|4400|4400
+20|2|13000|6000
+30|6|11000|2500
+40|1|6500|6500
+50|45|8200|2100
+60|5|9000|4200
+70|1|10000|10000
+80|34|14000|6100
+90|3|24000|17000
+100|6|12008|6900
+110|2|12008|8300
+> select job_id, sum(salary) from employees group by job_id having sum(salary) > 30000 order by 2 desc
+@ JOB_ID|SUM(SALARY)
+SA_REP|250500
+SH_CLERK|64300
+SA_MAN|61000
+ST_CLERK|55700
+FI_ACCOUNT|39600
+ST_MAN|36400
+AD_VP|34000
+> select department_id, job_id, sum(salary) from employees where department_id in (20, 30) group by rollup (department_id, job_id) order by department_id, job_id
+@ DEPARTMENT_ID|JOB_ID|SUM(SALARY)
+20|MK_MAN|13000
+20|MK_REP|6000
+20|NULL|19000
+30|PU_CLERK|13900
+30|PU_MAN|11000
+30|NULL|24900
+NULL|NULL|43900
+> select last_name, salary, department_id from employees e where salary > (select avg(salary) from employees where department_id = e.department_id) and department_id = 80 order by salary desc, last_name
+@ LAST_NAME|SALARY|DEPARTMENT_ID
+Singh|14000|80
+Partners|13500|80
+Errazuriz|12000|80
+Ozer|11500|80
+Abel|11000|80
+Cambrault|11000|80
+Vishney|10500|80
+Zlotkey|10500|80
+Bloom|10000|80
+King|10000|80
+Tucker|10000|80
+Fox|9600|80
+Bernstein|9500|80
+Greene|9500|80
+Sully|9500|80
+Hall|9000|80
+McEwen|9000|80
+> select last_name from employees where employee_id in (select manager_id from employees) order by last_name
+@ LAST_NAME
+Cambrault
+Errazuriz
+Fripp
+Garcia
+Gruenberg
+Higgins
+James
+Kaufling
+King
+Li
+Martinez
+Mourgos
+Partners
+Singh
+Vollman
+Weiss
+Yang
+Zlotkey
+> select department_name from departments d where not exists (select 1 from employees e where e.department_id = d.department_id) and department_id < 140 order by 1
+@ DEPARTMENT_NAME
+Corporate Tax
+Treasury
+> select last_name, job_id, salary from employees where salary = (select max(salary) from employees)
+@ LAST_NAME|JOB_ID|SALARY
+King|AD_PRES|24000
+> select employee_id, last_name, manager_id, level from employees start with manager_id is null connect by prior employee_id = manager_id and level <= 2 order by level, employee_id
+@ EMPLOYEE_ID|LAST_NAME|MANAGER_ID|LEVEL
+100|King|NULL|1
+101|Yang|100|2
+102|Garcia|100|2
+114|Li|100|2
+120|Weiss|100|2
+121|Fripp|100|2
+122|Kaufling|100|2
+123|Vollman|100|2
+124|Mourgos|100|2
+145|Singh|100|2
+146|Partners|100|2
+147|Errazuriz|100|2
+148|Cambrault|100|2
+149|Zlotkey|100|2
+201|Martinez|100|2
+> select lpad(' ', 2 * level - 2) || last_name org from employees where department_id = 90 start with employee_id = 100 connect by prior employee_id = manager_id order siblings by last_name
+@ ORG
+King
+  Garcia
+  Yang
+> select last_name, sys_connect_by_path(last_name, '/') path from employees where employee_id = 206 start with employee_id = 100 connect by prior employee_id = manager_id
+@ LAST_NAME|PATH
+Gietz|/King/Yang/Higgins/Gietz
+> select last_name, salary, rank() over (partition by department_id order by salary desc) rnk from employees where department_id = 60 order by rnk, last_name
+@ LAST_NAME|SALARY|RNK
+James|9000|1
+Miller|6000|2
+Jackson|4800|3
+Williams|4800|3
+Nguyen|4200|5
+> select department_id, last_name, salary, sum(salary) over (partition by department_id order by employee_id) running from employees where department_id in (10, 20) order by department_id, employee_id
+@ DEPARTMENT_ID|LAST_NAME|SALARY|RUNNING
+10|Whalen|4400|4400
+20|Martinez|13000|13000
+20|Davis|6000|19000
+> select last_name, hire_date, lag(hire_date) over (order by hire_date, employee_id) prev from employees where department_id = 30 order by hire_date, employee_id
+@ LAST_NAME|HIRE_DATE|PREV
+Li|2012-12-07 00:00:00|NULL
+Khoo|2013-05-18 00:00:00|2012-12-07 00:00:00
+Tobias|2015-07-24 00:00:00|2013-05-18 00:00:00
+Baida|2015-12-24 00:00:00|2015-07-24 00:00:00
+Himuro|2016-11-15 00:00:00|2015-12-24 00:00:00
+Colmenares|2017-08-10 00:00:00|2016-11-15 00:00:00
+> select department_id, listagg(last_name, ', ') within group (order by last_name) names from employees where department_id in (10, 20, 30) group by department_id order by department_id
+@ DEPARTMENT_ID|NAMES
+10|Whalen
+20|Davis, Martinez
+30|Baida, Colmenares, Himuro, Khoo, Li, Tobias
+> select * from (select last_name, salary, row_number() over (order by salary desc, employee_id) rn from employees) where rn <= 5 order by rn
+@ LAST_NAME|SALARY|RN
+King|24000|1
+Yang|17000|2
+Garcia|17000|3
+Singh|14000|4
+Partners|13500|5
+> select last_name, salary from employees order by salary desc, employee_id fetch first 5 rows only
+@ LAST_NAME|SALARY
+King|24000
+Yang|17000
+Garcia|17000
+Singh|14000
+Partners|13500
+> select last_name, salary from (select last_name, salary from employees order by salary desc, employee_id) where rownum <= 3
+@ LAST_NAME|SALARY
+King|24000
+Yang|17000
+Garcia|17000
+> select last_name, nvl(to_char(commission_pct), 'none') comm from employees where employee_id between 145 and 150 or employee_id = 100 order by employee_id
+@ LAST_NAME|COMM
+King|none
+Singh|.4
+Partners|.3
+Errazuriz|.3
+Cambrault|.3
+Zlotkey|.2
+Tucker|.3
+> select last_name, nvl2(commission_pct, salary * commission_pct, 0) bonus from employees where department_id = 80 and rownum <= 3 order by employee_id
+@ LAST_NAME|BONUS
+Singh|5600
+Partners|4050
+Errazuriz|3600
+> select last_name, decode(job_id, 'IT_PROG', 'Programmer', 'SA_MAN', 'Sales Manager', 'Other') role from employees where employee_id in (103, 145, 100) order by employee_id
+@ LAST_NAME|ROLE
+King|Other
+James|Programmer
+Singh|Sales Manager
+> select last_name, case when salary < 5000 then 'Low' when salary < 10000 then 'Medium' else 'High' end band from employees where employee_id in (132, 103, 100) order by employee_id
+@ LAST_NAME|BAND
+King|High
+James|Medium
+Olson|Low
+> select to_char(hire_date, 'YYYY') yr, count(*) from employees group by to_char(hire_date, 'YYYY') order by yr
+@ YR|COUNT(*)
+2011|1
+2012|7
+2013|6
+2014|10
+2015|29
+2016|24
+2017|19
+2018|11
+> select last_name, to_char(hire_date, 'DD-MON-YYYY') hired, months_between(date '2024-01-01', hire_date) > 200 veteran from employees where employee_id in (100, 101) order by employee_id
+@ LAST_NAME|HIRED|VETERAN
+King|17-JUN-2013|FALSE
+Yang|21-SEP-2015|FALSE
+> select last_name, trunc(months_between(date '2024-01-01', hire_date) / 12) years from employees where employee_id in (100, 104) order by employee_id
+@ LAST_NAME|YEARS
+King|10
+Miller|6
+> select last_name, add_months(hire_date, 6) review, last_day(hire_date) month_end from employees where employee_id = 107
+@ LAST_NAME|REVIEW|MONTH_END
+Nguyen|2017-08-07 00:00:00|2017-02-28 00:00:00
+> select upper(last_name), lower(email), initcap(job_id), length(last_name), substr(first_name, 1, 3), instr(last_name, 'a') from employees where employee_id = 101
+@ UPPER(LAST_NAME)|LOWER(EMAIL)|INITCAP(JOB_ID)|LENGTH(LAST_NAME)|SUBSTR(FIRST_NAME,1,3)|INSTR(LAST_NAME,'A')
+YANG|nyang|Ad_Vp|4|Nee|2
+> select last_name, round(salary / 12, 2) monthly, trunc(salary * 1.075) raised, mod(salary, 1000) rem from employees where employee_id in (100, 104) order by employee_id
+@ LAST_NAME|MONTHLY|RAISED|REM
+King|2000|25800|0
+Miller|500|6450|0
+> select * from emp_details_view where employee_id = 100
+@ EMPLOYEE_ID|JOB_ID|MANAGER_ID|DEPARTMENT_ID|LOCATION_ID|COUNTRY_ID|FIRST_NAME|LAST_NAME|SALARY|COMMISSION_PCT|DEPARTMENT_NAME|JOB_TITLE|CITY|STATE_PROVINCE|COUNTRY_NAME|REGION_NAME
+100|AD_PRES|NULL|90|1700|US|Steven|King|24000|NULL|Executive|President|Seattle|Washington|United States of America|Americas
+> select count(*) from emp_details_view where region_name = 'Americas'
+@ COUNT(*)
+70
+> select job_id, job_title, min_salary, max_salary from jobs where max_salary > 15000 order by job_id
+@ JOB_ID|JOB_TITLE|MIN_SALARY|MAX_SALARY
+AC_MGR|Accounting Manager|8200|16000
+AD_PRES|President|20080|40000
+AD_VP|Administration Vice President|15000|30000
+FI_MGR|Finance Manager|8200|16000
+SA_MAN|Sales Manager|10000|20080
+> select employee_id, start_date, end_date, job_id from job_history order by employee_id, start_date
+@ EMPLOYEE_ID|START_DATE|END_DATE|JOB_ID
+101|2007-09-21 00:00:00|2011-10-27 00:00:00|AC_ACCOUNT
+101|2011-10-28 00:00:00|2015-03-15 00:00:00|AC_MGR
+102|2011-01-13 00:00:00|2016-07-24 00:00:00|IT_PROG
+114|2016-03-24 00:00:00|2017-12-31 00:00:00|ST_CLERK
+122|2017-01-01 00:00:00|2017-12-31 00:00:00|ST_CLERK
+176|2016-03-24 00:00:00|2016-12-31 00:00:00|SA_REP
+176|2017-01-01 00:00:00|2017-12-31 00:00:00|SA_MAN
+200|2005-09-17 00:00:00|2011-06-17 00:00:00|AD_ASST
+200|2012-07-01 00:00:00|2016-12-31 00:00:00|AC_ACCOUNT
+201|2014-02-17 00:00:00|2017-12-19 00:00:00|MK_REP
+> select e.last_name, j.job_title, jh.start_date from employees e join job_history jh on e.employee_id = jh.employee_id join jobs j on j.job_id = jh.job_id order by e.last_name, jh.start_date
+@ LAST_NAME|JOB_TITLE|START_DATE
+Garcia|Programmer|2011-01-13 00:00:00
+Kaufling|Stock Clerk|2017-01-01 00:00:00
+Li|Stock Clerk|2016-03-24 00:00:00
+Martinez|Marketing Representative|2014-02-17 00:00:00
+Taylor|Sales Representative|2016-03-24 00:00:00
+Taylor|Sales Manager|2017-01-01 00:00:00
+Whalen|Administration Assistant|2005-09-17 00:00:00
+Whalen|Public Accountant|2012-07-01 00:00:00
+Yang|Public Accountant|2007-09-21 00:00:00
+Yang|Accounting Manager|2011-10-28 00:00:00
+> select department_id from employees where department_id is not null union select department_id from departments where location_id = 1700 order by 1
+@ DEPARTMENT_ID
+10
+20
+30
+40
+50
+60
+70
+80
+90
+100
+110
+120
+130
+140
+150
+160
+170
+180
+190
+200
+210
+220
+230
+240
+250
+260
+270
+> select job_id from employees where department_id = 50 intersect select job_id from employees where department_id = 80 order by 1
+@ JOB_ID
+> select job_id from jobs minus select job_id from employees order by 1
+@ JOB_ID
+> select employees_seq.nextval from dual
+@ NEXTVAL
+207
+> insert into departments (department_id, department_name, location_id) values (departments_seq.nextval, 'Analytics', 1700)
+# 1
+> select department_id, department_name from departments where department_name = 'Analytics'
+@ DEPARTMENT_ID|DEPARTMENT_NAME
+280|Analytics
+> update employees set salary = salary * 1.1 where department_id = 60
+# 5
+> select sum(salary) from employees where department_id = 60
+@ SUM(SALARY)
+31680
+> delete from departments where department_name = 'Analytics'
+# 1
+> merge into jobs j using (select 'AD_PRES' job_id, 45000 max_salary from dual union all select 'NEW_JOB', 9000 from dual) s on (j.job_id = s.job_id) when matched then update set j.max_salary = s.max_salary when not matched then insert (job_id, job_title, min_salary, max_salary) values (s.job_id, 'New Job', 1000, s.max_salary)
+# 2
+> select job_id, job_title, max_salary from jobs where job_id in ('AD_PRES', 'NEW_JOB') order by job_id
+@ JOB_ID|JOB_TITLE|MAX_SALARY
+AD_PRES|President|45000
+NEW_JOB|New Job|9000
+> rollback
+.
+> select sum(salary) from employees where department_id = 60
+@ SUM(SALARY)
+28800
+> insert into employees (employee_id, last_name, email, hire_date, job_id, salary) values (300, 'Test', 'SKING', date '2024-01-01', 'IT_PROG', 5000)
+! ORA-00001
+> insert into employees (employee_id, last_name, email, hire_date, job_id, salary) values (301, 'Test', 'TEST301', date '2024-01-01', 'NOJOB', 5000)
+! ORA-02291
+> insert into employees (employee_id, last_name, email, hire_date, job_id, salary) values (302, 'Test', 'TEST302', date '2024-01-01', 'IT_PROG', -1)
+! ORA-02290
+> delete from jobs where job_id = 'IT_PROG'
+! ORA-02292
+> select table_name from user_tables order by table_name
+@ TABLE_NAME
+COUNTRIES
+DEPARTMENTS
+EMPLOYEES
+JOBS
+JOB_HISTORY
+LOCATIONS
+REGIONS
+> select column_name, data_type, nullable from user_tab_columns where table_name = 'EMPLOYEES' order by column_id
+@ COLUMN_NAME|DATA_TYPE|NULLABLE
+EMPLOYEE_ID|NUMBER|N
+FIRST_NAME|VARCHAR2|Y
+LAST_NAME|VARCHAR2|N
+EMAIL|VARCHAR2|N
+PHONE_NUMBER|VARCHAR2|Y
+HIRE_DATE|DATE|N
+JOB_ID|VARCHAR2|N
+SALARY|NUMBER|Y
+COMMISSION_PCT|NUMBER|Y
+MANAGER_ID|NUMBER|Y
+DEPARTMENT_ID|NUMBER|Y
+> select constraint_name, constraint_type from user_constraints where table_name = 'EMPLOYEES' order by constraint_name
+@ CONSTRAINT_NAME|CONSTRAINT_TYPE
+EMP_DEPT_FK|R
+EMP_EMAIL_NN|C
+EMP_EMAIL_UK|U
+EMP_EMP_ID_PK|P
+EMP_HIRE_DATE_NN|C
+EMP_JOB_FK|R
+EMP_JOB_NN|C
+EMP_LAST_NAME_NN|C
+EMP_MANAGER_FK|R
+EMP_SALARY_MIN|C
+> select index_name from user_indexes where table_name = 'EMPLOYEES' order by index_name
+@ INDEX_NAME
+EMP_DEPARTMENT_IX
+EMP_EMAIL_UK
+EMP_EMP_ID_PK
+EMP_JOB_IX
+EMP_MANAGER_IX
+EMP_NAME_IX
+> select sequence_name, last_number from user_sequences order by sequence_name
+@ SEQUENCE_NAME|LAST_NUMBER
+DEPARTMENTS_SEQ|290
+EMPLOYEES_SEQ|208
+LOCATIONS_SEQ|3300
+> select object_name, object_type from user_objects where object_type in ('PROCEDURE', 'TRIGGER', 'VIEW') order by object_name
+@ OBJECT_NAME|OBJECT_TYPE
+ADD_JOB_HISTORY|PROCEDURE
+EMP_DETAILS_VIEW|VIEW
+SECURE_DML|PROCEDURE
+SECURE_EMPLOYEES|TRIGGER
+UPDATE_JOB_HISTORY|TRIGGER
+> select comments from user_tab_comments where table_name = 'REGIONS'
+@ COMMENTS
+Regions table that contains region numbers and names. references with the Countries table.
+> select comments from user_col_comments where table_name = 'REGIONS' and column_name = 'REGION_ID'
+@ COMMENTS
+Primary key of regions table.

@@ -1,0 +1,27 @@
+type Point = {
+    x: f64,
+    y: f64,
+}
+
+function distance(p: Point): f64
+{
+    return Math.sqrt((((p).x * (p).x) + ((p).y * (p).y)));
+}
+
+export function lengths(): Vec<f64>
+{
+    const points: Vec<Point> = [Point(3.0, 4.0), Point(5.0, 12.0)];
+    return (points).map((p: Point): f64 => {
+    return distance(p);
+});
+}
+
+export function empty(): Vec<i64>
+{
+    const values: Vec<i64> = ([] satisfies Vec<i64>);
+    return (values).map((x: i64) => {
+    return x;
+});
+}
+
+export { Point };

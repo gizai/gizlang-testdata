@@ -1,0 +1,1 @@
+function f():Ref<i64>{return _ref_create<i64>(42);}

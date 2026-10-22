@@ -1,0 +1,13 @@
+type Inner = {
+    n: i64,
+}
+
+type Outer = {
+    inner: Inner,
+    label: string,
+}
+
+function f(xs: Vec<Outer>): Vec<Outer>
+{
+    return push(xs, Outer(Inner(42), "답"));
+}

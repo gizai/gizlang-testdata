@@ -1,0 +1,11 @@
+type Box<T> = {
+    value: T,
+}
+
+function main(): i64
+{
+    const boxes: Vec<Box<Box<i64>>> = [Box<Box<i64>>(Box<i64>(42))];
+    return (boxes).map((box: Box<Box<i64>>) => {
+    return ((box).value).value;
+})[0];
+}

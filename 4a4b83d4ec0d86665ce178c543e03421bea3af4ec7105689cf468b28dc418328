@@ -1,0 +1,12 @@
+type A = {
+    x: i64,
+}
+
+type B = {
+    x: i64,
+}
+
+function f(a: A): i64
+{
+    return (a).x;
+}

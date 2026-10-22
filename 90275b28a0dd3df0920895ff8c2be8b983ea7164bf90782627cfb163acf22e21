@@ -1,0 +1,21 @@
+type Box = {
+    value: i64,
+}
+
+function collect(): u64
+{
+    return _gc_collect();
+}
+
+function count(): u64
+{
+    return _gc_live();
+}
+
+function work(): i64
+{
+    const value = _ref_create(Box(20));
+    (value).set(Box(42));
+    assert((value).sameIdentity(value));
+    return ((value).get()).value;
+}

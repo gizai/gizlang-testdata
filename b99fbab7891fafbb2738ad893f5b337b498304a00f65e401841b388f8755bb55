@@ -1,0 +1,1 @@
+function f():i64 requires print("1") {return 1;}

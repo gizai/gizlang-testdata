@@ -1,0 +1,1 @@
+function testAccept09RenamePrice(): void { HiddenTest.check(item("Z", "z", 1, 0, 7).unitCents === 7); }

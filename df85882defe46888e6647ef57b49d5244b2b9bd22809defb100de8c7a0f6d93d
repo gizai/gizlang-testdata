@@ -1,0 +1,1 @@
+{"sizes":[1000,100000,1000000],"warmups":3,"samples":20,"pool":1,"migrationRows":1000000,"operations":["point","page","include","aggregate","insert","batch","revision","transaction","migration"]}

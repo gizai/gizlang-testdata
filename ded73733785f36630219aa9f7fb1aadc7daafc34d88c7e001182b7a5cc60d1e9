@@ -1,0 +1,6 @@
+function f(x: u64): u64
+requires (x < 18446744073709551615u)
+ensures (result === x)
+{
+    return ((x + 1u) - 1u);
+}

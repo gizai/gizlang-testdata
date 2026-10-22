@@ -1,0 +1,7 @@
+function f(a: MutableView<i64>): i64
+{
+    for (const i of range(0, 1000)) {
+        a[0] = (a[0] + 1);
+    }
+    return a[0];
+}

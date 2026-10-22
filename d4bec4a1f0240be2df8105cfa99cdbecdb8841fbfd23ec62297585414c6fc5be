@@ -1,0 +1,4 @@
+function f(): i64
+{
+    print(string(1)); return 1;
+}

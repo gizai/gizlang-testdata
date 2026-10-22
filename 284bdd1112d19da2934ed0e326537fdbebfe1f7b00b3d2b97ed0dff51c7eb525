@@ -1,0 +1,8 @@
+interface Box {
+    score(self: Self): i64 effects {};
+}
+
+function main(): i64
+{
+    return 0;
+}

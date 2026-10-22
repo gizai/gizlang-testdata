@@ -1,0 +1,23 @@
+-- Sequences: START, INCREMENT (down too), MAXVALUE, CYCLE, NEXTVAL once per row in a select list,
+-- VALUES and INSERT ... SELECT, CURRVAL, and NEXTVAL where Oracle refuses it.
+create sequence sq1 start with 10 increment by 5 maxvalue 30 nocache nocycle;
+select sq1.nextval from dual;
+select sq1.currval from dual;
+create table seqt (a number, b varchar2(10));
+insert into seqt values (sq1.nextval, 'x');
+insert into seqt values (sq1.nextval, 'y');
+select a, b from seqt order by a;
+select sq1.nextval from dual;
+create sequence sq2 start with 1 increment by 1 maxvalue 3 cycle nocache;
+select sq2.nextval, b from seqt;
+select sq2.nextval, b from seqt;
+select sq2.nextval from seqt order by 1;
+create sequence sq3 increment by -2;
+select sq3.nextval from dual;
+select sq3.nextval from dual;
+insert into seqt select sq2.nextval, b from seqt;
+select a, b from seqt order by a, b;
+select sq1.nextval from dual;
+select sq1.nextval from dual;
+select nope.nextval from dual;
+select sq2.nextval from seqt union all select 1 from dual;

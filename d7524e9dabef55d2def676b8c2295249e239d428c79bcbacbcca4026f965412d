@@ -1,0 +1,9 @@
+function f(x: u64): u64
+{
+    return (x + 1u);
+}
+
+function g(x: u64): u64
+{
+    return (f(x) + 2u);
+}

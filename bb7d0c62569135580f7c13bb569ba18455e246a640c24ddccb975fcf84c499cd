@@ -1,0 +1,14 @@
+function a(x: i64): i64
+{
+    if ((x === 0)) {
+        print(string(x)); return x;
+    }
+    else {
+        return b((x - 1));
+    }
+}
+
+function b(x: i64): i64
+{
+    return a(x);
+}

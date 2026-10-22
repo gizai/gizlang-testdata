@@ -1,0 +1,5 @@
+function testAccept08RenameCustomer(): void {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "A", hiddenOne("NUT", 5)));
+    d = hiddenMust(ship(d, 1));
+    HiddenTest.check(d.orders[0].customerId === "acme" && d.invoices[0].customerId === "acme");
+}

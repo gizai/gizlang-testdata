@@ -1,0 +1,26 @@
+import { redirect } from "next/navigation";
+import { access, canWrite, mayRemove } from "@/lib/acl";
+import { thread } from "@/lib/db";
+import { Rejected } from "@/lib/model";
+import { principal } from "@/lib/session";
+import { Thread } from "./thread";
+
+export default async function ThreadPage({ params }: { params: Promise<{ target: string[] }> }) {
+  const target = (await params).target.map(decodeURIComponent).join("/");
+  const who = await principal();
+  let a;
+  try {
+    a = access(who, target);
+  } catch (e) {
+    if (e instanceof Rejected && e.rejection.status === 401) redirect("/login");
+    if (e instanceof Rejected) return <p>{e.rejection.message}</p>;
+    throw e;
+  }
+  return (
+    <main>
+      <h1>{target}</h1>
+      {who && <p className="who">{who}(으)로 로그인됨</p>}
+      <Thread target={target} initial={thread(target)} me={who} canWrite={canWrite(a)} admin={mayRemove(a, "")} />
+    </main>
+  );
+}

@@ -1,0 +1,6 @@
+function f(x: i64): i64
+requires (x < 100)
+ensures (result > x)
+{
+    return (x + 2);
+}

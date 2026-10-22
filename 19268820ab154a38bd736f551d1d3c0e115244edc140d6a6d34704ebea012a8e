@@ -1,0 +1,195 @@
+// Hidden regression suite: behavior no change request asks to change.
+// hidden.giz checks the same facts. Run by ../../run.py against depot.ts.
+import { addCustomer, addItem, addPromotion, cancel, findCustomer, findItem, history, importStock, item, lastInvoiceNumber,
+    lastOrderId, line, lineCents, newDepot, openTasks, orderCents, owedBy, pay, placeOrder, receive, ship, statement,
+    statusOf, stockAt, stockReport, totalStock, transfer, type Depot, type Line, type Result } from "./depot.ts";
+
+function must(outcome: Result<Depot, string>): Depot {
+    if (outcome.kind !== "ok") { throw new Error(outcome.error); }
+    return outcome.value;
+}
+const failed = (outcome: Result<Depot, string>): boolean => outcome.kind === "err";
+const join = (parts: string[]): string => parts.join("|");
+const one = (sku: string, quantity: number): Line[] => [line(sku, quantity)];
+const two = (a: string, qa: number, b: string, qb: number): Line[] => [line(a, qa), line(b, qb)];
+// BOLT 25c (reorder 100): A 500, B 200. NUT 10c (50): A 300. GEAR 12000c (2): B 10.
+// PUMP 90000c (1): A 5. acme regular, credit 300000; zen gold, 100000; tiny regular, 1000.
+function depot(): Depot {
+    let d = newDepot();
+    d = must(addItem(d, item("BOLT", "Bolt", 25, 100)));
+    d = must(addItem(d, item("NUT", "Nut", 10, 50)));
+    d = must(addItem(d, item("GEAR", "Gear", 12000, 2)));
+    d = must(addItem(d, item("PUMP", "Pump", 90000, 1)));
+    d = must(receive(d, "BOLT", "A", 500));
+    d = must(receive(d, "BOLT", "B", 200));
+    d = must(receive(d, "NUT", "A", 300));
+    d = must(receive(d, "GEAR", "B", 10));
+    d = must(receive(d, "PUMP", "A", 5));
+    d = must(addCustomer(d, "acme", "Acme Ltd", false, 300000));
+    d = must(addCustomer(d, "zen", "Zen Co", true, 100000));
+    d = must(addCustomer(d, "tiny", "Tiny", false, 1000));
+    return d;
+}
+
+export const hidden: Record<string, () => boolean> = {
+    testHiddenItemChecks: () => {
+        const d = depot();
+        return failed(addItem(d, item("", "x", 1, 1))) && failed(addItem(d, item("BOLT", "x", 1, 1)))
+            && failed(addItem(d, item("X", "x", -1, 1))) && failed(addItem(d, item("X", "x", 1, -1)))
+            && findItem(d, "GEAR") === 2 && findItem(d, "gear") === -1;
+    },
+    testHiddenStockByLocation: () => {
+        const d = depot();
+        return stockAt(d, "BOLT", "A") === 500 && stockAt(d, "BOLT", "B") === 200 && stockAt(d, "BOLT", "C") === 0
+            && stockAt(d, "NOPE", "A") === -1 && totalStock(d, "BOLT") === 700 && totalStock(d, "NOPE") === -1;
+    },
+    testHiddenReceiveChecks: () => {
+        const d = depot();
+        return failed(receive(d, "NOPE", "A", 1)) && failed(receive(d, "BOLT", "", 1))
+            && failed(receive(d, "BOLT", "A", 0)) && stockAt(must(receive(d, "BOLT", "C", 7)), "BOLT", "C") === 7;
+    },
+    testHiddenTransfer: () => {
+        const d = depot();
+        const moved = must(transfer(d, "GEAR", "B", "A", 4));
+        return stockAt(moved, "GEAR", "B") === 6 && stockAt(moved, "GEAR", "A") === 4 && totalStock(moved, "GEAR") === 10
+            && failed(transfer(d, "GEAR", "B", "A", 11)) && failed(transfer(d, "GEAR", "B", "B", 1))
+            && failed(transfer(d, "GEAR", "B", "", 1)) && failed(transfer(d, "GEAR", "B", "A", 0))
+            && failed(transfer(d, "NOPE", "B", "A", 1)) && stockAt(d, "GEAR", "B") === 10;
+    },
+    testHiddenCustomerChecks: () => {
+        const d = depot();
+        return failed(addCustomer(d, "", "x", false, 1)) && failed(addCustomer(d, "acme", "x", false, 1))
+            && failed(addCustomer(d, "new", "x", false, -1)) && owedBy(d, "acme") === 0 && owedBy(d, "nobody") === -1
+            && findCustomer(d, "zen") === 1;
+    },
+    testHiddenPromotions: () => {
+        let d = depot();
+        d = must(addPromotion(d, "BOLT", 100, 10));
+        d = must(addPromotion(d, "BOLT", 300, 20));
+        d = must(addPromotion(d, "BOLT", 50, 5));
+        return lineCents(d, line("BOLT", 40)) === 1000 && lineCents(d, line("BOLT", 99)) === 2352
+            && lineCents(d, line("BOLT", 100)) === 2250 && lineCents(d, line("BOLT", 300)) === 6000
+            && failed(addPromotion(d, "NOPE", 1, 1)) && failed(addPromotion(d, "BOLT", 0, 1))
+            && failed(addPromotion(d, "BOLT", 1, 0)) && failed(addPromotion(d, "BOLT", 1, 101));
+    },
+    testHiddenGoldAmount: () => {
+        let d = must(addPromotion(depot(), "NUT", 10, 50));
+        d = must(placeOrder(d, "zen", "A", two("BOLT", 33, "NUT", 10)));
+        d = must(placeOrder(d, "acme", "A", two("BOLT", 33, "NUT", 10)));
+        return orderCents(d, 1) === 849 && orderCents(d, 2) === 875 && orderCents(d, 3) === -1;
+    },
+    testHiddenOrderChecks: () => {
+        const d = depot();
+        return failed(placeOrder(d, "nobody", "A", one("BOLT", 1))) && failed(placeOrder(d, "acme", "A", []))
+            && failed(placeOrder(d, "acme", "A", one("BOLT", 0))) && failed(placeOrder(d, "acme", "A", one("NOPE", 1)))
+            && failed(placeOrder(d, "acme", "A", two("BOLT", 1, "BOLT", 1)))
+            && failed(placeOrder(d, "acme", "B", one("NUT", 1))) && failed(placeOrder(d, "acme", "A", one("BOLT", 501)))
+            && lastOrderId(d) === 0 && stockAt(d, "BOLT", "A") === 500 && join(openTasks(d)) === "";
+    },
+    testHiddenPlaceReserves: () => {
+        const d = must(placeOrder(depot(), "acme", "B", two("BOLT", 150, "GEAR", 3)));
+        return lastOrderId(d) === 1 && statusOf(d, 1) === "placed" && statusOf(d, 2) === "" && stockAt(d, "BOLT", "B") === 50
+            && stockAt(d, "GEAR", "B") === 7 && orderCents(d, 1) === 39750 && owedBy(d, "acme") === 0;
+    },
+    testHiddenCreditHold: () => {
+        let d = must(placeOrder(depot(), "acme", "A", one("PUMP", 3)));
+        d = must(placeOrder(d, "acme", "A", one("PUMP", 1)));
+        d = must(placeOrder(d, "acme", "A", one("BOLT", 10)));
+        return statusOf(d, 1) === "placed" && statusOf(d, 2) === "onHold" && statusOf(d, 3) === "placed"
+            && stockAt(d, "PUMP", "A") === 1 && stockAt(d, "BOLT", "A") === 490
+            && join(openTasks(d)) === "review:1|reorder:PUMP|credit:acme" && failed(ship(d, 2));
+    },
+    testHiddenShipInvoices: () => {
+        let d = must(placeOrder(depot(), "zen", "B", one("GEAR", 2)));
+        d = must(ship(d, 1));
+        return statusOf(d, 1) === "shipped" && lastInvoiceNumber(d) === 1 && owedBy(d, "zen") === 23280
+            && failed(ship(d, 1)) && failed(ship(d, 9)) && failed(cancel(d, 1))
+            && statement(d, "zen") === "#1 1 23280 due\nowed 23280\n" && statement(d, "acme") === "owed 0\n";
+    },
+    testHiddenCancelReturnsStock: () => {
+        let d = must(placeOrder(depot(), "acme", "B", one("GEAR", 9)));
+        d = must(cancel(d, 1));
+        return statusOf(d, 1) === "cancelled" && stockAt(d, "GEAR", "B") === 10 && failed(cancel(d, 1))
+            && failed(ship(d, 1)) && failed(cancel(d, 5)) && join(openTasks(d)) === "";
+    },
+    testHiddenPayReleasesHeld: () => {
+        let d = must(placeOrder(depot(), "tiny", "A", one("NUT", 80)));
+        d = must(ship(d, 1));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 30)));
+        d = must(placeOrder(d, "tiny", "A", one("BOLT", 9)));
+        const held = statusOf(d, 2) === "onHold" && statusOf(d, 3) === "onHold" && join(openTasks(d)) === "credit:tiny";
+        d = must(pay(d, 1));
+        return held && owedBy(d, "tiny") === 0 && statusOf(d, 2) === "placed" && statusOf(d, 3) === "placed"
+            && join(openTasks(d)) === "" && failed(pay(d, 1)) && failed(pay(d, 2))
+            && statement(d, "tiny") === "#1 1 800 paid\nowed 0\n";
+    },
+    testHiddenReleaseOldestFirst: () => {
+        let d = must(placeOrder(depot(), "tiny", "A", one("NUT", 90)));
+        d = must(ship(d, 1));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 70)));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 20)));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 40)));
+        d = must(pay(d, 1));
+        return statusOf(d, 2) === "placed" && statusOf(d, 3) === "placed" && statusOf(d, 4) === "onHold"
+            && join(openTasks(d)) === "credit:tiny";
+    },
+    testHiddenCancelReleasesHeld: () => {
+        let d = must(placeOrder(depot(), "tiny", "A", one("NUT", 90)));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 50)));
+        d = must(cancel(d, 1));
+        return statusOf(d, 2) === "placed" && stockAt(d, "NUT", "A") === 250 && join(openTasks(d)) === "";
+    },
+    testHiddenReorderWork: () => {
+        let d = must(placeOrder(depot(), "acme", "A", one("NUT", 249)));
+        const low = join(openTasks(d));
+        d = must(placeOrder(d, "acme", "A", one("NUT", 1)));
+        d = must(receive(d, "NUT", "C", 1));
+        const raised = join(openTasks(d));
+        d = must(transfer(d, "NUT", "C", "A", 1));
+        return low === "" && raised === "" && join(openTasks(must(placeOrder(d, "acme", "A", one("NUT", 1))))) === "reorder:NUT";
+    },
+    testHiddenReorderOpensOnce: () => {
+        let d = must(placeOrder(depot(), "acme", "B", one("GEAR", 8)));
+        d = must(placeOrder(d, "acme", "B", one("GEAR", 1)));
+        const twice = join(openTasks(d));
+        d = must(cancel(d, 1));
+        const closed = join(openTasks(d));
+        d = must(placeOrder(d, "acme", "B", one("GEAR", 9)));
+        return twice === "reorder:GEAR" && closed === "" && join(openTasks(d)) === "reorder:GEAR";
+    },
+    testHiddenReviewWork: () => {
+        let d = must(placeOrder(depot(), "acme", "A", two("PUMP", 2, "BOLT", 40)));
+        const small = join(openTasks(d));
+        d = must(cancel(d, 1));
+        d = must(placeOrder(d, "acme", "A", one("PUMP", 3)));
+        d = must(placeOrder(d, "acme", "B", one("GEAR", 1)));
+        const opened = join(openTasks(d));
+        d = must(cancel(d, 2));
+        return small === "" && opened === "review:2" && orderCents(d, 1) === 181000 && join(openTasks(d)) === "";
+    },
+    testHiddenHistory: () => {
+        let d = must(placeOrder(depot(), "tiny", "A", one("NUT", 90)));
+        d = must(placeOrder(d, "tiny", "A", one("NUT", 20)));
+        d = must(ship(d, 1));
+        d = must(pay(d, 1));
+        d = must(cancel(d, 2));
+        const log = history(d);
+        return log.length === 14 && join(log.slice(5)) === "stock NUT|placed 1|stock NUT|held 2|shipped 1|paid 1|placed 2|stock NUT|cancelled 2";
+    },
+    testHiddenImport: () => {
+        const d = must(importStock(depot(), "BOLT, C, 5\n\n  NUT,C,7  \n"));
+        return stockAt(d, "BOLT", "C") === 5 && stockAt(d, "NUT", "C") === 7
+            && failed(importStock(d, "BOLT,C,5\nNUT,C\n")) && failed(importStock(d, "BOLT,C,x\n"))
+            && failed(importStock(d, "NOPE,C,1\n")) && failed(importStock(d, "BOLT,C,0\n"))
+            && stockAt(must(importStock(depot(), "")), "BOLT", "A") === 500;
+    },
+    testHiddenImportErrorsNameLines: () => {
+        const outcome = importStock(depot(), "BOLT,C,1\n\nNUT,C,x\n");
+        return outcome.kind === "err" && outcome.error === "line 3: not a number: x";
+    },
+    testHiddenStockReport: () => {
+        let d = must(receive(depot(), "BOLT", "AA", 3));
+        d = must(transfer(d, "GEAR", "B", "A", 10));
+        return stockReport(d) === "BOLT 703 A:500 AA:3 B:200\nGEAR 10 A:10\nNUT 300 A:300\nPUMP 5 A:5\n";
+    },
+};

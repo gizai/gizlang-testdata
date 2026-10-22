@@ -1,0 +1,58 @@
+> create sequence sq1 start with 10 increment by 5 maxvalue 30 nocache nocycle
+.
+> select sq1.nextval from dual
+@ NEXTVAL
+10
+> select sq1.currval from dual
+@ CURRVAL
+10
+> create table seqt (a number, b varchar2(10))
+.
+> insert into seqt values (sq1.nextval, 'x')
+# 1
+> insert into seqt values (sq1.nextval, 'y')
+# 1
+> select a, b from seqt order by a
+@ A|B
+15|x
+20|y
+> select sq1.nextval from dual
+@ NEXTVAL
+25
+> create sequence sq2 start with 1 increment by 1 maxvalue 3 cycle nocache
+.
+> select sq2.nextval, b from seqt
+@ NEXTVAL|B
+1|x
+2|y
+> select sq2.nextval, b from seqt
+@ NEXTVAL|B
+3|x
+1|y
+> select sq2.nextval from seqt order by 1
+! ORA-02287
+> create sequence sq3 increment by -2
+.
+> select sq3.nextval from dual
+@ NEXTVAL
+-1
+> select sq3.nextval from dual
+@ NEXTVAL
+-3
+> insert into seqt select sq2.nextval, b from seqt
+# 2
+> select a, b from seqt order by a, b
+@ A|B
+2|x
+3|y
+15|x
+20|y
+> select sq1.nextval from dual
+@ NEXTVAL
+30
+> select sq1.nextval from dual
+! ORA-08004
+> select nope.nextval from dual
+! ORA-02289
+> select sq2.nextval from seqt union all select 1 from dual
+! ORA-02287

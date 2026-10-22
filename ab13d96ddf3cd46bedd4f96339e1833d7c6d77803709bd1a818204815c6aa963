@@ -1,0 +1,4 @@
+.next/
+comments.db*
+*.tsbuildinfo
+next-env.d.ts

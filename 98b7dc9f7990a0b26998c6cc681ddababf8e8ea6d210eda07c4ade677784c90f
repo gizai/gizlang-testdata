@@ -1,0 +1,12 @@
+namespace math {
+    export function add(x: i64, y: i64): i64
+    {
+        return (x + y);
+    }
+    
+}
+
+function main(): i64
+{
+    return math__add(20, 22);
+}

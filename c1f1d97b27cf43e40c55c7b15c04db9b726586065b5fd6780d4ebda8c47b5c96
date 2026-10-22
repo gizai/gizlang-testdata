@@ -1,0 +1,1 @@
+function f(value:Ref<i64>):i64{return value.get<i64>();}

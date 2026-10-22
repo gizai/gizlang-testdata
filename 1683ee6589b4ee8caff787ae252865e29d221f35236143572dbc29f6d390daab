@@ -1,0 +1,1 @@
+function f():i64 effects {}{print(string(1)); return 1;}

@@ -1,0 +1,8 @@
+function testAccept03MergeLines(): void {
+    const twice: Vec<Line> = [Line("P2", 3), Line("P2", 3)];
+    const mixed: Vec<Line> = [Line("P2", 2), Line("A9", 1), Line("P2", 2)];
+    const store = hiddenMust(placeOrder(hiddenShop(), "Ann", mixed));
+    const lines = store.orders[0].lines;
+    HiddenTest.check(hiddenFailed(placeOrder(hiddenShop(), "Ann", twice)) && stockOf(store, "P2") === 1 && stockOf(store, "A9") === 49
+        && lines.length === 2 && lines[0].sku === "P2" && lines[0].quantity === 4 && lines[1].sku === "A9");
+}

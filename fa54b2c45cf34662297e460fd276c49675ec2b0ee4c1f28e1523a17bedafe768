@@ -1,0 +1,22 @@
+type Result<T> =
+    | { kind: "ok"; value: T; }
+    | { kind: "error"; message: string; }
+;
+
+function read(r: Result<i64>): i64
+{
+    match (r) {
+        Result<i64>.ok(v) => {
+            return v;
+        }
+        Result<i64>.error(message) => {
+            return len(message);
+        }
+    }
+}
+
+function main(): i64
+{
+    const r = Result<i64>.ok(42);
+    return read(r);
+}

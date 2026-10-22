@@ -1,0 +1,21 @@
+namespace a {
+    type Choice =
+        | { kind: "Some"; value: i64; }
+        | { kind: "None";  }
+    ;
+    
+    export { Choice };
+}
+
+function main(): i64
+{
+    const x = a__Choice.Some(42);
+    match (x) {
+        a__Choice.Some(value) => {
+            return value;
+        }
+        a__Choice.None() => {
+            return 0;
+        }
+    }
+}

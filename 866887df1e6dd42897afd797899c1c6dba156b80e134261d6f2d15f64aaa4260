@@ -1,0 +1,8 @@
+function f(a: i64, b: i64): i64
+{
+    let x = 0;
+    for (const i of range(a, b)) {
+        x = (x + i);
+    }
+    return x;
+}

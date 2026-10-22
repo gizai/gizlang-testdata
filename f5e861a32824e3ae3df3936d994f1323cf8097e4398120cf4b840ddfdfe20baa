@@ -1,0 +1,11 @@
+# Task
+
+`shop.ts` is a shop's stock, orders and automations, written in TypeScript. `REQUEST.md` is
+the change to make. Change `shop.ts` so it does what the request asks and everything else
+keeps working as before; keep its existing functions' names and parameters unless the
+request changes them.
+
+- `./check` type-checks the program (`tsc --strict`).
+- `./test` runs `tests.ts` with Node, if you write one (`import ... from "./shop.ts"`).
+
+Finish when the change is done and `./check` passes.

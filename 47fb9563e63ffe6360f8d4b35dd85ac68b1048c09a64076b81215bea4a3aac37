@@ -1,0 +1,4 @@
+function f(x: bytes): bytes
+{
+    return (x + b"!");
+}

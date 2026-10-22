@@ -1,0 +1,12 @@
+function captureLayout()
+{
+    const alpha = true;
+    const middle = 4.0;
+    const zeta = 37;
+    return (value: i64): i64 => {
+    if ((((zeta > 0) && (middle > 0.0)) && alpha)) {
+        return (zeta + value);
+    }
+    return 0;
+};
+}

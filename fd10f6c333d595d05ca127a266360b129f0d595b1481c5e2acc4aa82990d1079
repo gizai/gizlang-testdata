@@ -1,0 +1,8 @@
+type Box = {
+    value: Ref<i64>,
+}
+
+function identity(value: Box): Box
+{
+    return value;
+}

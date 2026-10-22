@@ -1,0 +1,18 @@
+namespace a {
+    type Point = {
+        x: i64,
+    }
+    
+    function read(p: Point): i64
+    {
+        return (p).x;
+    }
+    
+    export { Point };
+    export { read as default };
+}
+
+
+export { Point as P } from "a";
+export { default } from "a";
+export { default as read } from "a";

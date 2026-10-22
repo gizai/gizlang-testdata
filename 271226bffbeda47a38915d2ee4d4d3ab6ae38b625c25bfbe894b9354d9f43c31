@@ -1,0 +1,80 @@
+// What depot.ts does today, as the comments in it say: each test is one fact a
+// change must keep unless its request changes that fact. `./test` runs them.
+import assert from "node:assert/strict";
+import { type Depot, type Result, newDepot, item, line, addItem, addCustomer, addPromotion, receive, placeOrder, ship, cancel, pay,
+    statement, statusOf, owedBy, lineCents, openTasks, importStock, stockReport } from "./depot.ts";
+
+function must(r: Result<Depot, string>): Depot {
+    if (r.kind === "err") { assert.equal(r.error, ""); return newDepot(); }
+    return r.value;
+}
+function failed(r: Result<Depot, string>): string { return r.kind === "err" ? r.error : ""; }
+// Two items, stock at "east", a regular customer with 50,000 cents of credit and a gold one.
+function start(): Depot {
+    let d = must(addItem(newDepot(), item("BOLT", "Bolt", 250, 5)));
+    d = must(addItem(d, item("NUT", "Nut", 1000, 0)));
+    d = must(receive(d, "BOLT", "east", 40));
+    d = must(receive(d, "NUT", "east", 300));
+    d = must(addCustomer(d, "ray", "Ray", false, 50000));
+    return must(addCustomer(d, "gil", "Gil", true, 1000000));
+}
+function joined(names: string[]): string { return names.map((name) => name + ";").join(""); }
+
+const facts: Record<string, () => void> = {
+    // A statement lists each invoice as "#number order amount paid|due", then "owed amount".
+    factStatement() {
+        let d = must(placeOrder(start(), "ray", "east", [line("BOLT", 4)]));
+        d = must(placeOrder(d, "ray", "east", [line("NUT", 2)]));
+        d = must(ship(d, 1));
+        d = must(ship(d, 2));
+        d = must(pay(d, 1));
+        assert.equal(statement(d, "ray"), "#1 1 1000 paid\n#2 2 2000 due\nowed 2000\n");
+        assert.equal(statement(d, "gil"), "owed 0\n");
+    },
+    // Shipping invoices the order's amount, gold customers less 3% (the discount truncated).
+    factShipInvoicesGold() {
+        let d = must(placeOrder(start(), "gil", "east", [line("BOLT", 3)]));
+        d = must(ship(d, 1));
+        assert.equal(statusOf(d, 1), "shipped");
+        assert.equal(owedBy(d, "gil"), 728);
+        assert.ok(failed(ship(d, 1)).length > 0);
+    },
+    // An order over the customer's credit is held and opens credit work; paying releases it.
+    factCreditHold() {
+        let d = must(placeOrder(start(), "ray", "east", [line("NUT", 40)]));
+        d = must(ship(d, 1));
+        d = must(placeOrder(d, "ray", "east", [line("NUT", 20)]));
+        assert.equal(statusOf(d, 2), "onHold");
+        assert.ok(joined(openTasks(d)).includes("credit:ray;"));
+        d = must(pay(d, 1));
+        assert.equal(statusOf(d, 2), "placed");
+        assert.ok(!joined(openTasks(d)).includes("credit:ray;"));
+    },
+    // A sku at or below its reorder level opens one reorder; restocking above closes it.
+    factReorder() {
+        let d = must(placeOrder(start(), "ray", "east", [line("BOLT", 36)]));
+        assert.ok(joined(openTasks(d)).includes("reorder:BOLT;"));
+        d = must(cancel(d, 1));
+        assert.ok(!joined(openTasks(d)).includes("reorder:BOLT;"));
+        assert.equal(statusOf(d, 1), "cancelled");
+    },
+    // A promotion takes its percent off a qualifying line (the discount truncated to whole cents).
+    factPromotion() {
+        const d = must(addPromotion(start(), "BOLT", 10, 15));
+        assert.equal(lineCents(d, line("BOLT", 9)), 2250);
+        assert.equal(lineCents(d, line("BOLT", 11)), 2338);
+    },
+    // An import names the line that failed (from 1), skips blank lines, and reports by sku.
+    factImportAndReport() {
+        assert.equal(failed(importStock(start(), "BOLT,west,2\n\nNUT,west,x")), "line 3: not a number: x");
+        const d = must(importStock(start(), "BOLT,west,2\n\nNUT,west,7\n"));
+        assert.equal(stockReport(d), "BOLT 42 east:40 west:2\nNUT 307 east:300 west:7\n");
+    },
+};
+
+let failures = 0;
+for (const [name, fact] of Object.entries(facts)) {
+    try { fact(); } catch (error) { failures += 1; console.log("fail " + name + ": " + (error instanceof Error ? error.message : String(error))); }
+}
+console.log(Object.keys(facts).length + " run, " + failures + " failed");
+if (failures > 0) { process.exit(1); }

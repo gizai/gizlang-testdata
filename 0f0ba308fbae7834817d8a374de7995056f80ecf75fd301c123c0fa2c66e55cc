@@ -1,0 +1,25 @@
+namespace a {
+    export function f(): i64
+    {
+        return 42;
+    }
+    
+}
+
+namespace b {
+    
+    export * as API from "a";
+}
+
+namespace c {
+    
+    export * as API from "a";
+}
+
+function main(): i64
+{
+    const f = (): i64 => {
+    return a__f();
+};
+    return f();
+}

@@ -1,0 +1,13 @@
+type Point = {
+    x: i64,
+}
+
+function use(p: Point): i64
+{
+    return (p).x;
+}
+
+function other(): i64
+{
+    return 1;
+}

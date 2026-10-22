@@ -1,0 +1,36 @@
+type Box<T> = {
+    value: T,
+}
+
+type Option<T> =
+    | { kind: "Some"; value0: T; }
+    | { kind: "None";  }
+;
+
+function main(): i64
+{
+    const b = Box<i64>(identity(42));
+    return unwrap(Option<i64>.Some(get(b)));
+}
+
+function unwrap(x: Option<i64>): i64
+{
+    match (x) {
+        Option<i64>.Some(v) => {
+            return v;
+        }
+        Option<i64>.None() => {
+            return 0;
+        }
+    }
+}
+
+function identity<T>(x: T): T
+{
+    return x;
+}
+
+function get<T>(box: Box<T>): T
+{
+    return (box).value;
+}

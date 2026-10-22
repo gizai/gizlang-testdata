@@ -1,0 +1,1 @@
+function f(a:i64):i64{for (const a of range(0, 5)) {}return a;}

@@ -1,0 +1,6 @@
+function run(xs: Vec<i64>): Vec<i64>
+{
+    return (xs).map((x: i64) => {
+    return (x + 1);
+});
+}

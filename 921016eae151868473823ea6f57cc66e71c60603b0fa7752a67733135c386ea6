@@ -1,0 +1,9 @@
+function changed(x: i64): i64
+{
+    return (x + 1);
+}
+
+function unchanged(x: i64): i64
+{
+    return x;
+}

@@ -1,0 +1,1 @@
+type Choice = { kind: "Number"; value0: i64; } | { kind: "Empty";  }; function f(c:Choice):i64{match (c){Choice.Bogus()=>{return 0;}}}

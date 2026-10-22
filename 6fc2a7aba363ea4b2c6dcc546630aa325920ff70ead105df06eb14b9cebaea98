@@ -1,0 +1,1 @@
+{"object":"list","has_more":false,"data":[{"id":"in_one","object":"invoice","created":180,"customer":"cus_one","currency":"usd","total":2500,"amount_paid":2500,"amount_due":2500,"status":"paid"}]}

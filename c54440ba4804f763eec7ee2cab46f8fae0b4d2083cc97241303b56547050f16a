@@ -1,0 +1,1 @@
+type Loop={value:Loop};function bad(value:Ref<Loop>):i64{return 0;}

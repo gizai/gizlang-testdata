@@ -1,0 +1,1 @@
+function f(a:Ref<i64>,b:Ref<u64>):bool{return _ref_same(a,b);}

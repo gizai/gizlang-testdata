@@ -1,0 +1,4 @@
+function f(a: i64): u64
+{
+    return u64(a);
+}

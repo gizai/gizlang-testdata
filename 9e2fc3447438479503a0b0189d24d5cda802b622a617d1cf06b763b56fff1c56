@@ -1,0 +1,4 @@
+function f(x: i64): boolean
+{
+    return ((x !== 0) && ((1 / x) === 0));
+}

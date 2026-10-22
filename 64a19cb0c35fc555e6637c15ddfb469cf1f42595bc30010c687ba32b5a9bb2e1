@@ -1,0 +1,17 @@
+namespace lib {
+    type Ref = {
+        value: i64,
+    }
+    
+    export function answer(): i64
+    {
+        return (Ref(42)).value;
+    }
+    
+    export { Ref };
+}
+
+function main(): i64
+{
+    return lib__answer();
+}

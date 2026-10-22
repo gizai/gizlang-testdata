@@ -1,0 +1,1 @@
+{"id":"evt_customer_deleted","object":"event","created":230,"type":"customer.deleted","data":{"object":{"id":"cus_one","object":"customer","deleted":true}}}

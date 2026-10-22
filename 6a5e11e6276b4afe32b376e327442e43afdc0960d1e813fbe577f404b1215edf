@@ -1,0 +1,1 @@
+function f(a:MutableView<f64>):i64{const b=a;return 1;}

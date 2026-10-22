@@ -1,0 +1,13 @@
+type Point = {
+    horizontal: i64,
+}
+
+function use(p: Point): i64
+{
+    return (p).horizontal;
+}
+
+function other(): i64
+{
+    return 1;
+}

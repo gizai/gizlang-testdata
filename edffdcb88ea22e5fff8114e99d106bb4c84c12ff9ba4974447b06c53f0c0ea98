@@ -1,0 +1,18 @@
+type R = {
+    x: i64,
+}
+
+function R.get(r: R): i64
+{
+    return (r).x;
+}
+
+function other(a: i64): i64
+{
+    return (a + 1);
+}
+
+function main(): i64
+{
+    return other(41);
+}

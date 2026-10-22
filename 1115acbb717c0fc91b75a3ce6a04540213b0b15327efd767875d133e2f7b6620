@@ -1,0 +1,1 @@
+type X={kind:"A"};function f(x:X):i64 {match x {{kind:"A"}=>{return 0;}}}

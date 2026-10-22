@@ -1,0 +1,4 @@
+function f(x: Vec<string>): Vec<string>
+{
+    return push(x, "다");
+}

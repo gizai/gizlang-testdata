@@ -1,0 +1,9 @@
+function forward(value: Ref<i64>): Ref<i64>
+{
+    return identity(value);
+}
+
+function identity<T>(value: Ref<T>): Ref<T>
+{
+    return value;
+}

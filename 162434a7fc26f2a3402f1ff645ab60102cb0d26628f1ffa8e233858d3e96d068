@@ -1,0 +1,17 @@
+import Link from "next/link";
+
+export const dynamic = "force-static";
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Giz 댓글</h1>
+      <p>어느 레코드에나 붙는 실시간 댓글입니다.</p>
+      <ul>
+        <li><Link href="/t/docs/1">docs/1의 댓글</Link></li>
+        <li><Link href="/login">로그인</Link></li>
+        <li><a href="/api/tools">에이전트 도구 목록</a></li>
+      </ul>
+    </main>
+  );
+}

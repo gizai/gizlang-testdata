@@ -1,0 +1,12 @@
+namespace a {
+    export function id<T>(x: T): T
+    {
+        return x;
+    }
+    
+}
+
+function main(): i64
+{
+    return a__id<i64>(42);
+}

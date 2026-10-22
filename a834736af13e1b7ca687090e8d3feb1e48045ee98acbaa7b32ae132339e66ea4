@@ -1,0 +1,72 @@
+// What is stored and what actions take, with their validation and the agent
+// tool schemas, written out by hand: Next.js has no single declaration that
+// the DDL (lib/db.ts), the forms (thread.tsx) and the tools share.
+export type Comment = {
+  id: string;
+  target: string;
+  created: number;
+  parent: string | null;
+  author: string;
+  body: string;
+  removed: number | null;
+};
+export type Role = "read" | "write" | "admin";
+
+export type Rejection = { status: number; field: string; message: string };
+export class Rejected extends Error {
+  constructor(public rejection: Rejection) {
+    super(rejection.message);
+  }
+}
+export const reject = (status: number, field: string, message: string) => new Rejected({ status, field, message });
+
+export type AddComment = { target: string; parent: string | null; body: string };
+export type RemoveComment = { target: string; id: string };
+
+const text = (value: unknown) => (typeof value === "string" ? value : "");
+
+export function readAddComment(input: Record<string, unknown>): AddComment {
+  const target = text(input.target);
+  const parent = text(input.parent) || null;
+  const body = text(input.body).trim();
+  if (!target) throw reject(422, "target", "target: 입력하세요.");
+  if (body.length === 0) throw reject(422, "body", "댓글: 입력하세요.");
+  if (body.length > 10000) throw reject(422, "body", "댓글: 10000자 이하로 입력하세요.");
+  return { target, parent, body };
+}
+
+export function readRemoveComment(input: Record<string, unknown>): RemoveComment {
+  const target = text(input.target);
+  const id = text(input.id);
+  if (!target) throw reject(422, "target", "target: 입력하세요.");
+  if (!id) throw reject(422, "id", "id: 입력하세요.");
+  return { target, id };
+}
+
+export const tools = [
+  {
+    name: "addComment",
+    description: "Add a comment to a record, or reply to one of its comments, as the signed-in person.",
+    input_schema: {
+      type: "object",
+      properties: {
+        target: { type: "string", description: 'The record to comment on ("docs/42").' },
+        parent: { type: "string", description: "The comment to reply to, if any." },
+        body: { type: "string", description: "The comment's text.", minLength: 1, maxLength: 10000 },
+      },
+      required: ["target", "body"],
+    },
+  },
+  {
+    name: "removeComment",
+    description: "Remove a comment; only its author or an admin of its record may.",
+    input_schema: {
+      type: "object",
+      properties: {
+        target: { type: "string", description: "The record the comment is on." },
+        id: { type: "string", description: "The comment to remove." },
+      },
+      required: ["target", "id"],
+    },
+  },
+];

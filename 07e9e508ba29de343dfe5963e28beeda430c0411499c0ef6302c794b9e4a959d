@@ -1,0 +1,5 @@
+CREATE TABLE lineorder (lo_orderkey INT, lo_linenumber INT, lo_custkey INT, lo_partkey INT, lo_suppkey INT, lo_orderdate INT, lo_orderpriority TEXT, lo_shippriority INT, lo_quantity INT, lo_extendedprice INT, lo_ordtotalprice INT, lo_discount INT, lo_revenue INT, lo_supplycost INT, lo_tax INT, lo_commitdate INT, lo_shipmode TEXT);
+CREATE TABLE dates (d_datekey INT, d_date TEXT, d_dayofweek TEXT, d_month TEXT, d_year INT, d_yearmonthnum INT, d_yearmonth TEXT, d_daynuminweek INT, d_daynuminmonth INT, d_daynuminyear INT, d_monthnuminyear INT, d_weeknuminyear INT, d_sellingseason TEXT, d_lastdayinweekfl INT, d_lastdayinmonthfl INT, d_holidayfl INT, d_weekdayfl INT);
+CREATE TABLE ssb_customer (c_custkey INT, c_name TEXT, c_address TEXT, c_city TEXT, c_nation TEXT, c_region TEXT, c_phone TEXT, c_mktsegment TEXT);
+CREATE TABLE ssb_supplier (s_suppkey INT, s_name TEXT, s_address TEXT, s_city TEXT, s_nation TEXT, s_region TEXT, s_phone TEXT);
+CREATE TABLE ssb_part (p_partkey INT, p_name TEXT, p_mfgr TEXT, p_category TEXT, p_brand1 TEXT, p_color TEXT, p_type TEXT, p_size INT, p_container TEXT);

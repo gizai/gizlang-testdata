@@ -1,0 +1,19 @@
+function testAccept06ReorderPerLocation(): void {
+    let d = hiddenMust(setReorder(hiddenDepot(), "BOLT", "B", 150));
+    const none = hiddenJoin(openTasks(d));
+    d = hiddenMust(placeOrder(d, "acme", "B", hiddenOne("BOLT", 60)));
+    const low = hiddenJoin(openTasks(d));
+    d = hiddenMust(transfer(d, "BOLT", "A", "B", 20));
+    const raised = hiddenJoin(openTasks(d));
+    const logged = history(d).length;
+    d = hiddenMust(setReorder(d, "BOLT", "B", 170));
+    d = hiddenMust(setReorder(d, "BOLT", "C", 0));
+    const set = hiddenJoin(openTasks(d)) === "reorder:BOLT@B|reorder:BOLT@C" && history(d).length === logged;
+    let e = hiddenMust(setReorder(hiddenDepot(), "GEAR", "B", 5));
+    e = hiddenMust(placeOrder(e, "acme", "B", hiddenOne("GEAR", 8)));
+    const both = hiddenJoin(openTasks(e)) === "reorder:GEAR|reorder:GEAR@B";
+    e = hiddenMust(cancel(e, 1));
+    HiddenTest.check(none === "" && low === "reorder:BOLT@B" && raised === "" && set && both && hiddenJoin(openTasks(e)) === ""
+        && hiddenFailed(setReorder(d, "NOPE", "B", 1)) && hiddenFailed(setReorder(d, "BOLT", "", 1))
+        && hiddenFailed(setReorder(d, "BOLT", "B", -1)));
+}

@@ -1,0 +1,9 @@
+function inner(a: i64): i64
+{
+    return (1 / a);
+}
+
+function outer(a: i64): i64
+{
+    return (inner(a) + 5);
+}

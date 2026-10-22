@@ -1,0 +1,25 @@
+"use server";
+
+import { addComment, removeComment } from "@/lib/comments";
+import { Rejected, readAddComment, readRemoveComment, type Rejection } from "@/lib/model";
+import { principal } from "@/lib/session";
+
+export type ActionState = { rejection?: Rejection; done?: number };
+
+async function run(form: FormData, act: (who: string, input: Record<string, unknown>) => unknown): Promise<ActionState> {
+  try {
+    act(await principal(), Object.fromEntries(form));
+    return { done: Date.now() };
+  } catch (e) {
+    if (e instanceof Rejected) return { rejection: e.rejection };
+    throw e;
+  }
+}
+
+export async function addCommentAction(_: ActionState, form: FormData) {
+  return run(form, (who, input) => addComment(who, readAddComment(input)));
+}
+
+export async function removeCommentAction(_: ActionState, form: FormData) {
+  return run(form, (who, input) => removeComment(who, readRemoveComment(input)));
+}

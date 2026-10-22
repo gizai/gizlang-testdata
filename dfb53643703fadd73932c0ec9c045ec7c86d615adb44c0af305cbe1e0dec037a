@@ -1,0 +1,17 @@
+namespace a {
+    function hidden(): i64
+    {
+        return 1;
+    }
+    
+    export function public(): i64
+    {
+        return hidden();
+    }
+    
+}
+
+function main(): i64
+{
+    return a__public();
+}

@@ -1,0 +1,8 @@
+type Node = {
+    next: Ref<Node>,
+}
+
+function identity(value: Ref<Node>): Ref<Node>
+{
+    return value;
+}

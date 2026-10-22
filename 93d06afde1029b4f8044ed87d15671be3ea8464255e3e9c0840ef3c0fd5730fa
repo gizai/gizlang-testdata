@@ -1,0 +1,9 @@
+function f(x: i64): i64
+ensures (result > 0)
+{
+    let y = 0;
+    for (const i of range(0, x)) {
+        y = (y + 1);
+    }
+    return y;
+}

@@ -1,0 +1,30 @@
+import { access } from "@/lib/acl";
+import { subscribe } from "@/lib/feed";
+import { Rejected } from "@/lib/model";
+import { principal } from "@/lib/session";
+
+// A thread's changes as server-sent events, each a comment as JSON.
+export async function GET(request: Request) {
+  const target = new URL(request.url).searchParams.get("t") ?? "";
+  try {
+    access(await principal(), target);
+  } catch (e) {
+    if (e instanceof Rejected) return Response.json({ ok: false, ...e.rejection }, { status: e.rejection.status });
+    throw e;
+  }
+  const encoder = new TextEncoder();
+  let stop = () => {};
+  const stream = new ReadableStream({
+    start(controller) {
+      const ping = setInterval(() => controller.enqueue(encoder.encode(": ping\n\n")), 25000);
+      const unsubscribe = subscribe(target, (c) => controller.enqueue(encoder.encode(`data: ${JSON.stringify(c)}\n\n`)));
+      stop = () => {
+        clearInterval(ping);
+        unsubscribe();
+      };
+      request.signal.addEventListener("abort", stop);
+    },
+    cancel: () => stop(),
+  });
+  return new Response(stream, { headers: { "content-type": "text/event-stream", "cache-control": "no-cache" } });
+}

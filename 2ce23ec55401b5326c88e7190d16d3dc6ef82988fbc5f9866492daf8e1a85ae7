@@ -1,0 +1,6 @@
+function f(): i64
+{
+    while (true) {
+    }
+    return 1;
+}

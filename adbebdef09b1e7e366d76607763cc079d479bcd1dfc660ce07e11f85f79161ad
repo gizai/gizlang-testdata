@@ -1,0 +1,325 @@
+type Scan = {
+    count: i64,
+    error: i64,
+    line: i64,
+    column: i64,
+}
+
+function codepoint(s: bytes, p: i64): u64
+{
+    const c = s[p];
+    if ((c < 128u)) {
+        return c;
+    }
+    if ((c < 224u)) {
+        return (((c & 31u) << 6u) | (s[(p + 1)] & 63u));
+    }
+    if ((c < 240u)) {
+        return ((((c & 15u) << 12u) | ((s[(p + 1)] & 63u) << 6u)) | (s[(p + 2)] & 63u));
+    }
+    return (((((c & 7u) << 18u) | ((s[(p + 1)] & 63u) << 12u)) | ((s[(p + 2)] & 63u) << 6u)) | (s[(p + 3)] & 63u));
+}
+
+function digit(c: u64): boolean
+{
+    return ((c >= 48u) && (c <= 57u));
+}
+
+function hexDigit(c: u64): boolean
+{
+    return ((digit(c) || ((c >= 65u) && (c <= 70u))) || ((c >= 97u) && (c <= 102u)));
+}
+
+function letter(c: u64): boolean
+{
+    return (((c === 95u) || ((c >= 65u) && (c <= 90u))) || ((c >= 97u) && (c <= 122u)));
+}
+
+function numberEnd(s: bytes, start: i64, limit: i64): i64
+{
+    const n = limit;
+    let p = start;
+    if ((((((p + 2) < n) && (s[p] === 48u)) && (s[(p + 1)] === 120u)) && hexDigit(s[(p + 2)]))) {
+        p = (p + 3);
+        while (((p < n) && hexDigit(s[p]))) {
+            p = (p + 1);
+        }
+        if (((p < n) && (s[p] === 117u))) {
+            p = (p + 1);
+        }
+        return p;
+    }
+    while (((p < n) && digit(s[p]))) {
+        p = (p + 1);
+    }
+    let floating = false;
+    if (((((p + 1) < n) && (s[p] === 46u)) && digit(s[(p + 1)]))) {
+        floating = true;
+        p = (p + 2);
+        while (((p < n) && digit(s[p]))) {
+            p = (p + 1);
+        }
+    }
+    if (((p < n) && ((s[p] === 101u) || (s[p] === 69u)))) {
+        let q = (p + 1);
+        if (((q < n) && ((s[q] === 43u) || (s[q] === 45u)))) {
+            q = (q + 1);
+        }
+        if (((q < n) && digit(s[q]))) {
+            floating = true;
+            p = (q + 1);
+            while (((p < n) && digit(s[p]))) {
+                p = (p + 1);
+            }
+        }
+    }
+    if ((((!floating) && (p < n)) && (s[p] === 117u))) {
+        p = (p + 1);
+    }
+    return p;
+}
+
+function punctuation(c: u64): boolean
+{
+    return (((((((((((((((((((((((c === 123u) || (c === 125u)) || (c === 40u)) || (c === 41u)) || (c === 91u)) || (c === 93u)) || (c === 59u)) || (c === 44u)) || (c === 58u)) || (c === 43u)) || (c === 42u)) || (c === 47u)) || (c === 37u)) || (c === 60u)) || (c === 62u)) || (c === 61u)) || (c === 33u)) || (c === 38u)) || (c === 124u)) || (c === 94u)) || (c === 126u)) || (c === 46u)) || (c === 45u));
+}
+
+export function scan(source: bytes, out: MutableView<i64>): Scan
+{
+    return scanWithOffsets(source, out, false);
+}
+
+export function scanBytes(source: bytes, out: MutableView<i64>): Scan
+{
+    return scanWithOffsets(source, out, true);
+}
+
+function scanWithOffsets(source: bytes, out: MutableView<i64>, byteOffsets: boolean): Scan
+{
+    return scanSpan(source, out, byteOffsets, 0, len(source), 0, 0);
+}
+
+export function scanRange(source: bytes, out: MutableView<i64>, start: i64, end: i64, first: i64, base: i64): Scan
+{
+    return scanSpan(source, out, true, start, end, first, base);
+}
+
+function scanSpan(source: bytes, out: MutableView<i64>, byteOffsets: boolean, start: i64, endLimit: i64, firstToken: i64, outputBase: i64): Scan
+{
+    if ((((((start < 0) || (endLimit < start)) || (endLimit > len(source))) || (firstToken < 0)) || (outputBase < 0))) {
+        return Scan(firstToken, start, 1, 1);
+    }
+    const n = endLimit;
+    let p = start;
+    let offset = start;
+    let line = 1;
+    let column = 1;
+    let count = firstToken;
+    while ((p < n)) {
+        const c = source[p];
+        const begin = offset;
+        const byteBegin = p;
+        const tokenLine = line;
+        const tokenColumn = column;
+        let end = p;
+        let keep = true;
+        let recognized = false;
+        if (space(codepoint(source, p))) {
+            keep = false;
+            recognized = true;
+            end = (p + width(c));
+        }
+        if (((((!recognized) && (c === 47u)) && ((p + 1) < n)) && (source[(p + 1)] === 47u))) {
+            keep = false;
+            recognized = true;
+            end = (p + 2);
+            while (((end < n) && (source[end] !== 10u))) {
+                end = (end + 1);
+            }
+        }
+        if (((((!recognized) && (c === 47u)) && ((p + 1) < n)) && (source[(p + 1)] === 42u))) {
+            keep = false;
+            recognized = true;
+            end = (p + 2);
+            let closed = false;
+            while ((((end + 1) < n) && (!closed))) {
+                if (((source[end] === 42u) && (source[(end + 1)] === 47u))) {
+                    closed = true;
+                    end = (end + 2);
+                }
+                else {
+                    end = (end + 1);
+                }
+            }
+            if ((!closed)) {
+                return Scan(count, begin, line, column);
+            }
+        }
+        if (((!recognized) && digit(c))) {
+            recognized = true;
+            end = numberEnd(source, p, n);
+        }
+        if (((!recognized) && (((c === 34u) || (c === 39u)) || (((c === 98u) && ((p + 1) < n)) && ((source[(p + 1)] === 34u) || (source[(p + 1)] === 39u)))))) {
+            recognized = true;
+            let quote = c;
+            end = (p + 1);
+            if ((c === 98u)) {
+                quote = source[(p + 1)];
+                end = (p + 2);
+            }
+            let closed = false;
+            let invalid = false;
+            while ((((end < n) && (!closed)) && (!invalid))) {
+                if ((source[end] === quote)) {
+                    closed = true;
+                    end = (end + 1);
+                }
+                else {
+                    if ((source[end] === 92u)) {
+                        if ((((end + 1) < n) && (source[(end + 1)] !== 10u))) {
+                            end = (end + 2);
+                        }
+                        else {
+                            invalid = true;
+                        }
+                    }
+                    else {
+                        end = (end + 1);
+                    }
+                }
+            }
+            if ((!closed)) {
+                if ((c === 98u)) {
+                    return Scan(count, (begin + 1), line, (column + 1));
+                }
+                return Scan(count, begin, line, column);
+            }
+        }
+        if (((!recognized) && letter(c))) {
+            recognized = true;
+            end = (p + 1);
+            while (((end < n) && (letter(source[end]) || digit(source[end])))) {
+                end = (end + 1);
+            }
+        }
+        if (((!recognized) && punctuation(c))) {
+            recognized = true;
+            end = (p + 1);
+            if ((((((p + 2) < n) && ((c === 61u) || (c === 33u))) && (source[(p + 1)] === 61u)) && (source[(p + 2)] === 61u))) {
+                end = (p + 3);
+            }
+            else {
+                if (((p + 1) < n)) {
+                    const d = source[(p + 1)];
+                    if ((((((c === 61u) && (d === 62u)) || ((c === 46u) && (d === 46u))) || (((c === 60u) || (c === 62u)) && ((d === 61u) || (d === c)))) || (((c === 38u) || (c === 124u)) && (d === c)))) {
+                        end = (p + 2);
+                    }
+                }
+            }
+        }
+        if ((!recognized)) {
+            return Scan(count, begin, line, column);
+        }
+        while ((p < end)) {
+            const first = source[p];
+            p = (p + width(first));
+            offset = (offset + 1);
+            if ((first === 10u)) {
+                line = (line + 1);
+                column = 1;
+            }
+            else {
+                column = (column + 1);
+            }
+        }
+        if (keep) {
+            if ((len(out) !== 0)) {
+                if (byteOffsets) {
+                    out[(outputBase + (count * 4))] = byteBegin;
+                    out[((outputBase + (count * 4)) + 1)] = p;
+                }
+                else {
+                    out[(outputBase + (count * 4))] = begin;
+                    out[((outputBase + (count * 4)) + 1)] = offset;
+                }
+                out[((outputBase + (count * 4)) + 2)] = tokenLine;
+                out[((outputBase + (count * 4)) + 3)] = tokenColumn;
+            }
+            count = (count + 1);
+        }
+    }
+    return Scan(count, (-1), line, column);
+}
+
+function space(c: u64): boolean
+{
+    return ((((((((((((c >= 9u) && (c <= 13u)) || ((c >= 28u) && (c <= 32u))) || (c === 133u)) || (c === 160u)) || (c === 5760u)) || ((c >= 8192u) && (c <= 8202u))) || (c === 8232u)) || (c === 8233u)) || (c === 8239u)) || (c === 8287u)) || (c === 12288u));
+}
+
+function width(c: u64): i64
+requires (c <= 255u)
+ensures ((result >= 1) && (result <= 4))
+{
+    if ((c < 128u)) {
+        return 1;
+    }
+    if ((c < 224u)) {
+        return 2;
+    }
+    if ((c < 240u)) {
+        return 3;
+    }
+    return 4;
+}
+
+export function validUtf8(source: bytes): boolean
+{
+    let p = 0;
+    while ((p < len(source))) {
+        const first = source[p];
+        let width = 1;
+        let code = first;
+        let minimum = 0u;
+        if ((first >= 128u)) {
+            if (((first >= 194u) && (first <= 223u))) {
+                width = 2;
+                code = (first & 31u);
+                minimum = 128u;
+            }
+            else {
+                if (((first >= 224u) && (first <= 239u))) {
+                    width = 3;
+                    code = (first & 15u);
+                    minimum = 2048u;
+                }
+                else {
+                    if (((first >= 240u) && (first <= 244u))) {
+                        width = 4;
+                        code = (first & 7u);
+                        minimum = 65536u;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+            }
+            if (((p + width) > len(source))) {
+                return false;
+            }
+            for (const offset of range(1, width)) {
+                const continuation = source[(p + offset)];
+                if (((continuation < 128u) || (continuation > 191u))) {
+                    return false;
+                }
+                code = ((code * 64u) + (continuation & 63u));
+            }
+            if ((((code < minimum) || (code > 1114111u)) || ((code >= 55296u) && (code <= 57343u)))) {
+                return false;
+            }
+        }
+        p = (p + width);
+    }
+    return true;
+}
+
+export { Scan };

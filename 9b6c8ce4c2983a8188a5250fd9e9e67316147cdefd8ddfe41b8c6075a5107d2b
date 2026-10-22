@@ -1,0 +1,4 @@
+function testAccept10Shipping(): void {
+    const store = hiddenMust(placeOrder(hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P2", 2))), "Bo", hiddenLines("P1", 2)));
+    HiddenTest.check(orderTotal(store, 1) === 1300 && orderTotal(store, 2) === 5000);
+}

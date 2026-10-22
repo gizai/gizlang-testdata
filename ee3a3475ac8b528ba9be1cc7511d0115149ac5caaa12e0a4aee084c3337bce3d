@@ -1,0 +1,19 @@
+function leaf(x: i64): i64
+{
+    return (x + 3);
+}
+
+function caller(x: i64): i64
+{
+    return leaf(x);
+}
+
+function root(x: i64): i64
+{
+    return caller(x);
+}
+
+function unrelated(x: i64): i64
+{
+    return (x * 2);
+}
