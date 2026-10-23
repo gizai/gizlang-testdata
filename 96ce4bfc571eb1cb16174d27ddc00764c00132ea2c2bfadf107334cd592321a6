@@ -1,0 +1,5 @@
+function program(): u64
+{
+    return b"\u00FF"[0];
+}
+function main(): void { print(string(program())); }

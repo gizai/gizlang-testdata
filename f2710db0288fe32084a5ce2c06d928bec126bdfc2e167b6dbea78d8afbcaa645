@@ -1,0 +1,5 @@
+function program(): u64
+{
+    return _gc_live();
+}
+function main(): void { print(string(program())); }

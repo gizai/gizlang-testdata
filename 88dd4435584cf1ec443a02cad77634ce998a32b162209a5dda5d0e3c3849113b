@@ -1,0 +1,28 @@
+type Point = {
+    x: f64,
+    y: f64,
+}
+
+function Point.distance(p: Point): f64
+{
+    return Math.sqrt((((p).x * (p).x) + ((p).y * (p).y)));
+}
+
+function Point.move(p: Point, dx: f64, dy: f64): Point
+{
+    return Point(((p).x + dx), ((p).y + dy));
+}
+
+function increment(x: i64): i64
+requires (x < 100)
+ensures (result > x)
+{
+    return (x + 1);
+}
+
+function program(): f64
+{
+    const p = Point(3.0, 4.0);
+    return (p).distance();
+}
+function main(): void { print(string(program())); }

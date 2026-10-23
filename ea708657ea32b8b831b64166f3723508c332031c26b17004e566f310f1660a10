@@ -1,0 +1,10 @@
+function f(x: u64): u64
+{
+    return (x * 2u);
+}
+
+function program(): u64
+{
+    return f(21u);
+}
+function main(): void { print(string(program())); }

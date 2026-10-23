@@ -1,0 +1,5 @@
+function program(): u64
+{
+    return utf8("가")[0];
+}
+function main(): void { print(string(program())); }

@@ -1,0 +1,19 @@
+type Box = {
+    value: i64,
+}
+
+function Box.get(r: Box): i64
+{
+    return (r).value;
+}
+
+function add_one(number: i64): i64
+{
+    return (number + 1);
+}
+
+function program(): i64
+{
+    return add_one(41);
+}
+function main(): void { print(string(program())); }

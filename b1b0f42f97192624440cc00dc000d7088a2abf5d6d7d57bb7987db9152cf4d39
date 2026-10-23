@@ -1,0 +1,19 @@
+namespace math {
+    type Pair = {
+        x: i64,
+        y: i64,
+    }
+    
+    export function add(p: Pair): i64
+    {
+        return ((p).x + (p).y);
+    }
+    
+    export { Pair };
+}
+
+function program(): i64
+{
+    return math__add(math__Pair(20, 22));
+}
+function main(): void { print(string(program())); }

@@ -1,0 +1,37 @@
+type Point = {
+    x: f64,
+    y: f64,
+}
+
+type Mark = {
+    ok: boolean,
+    p: Point,
+    count: i64,
+}
+
+function Point.norm(p: Point): f64
+{
+    return Math.sqrt((((p).x * (p).x) + ((p).y * (p).y)));
+}
+
+function Point.shift(p: Point, d: f64): Point
+{
+    return Point(((p).x + d), ((p).y + d));
+}
+
+function pack(p: Point, n: i64): Mark
+{
+    return Mark(true, p, n);
+}
+
+function get(m: Mark): f64
+{
+    return ((m).p).norm();
+}
+
+function program(): i64
+{
+    const p = Point(3.0, 4.0);
+    return 42;
+}
+function main(): void { print(string(program())); }

@@ -1,0 +1,16 @@
+namespace a {
+    export function f(x: i64): i64
+    {
+        return (x + 1);
+    }
+    
+}
+
+function program(): i64
+{
+    const f = (x: i64): i64 => {
+    return a__f(x);
+};
+    return f(41);
+}
+function main(): void { print(string(program())); }

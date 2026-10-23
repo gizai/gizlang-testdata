@@ -1,0 +1,13 @@
+type Point = {
+    x: i64,
+}
+
+type Scene = {
+    points: Vec<Point>,
+}
+
+function program(): i64
+{
+    return 42;
+}
+function main(): void { print(string(program())); }

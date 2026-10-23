@@ -1,0 +1,18 @@
+namespace lib {
+    export function answer(): i64
+    {
+        return (base() + 2);
+    }
+    
+}
+
+export function base(): i64
+{
+    return 40;
+}
+
+function program(): i64
+{
+    return lib__answer();
+}
+function main(): void { print(string(program())); }

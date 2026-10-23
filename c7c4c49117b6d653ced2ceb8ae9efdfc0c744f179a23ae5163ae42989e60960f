@@ -1,0 +1,18 @@
+namespace lib {
+    function _map(value: i64, other: i64): i64
+    {
+        return (value + other);
+    }
+    
+    export function answer(): i64
+    {
+        return lib___map(40, 2);
+    }
+    
+}
+
+function program(): i64
+{
+    return lib__answer();
+}
+function main(): void { print(string(program())); }

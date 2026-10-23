@@ -1,0 +1,10 @@
+type Box<T> = {
+    value: T,
+}
+
+function program(): i64
+{
+    const b = Box<Box<i64>>(Box<i64>(42));
+    return ((b).value).value;
+}
+function main(): void { print(string(program())); }

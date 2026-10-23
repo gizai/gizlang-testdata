@@ -1,0 +1,20 @@
+function program(): i64
+{
+    const offset = 40;
+    const f = (x: i64): i64 => {
+    return (x + offset);
+};
+    const xs = map<i64, i64, _>([0, 1, 2], f);
+    return xs[2];
+}
+
+function map<T, U, F>(xs: Vec<T>, f: F): Vec<U>
+effects {f, fail}
+{
+    let out = ([] satisfies Vec<U>);
+    for (const i of range(0, len(xs))) {
+        out = push(out, f(xs[i]));
+    }
+    return out;
+}
+function main(): void { print(string(program())); }

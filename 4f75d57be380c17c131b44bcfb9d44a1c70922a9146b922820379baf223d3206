@@ -1,0 +1,19 @@
+namespace entry {
+    export function answer(): i64
+    {
+        return (base() + 2);
+    }
+    
+    export * as Root from "_entry";
+}
+
+export function base(): i64
+{
+    return 40;
+}
+
+export function program(): i64
+{
+    return ((entry__answer() + base()) - 40);
+}
+export function main(): void { print(string(program())); }

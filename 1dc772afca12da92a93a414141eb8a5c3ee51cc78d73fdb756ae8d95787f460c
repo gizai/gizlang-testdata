@@ -1,0 +1,10 @@
+function increment(x: i64): i64
+{
+    return (x + 1);
+}
+
+function program(): i64
+{
+    return increment(41);
+}
+function main(): void { print(string(program())); }

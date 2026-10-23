@@ -1,0 +1,9 @@
+type Box = {
+    value: i64,
+}
+
+function program(): i64
+{
+    return 0;
+}
+function main(): void { print(string(program())); }

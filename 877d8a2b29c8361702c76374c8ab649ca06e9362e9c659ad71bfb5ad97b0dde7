@@ -1,0 +1,2 @@
+function program():i64{let x=7;const f=(y:i64): i64 => {return x+y;};return f(35);}
+function main(): void { print(string(program())); }

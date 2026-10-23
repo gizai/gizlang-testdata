@@ -1,0 +1,6 @@
+function program(): i64
+{
+    const xs = [[1, 2], [3, 4]];
+    return xs[1][0];
+}
+function main(): void { print(string(program())); }

@@ -1,0 +1,10 @@
+function f(): i64
+{
+    return 1;
+}
+
+function program(): i64
+{
+    return 2;
+}
+function main(): void { print(string(program())); }

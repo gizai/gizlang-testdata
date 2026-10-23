@@ -1,0 +1,18 @@
+namespace lib {
+    function vec(value: i64): i64
+    {
+        return (value + 1);
+    }
+    
+    export function answer(): i64
+    {
+        return lib__vec(41);
+    }
+    
+}
+
+function program(): i64
+{
+    return lib__answer();
+}
+function main(): void { print(string(program())); }

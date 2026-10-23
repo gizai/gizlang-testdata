@@ -1,0 +1,13 @@
+namespace a {
+    export function id<T>(x: T): T
+    {
+        return x;
+    }
+    
+}
+
+function program(): i64
+{
+    return a__id<i64>(42);
+}
+function main(): void { print(string(program())); }

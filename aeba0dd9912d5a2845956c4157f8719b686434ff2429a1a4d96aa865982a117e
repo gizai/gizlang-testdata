@@ -1,0 +1,31 @@
+type Point = {
+    x: i64,
+    y: i64,
+}
+
+type Choice =
+    | { kind: "Number"; value0: i64; }
+    | { kind: "Pair"; value0: Point; value1: f64; }
+    | { kind: "Empty";  }
+;
+
+function read(c: Choice): i64
+{
+    match (c) {
+        Choice.Number(x) => {
+            return x;
+        }
+        Choice.Pair(p, weight) => {
+            return ((p).x + (p).y);
+        }
+        Choice.Empty() => {
+            return 0;
+        }
+    }
+}
+
+function program(): i64
+{
+    return read(Choice.Pair(Point(20, 22), 1.0));
+}
+function main(): void { print(string(program())); }

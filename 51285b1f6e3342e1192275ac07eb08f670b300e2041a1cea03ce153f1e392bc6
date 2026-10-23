@@ -1,0 +1,17 @@
+namespace a {
+    function add(x: i64): i64
+    {
+        return (x + 1);
+    }
+    
+    export { add as default };
+}
+
+function program(): i64
+{
+    return a__add(41);
+}
+
+export { default } from "a";
+export { default as increment } from "a";
+function main(): void { print(string(program())); }
