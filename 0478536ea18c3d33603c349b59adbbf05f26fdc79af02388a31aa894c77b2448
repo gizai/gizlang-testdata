@@ -1,0 +1,1 @@
+test("testAccept09RenamePrice", () => { expect(item("Z", "z", 1, 0, 7).unitCents === 7).toBe(true); });
