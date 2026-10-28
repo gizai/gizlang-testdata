@@ -1,0 +1,23 @@
+test("testAccept05ReturnGoods", () => {
+    let d = hiddenMust(addPromotion(hiddenDepot(), "BOLT", 100, 10));
+    d = hiddenMust(placeOrder(d, "zen", "A", hiddenTwo("BOLT", 120, "NUT", 20)));
+    d = hiddenMust(ship(d, 1));
+    d = hiddenMust(placeOrder(d, "zen", "A", hiddenOne("NUT", 1)));
+    const bad = hiddenFailed(returnGoods(d, 9, "BOLT", 1)) && hiddenFailed(returnGoods(d, 2, "NUT", 1))
+        && hiddenFailed(returnGoods(d, 1, "GEAR", 1)) && hiddenFailed(returnGoods(d, 1, "BOLT", 0))
+        && hiddenFailed(returnGoods(d, 1, "BOLT", 121));
+    // 2700 + 200 less 3% = 2813; without 30 bolts: 2250 + 200 less 3% = 2377.
+    d = hiddenMust(returnGoods(d, 1, "BOLT", 30));
+    const log = history(d);
+    const first = owedBy(d, "zen") === 2377 && stockAt(d, "BOLT", "A") === 410 && orderCents(d, 1) === 2813
+        && statement(d, "zen") === "#1 1 2813 due\n#2 1 -436 paid\nowed 2377\n" && lastInvoiceNumber(d) === 2
+        && log[log.length - 2] === "stock BOLT" && log[log.length - 1] === "returned 1 BOLT 30";
+    const rest = hiddenFailed(returnGoods(d, 1, "BOLT", 91)) && hiddenFailed(returnGoods(hiddenMust(returnGoods(d, 1, "BOLT", 90)), 1, "BOLT", 1));
+    // A credit releases held orders like a payment.
+    let e = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 90)));
+    e = hiddenMust(ship(e, 1));
+    e = hiddenMust(placeOrder(e, "tiny", "A", hiddenOne("NUT", 20)));
+    const held = statusOf(e, 2) === "onHold";
+    e = hiddenMust(returnGoods(e, 1, "NUT", 10));
+    expect(bad && first && rest && held && statusOf(e, 2) === "placed" && owedBy(e, "tiny") === 800 && hiddenJoin(openTasks(e)) === "").toBe(true);
+});
