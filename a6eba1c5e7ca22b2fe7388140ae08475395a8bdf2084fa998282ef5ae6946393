@@ -1,0 +1,6 @@
+test("testAccept08VipFollowUp", () => {
+    const vip = hiddenMust(cancel(hiddenMust(placeOrder(hiddenShop(), "VIP-Ann", hiddenLines("A9", 1))), 1));
+    const plain = hiddenMust(cancel(hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("A9", 1))), 1));
+    const tasks = openTasks(vip);
+    expect(tasks.length === 1 && tasks[0] === "followUp:1" && openTasks(plain).length === 0).toBe(true);
+});
