@@ -1,0 +1,11 @@
+test("testAccept04OnHold", () => {
+    const shop = hiddenMust(addItem(hiddenShop(), item("BIG", "Big press", 5, 0, 300000)));
+    const held = hiddenMust(placeOrder(shop, "Ann", hiddenLines("BIG", 2)));
+    const released = hiddenMust(release(held, 1));
+    const cancelled = hiddenMust(cancel(held, 1));
+    const small = hiddenMust(placeOrder(shop, "Ann", hiddenLines("A9", 1)));
+    expect(statusOf(held, 1) === "onHold" && stockOf(held, "BIG") === 3 && hiddenFailed(ship(held, 1))
+        && statusOf(released, 1) === "placed" && statusOf(hiddenMust(ship(released, 1)), 1) === "shipped"
+        && statusOf(cancelled, 1) === "cancelled" && stockOf(cancelled, "BIG") === 5
+        && statusOf(small, 1) === "placed" && hiddenFailed(release(small, 1))).toBe(true);
+});
