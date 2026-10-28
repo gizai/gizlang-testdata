@@ -1,0 +1,28 @@
+test("testAccept03HoldReview", () => {
+    let d = hiddenMust(receive(hiddenDepot(), "PUMP", "A", 10));
+    d = hiddenMust(addCustomer(d, "big", "Big", false, 1000000));
+    // 540000 is held for review although it fits the credit.
+    d = hiddenMust(placeOrder(d, "big", "A", hiddenOne("PUMP", 6)));
+    const held = statusOf(d, 1) === "onHold" && stockAt(d, "PUMP", "A") === 9 && hiddenJoin(openTasks(d)) === "review:1"
+        && history(d)[7] === "held 1" && hiddenFailed(ship(d, 1)) && hiddenFailed(approve(d, 2));
+    // A payment does not release it; approving places it without a new review.
+    d = hiddenMust(placeOrder(d, "big", "A", hiddenOne("NUT", 10)));
+    d = hiddenMust(ship(d, 2));
+    d = hiddenMust(pay(d, 1));
+    const unpaid = statusOf(d, 1) === "onHold";
+    d = hiddenMust(approve(d, 1));
+    const log = history(d);
+    const placed = statusOf(d, 1) === "placed" && hiddenJoin(openTasks(d)) === "" && hiddenFailed(approve(d, 1))
+        && log[log.length - 2] === "approved 1" && log[log.length - 1] === "placed 1";
+    // Over credit, approving holds it for credit, and a payment releases it.
+    let e = hiddenMust(receive(hiddenDepot(), "PUMP", "A", 10));
+    e = hiddenMust(addCustomer(e, "low", "Low", false, 600000));
+    e = hiddenMust(placeOrder(e, "low", "B", hiddenOne("GEAR", 9)));
+    e = hiddenMust(placeOrder(e, "low", "A", hiddenOne("PUMP", 6)));
+    e = hiddenMust(approve(e, 2));
+    const credit = statusOf(e, 2) === "onHold" && hiddenJoin(openTasks(e)) === "reorder:GEAR|credit:low"
+        && history(e)[history(e).length - 1] === "held 2" && hiddenFailed(approve(e, 2));
+    e = hiddenMust(ship(e, 1));
+    e = hiddenMust(pay(e, 1));
+    expect(held && unpaid && placed && credit && statusOf(e, 2) === "placed" && hiddenJoin(openTasks(e)) === "reorder:GEAR").toBe(true);
+});
