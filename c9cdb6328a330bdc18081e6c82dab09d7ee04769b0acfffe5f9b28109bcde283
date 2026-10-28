@@ -1,0 +1,7 @@
+test("testAccept01VipDiscount", () => {
+    let store = hiddenMust(addItem(hiddenShop(), item("GOLD", "Gold bar", 5, 0, 100000)));
+    store = hiddenMust(placeOrder(store, "VIP-Ann", hiddenLines("P1", 4)));
+    store = hiddenMust(placeOrder(store, "VIP-Bo", hiddenLines("GOLD", 2)));
+    store = hiddenMust(placeOrder(store, "Vip-Cy", hiddenLines("P1", 4)));
+    expect(orderTotal(store, 1) === 9500 && orderTotal(store, 2) === 171000 && orderTotal(store, 3) === 10000).toBe(true);
+});
