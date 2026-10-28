@@ -1,0 +1,5 @@
+test("testAccept08RenameCustomer", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "A", hiddenOne("NUT", 5)));
+    d = hiddenMust(ship(d, 1));
+    expect(d.orders[0].customerId === "acme" && d.invoices[0].customerId === "acme").toBe(true);
+});
