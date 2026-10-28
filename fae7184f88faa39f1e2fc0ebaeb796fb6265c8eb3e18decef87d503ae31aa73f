@@ -1,0 +1,28 @@
+test("testAccept07ChangeLine", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 50)));
+    d = hiddenMust(changeLine(d, 1, "NUT", 80));
+    const grown = statusOf(d, 1) === "placed" && stockAt(d, "NUT", "A") === 220 && orderCents(d, 1) === 800;
+    // 800 + 250 is over 1000: held for credit.
+    d = hiddenMust(changeLine(d, 1, "BOLT", 10));
+    let log = history(d);
+    const held = statusOf(d, 1) === "onHold" && stockAt(d, "BOLT", "A") === 490 && hiddenJoin(openTasks(d)) === "credit:tiny"
+        && log[log.length - 2] === "stock BOLT" && log[log.length - 1] === "held 1";
+    d = hiddenMust(changeLine(d, 1, "NUT", 70));
+    log = history(d);
+    const placed = statusOf(d, 1) === "placed" && orderCents(d, 1) === 950 && stockAt(d, "NUT", "A") === 230
+        && hiddenJoin(openTasks(d)) === "" && log[log.length - 1] === "placed 1";
+    const bad = hiddenFailed(changeLine(d, 1, "NUT", -1)) && hiddenFailed(changeLine(d, 1, "NOPE", 1))
+        && hiddenFailed(changeLine(d, 9, "NUT", 1)) && hiddenFailed(changeLine(d, 1, "NUT", 301))
+        && hiddenFailed(changeLine(hiddenMust(ship(d, 1)), 1, "NUT", 1)) && stockAt(d, "NUT", "A") === 230;
+    d = hiddenMust(changeLine(d, 1, "NUT", 0));
+    const one = orderCents(d, 1) === 250 && stockAt(d, "NUT", "A") === 300;
+    d = hiddenMust(changeLine(d, 1, "BOLT", 0));
+    const gone = statusOf(d, 1) === "cancelled" && stockAt(d, "BOLT", "A") === 500 && history(d)[history(d).length - 1] === "cancelled 1";
+    // An order held for review stays held for review.
+    let e = hiddenMust(receive(hiddenDepot(), "PUMP", "A", 10));
+    e = hiddenMust(addCustomer(e, "big", "Big", false, 1000000));
+    e = hiddenMust(placeOrder(e, "big", "A", hiddenOne("PUMP", 6)));
+    e = hiddenMust(changeLine(e, 1, "PUMP", 5));
+    expect(grown && held && placed && bad && one && gone && statusOf(e, 1) === "onHold" && stockAt(e, "PUMP", "A") === 10
+        && statusOf(hiddenMust(approve(e, 1)), 1) === "placed").toBe(true);
+});
