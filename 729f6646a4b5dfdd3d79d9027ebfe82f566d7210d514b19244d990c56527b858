@@ -1,0 +1,11 @@
+test("testAccept01GoldPromotions", () => {
+    let d = hiddenMust(addPromotion(hiddenDepot(), "BOLT", 100, 10));
+    d = hiddenMust(addGoldPromotion(d, "BOLT", 100, 20));
+    d = hiddenMust(addGoldPromotion(d, "NUT", 10, 50));
+    d = hiddenMust(placeOrder(d, "zen", "A", hiddenTwo("BOLT", 200, "NUT", 10)));
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenTwo("BOLT", 200, "NUT", 10)));
+    // zen: 4000 + 50 = 4050, less 3% = 3929; acme: 4500 + 100.
+    expect(orderCents(d, 1) === 3929 && orderCents(d, 2) === 4600 && lineCents(d, line("BOLT", 200)) === 4500
+        && hiddenFailed(addGoldPromotion(d, "NOPE", 1, 5)) && hiddenFailed(addGoldPromotion(d, "BOLT", 0, 5))
+        && hiddenFailed(addGoldPromotion(d, "BOLT", 1, 101))).toBe(true);
+});
