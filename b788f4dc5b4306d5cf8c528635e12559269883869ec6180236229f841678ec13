@@ -1,0 +1,10 @@
+test("testAccept02PlatinumTier", () => {
+    let d = hiddenMust(addPlatinumCustomer(hiddenDepot(), "plat", "Plat", 500000));
+    d = hiddenMust(addGoldPromotion(d, "NUT", 10, 50));
+    d = hiddenMust(placeOrder(d, "plat", "A", hiddenTwo("BOLT", 40, "NUT", 10)));
+    // 1000 + 50 = 1050, less 5% = 998.
+    expect(orderCents(d, 1) === 998 && tierOf(d, "plat") === "platinum" && tierOf(d, "zen") === "gold"
+        && tierOf(d, "acme") === "regular" && tierOf(d, "nobody") === ""
+        && hiddenFailed(addPlatinumCustomer(d, "acme", "x", 1)) && hiddenFailed(addPlatinumCustomer(d, "", "x", 1))
+        && hiddenFailed(addPlatinumCustomer(d, "p2", "x", -1))).toBe(true);
+});
