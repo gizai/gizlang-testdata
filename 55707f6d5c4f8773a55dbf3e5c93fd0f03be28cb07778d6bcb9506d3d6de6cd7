@@ -1,0 +1,77 @@
+// What depot.giz does today, as the comments in it say: each test is one fact a
+// change must keep unless its request changes that fact. `./check` runs them.
+import {expect} from "vitest";
+import {Result} from "gizlang:core";
+import {Depot, newDepot, item, line, addItem, addCustomer, addPromotion, receive, placeOrder, ship, cancel, pay,
+    statement, statusOf, owedBy, lineCents, openTasks, importStock, stockReport} from "./depot.giz";
+
+function must(r: Result<Depot, string>): Depot {
+    match (r) { Result.ok(d) => { return d; } Result.err(e) => { expect(e).toEqual(""); return newDepot(); } }
+}
+function failed(r: Result<Depot, string>): string {
+    match (r) { Result.ok(d) => { return ""; } Result.err(e) => { return e; } }
+}
+// Two items, stock at "east", a regular customer with 50,000 cents of credit and a gold one.
+function start(): Depot {
+    let d = must(addItem(newDepot(), item("BOLT", "Bolt", 250, 5)));
+    d = must(addItem(d, item("NUT", "Nut", 1000, 0)));
+    d = must(receive(d, "BOLT", "east", 40));
+    d = must(receive(d, "NUT", "east", 300));
+    d = must(addCustomer(d, "ray", "Ray", false, 50000));
+    return must(addCustomer(d, "gil", "Gil", true, 1000000));
+}
+function joined(names: Vec<string>): string {
+    let text = "";
+    for (const name of names) { text = text + name + ";"; }
+    return text;
+}
+
+// A statement lists each invoice as "#number order amount paid|due", then "owed amount".
+test("testFactStatement", () => {
+    let d = must(placeOrder(start(), "ray", "east", [line("BOLT", 4)]));
+    d = must(placeOrder(d, "ray", "east", [line("NUT", 2)]));
+    d = must(ship(d, 1));
+    d = must(ship(d, 2));
+    d = must(pay(d, 1));
+    expect(statement(d, "ray")).toEqual("#1 1 1000 paid\n#2 2 2000 due\nowed 2000\n");
+    expect(statement(d, "gil")).toEqual("owed 0\n");
+});
+// Shipping invoices the order's amount, gold customers less 3% (the discount truncated).
+test("testFactShipInvoicesGold", () => {
+    let d = must(placeOrder(start(), "gil", "east", [line("BOLT", 3)]));
+    d = must(ship(d, 1));
+    expect(statusOf(d, 1)).toEqual("shipped");
+    expect(owedBy(d, "gil")).toEqual(728);
+    expect(failed(ship(d, 1)).length > 0).toBe(true);
+});
+// An order over the customer's credit is held and opens credit work; paying releases it.
+test("testFactCreditHold", () => {
+    let d = must(placeOrder(start(), "ray", "east", [line("NUT", 40)]));
+    d = must(ship(d, 1));
+    d = must(placeOrder(d, "ray", "east", [line("NUT", 20)]));
+    expect(statusOf(d, 2)).toEqual("onHold");
+    expect(joined(openTasks(d)).includes("credit:ray;")).toBe(true);
+    d = must(pay(d, 1));
+    expect(statusOf(d, 2)).toEqual("placed");
+    expect(!joined(openTasks(d)).includes("credit:ray;")).toBe(true);
+});
+// A sku at or below its reorder level opens one reorder; restocking above closes it.
+test("testFactReorder", () => {
+    let d = must(placeOrder(start(), "ray", "east", [line("BOLT", 36)]));
+    expect(joined(openTasks(d)).includes("reorder:BOLT;")).toBe(true);
+    d = must(cancel(d, 1));
+    expect(!joined(openTasks(d)).includes("reorder:BOLT;")).toBe(true);
+    expect(statusOf(d, 1)).toEqual("cancelled");
+});
+// A promotion takes its percent off a qualifying line (the discount truncated to whole cents).
+test("testFactPromotion", () => {
+    const d = must(addPromotion(start(), "BOLT", 10, 15));
+    expect(lineCents(d, line("BOLT", 9))).toEqual(2250);
+    expect(lineCents(d, line("BOLT", 11))).toEqual(2338);
+});
+// An import names the line that failed (from 1), skips blank lines, and reports by sku.
+test("testFactImportAndReport", () => {
+    expect(failed(importStock(start(), "BOLT,west,2\n\nNUT,west,x"))).toEqual("line 3: not a number: x");
+    const d = must(importStock(start(), "BOLT,west,2\n\nNUT,west,7\n"));
+    expect(stockReport(d)).toEqual("BOLT 42 east:40 west:2\nNUT 307 east:300 west:7\n");
+});
