@@ -1,0 +1,4 @@
+test("testAccept07LowStockMark", () => {
+    const store = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P2", 3)));
+    expect(report(store) === "A9 Red pen 50\nP1 Blue pen 10\nP2 black ink 2 !\norders 1\n").toBe(true);
+});
