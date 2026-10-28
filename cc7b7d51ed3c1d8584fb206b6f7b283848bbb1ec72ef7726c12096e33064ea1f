@@ -1,0 +1,5 @@
+test("testAccept05SearchSku", () => {
+    const bySku = search(hiddenShop(), "p");
+    const both = search(hiddenShop(), "a9");
+    expect(bySku.length === 2 && bySku[0] === "P1" && bySku[1] === "P2" && both.length === 1 && both[0] === "A9").toBe(true);
+});
