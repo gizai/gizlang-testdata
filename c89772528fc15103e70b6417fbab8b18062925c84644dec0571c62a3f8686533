@@ -1,0 +1,216 @@
+// Hidden regression suite: behavior no change request asks to change. It is
+// appended to the edited depot.giz and uses only its functions; hidden.ts
+// checks the same facts.
+import {expect} from "vitest";
+function hiddenMust(outcome: Result<Depot, string>): Depot {
+    match (outcome) {
+        Result.ok(value) => { return value; }
+        Result.err(problem) => { assert(false); }
+    }
+}
+function hiddenFailed(outcome: Result<Depot, string>): bool {
+    match (outcome) { Result.ok(value) => { return false; } Result.err(problem) => { return true; } }
+}
+function hiddenJoin(parts: Vec<string>): string effects {fail} {
+    let text = "";
+    for (const index of range(0, parts.length)) {
+        if (index > 0) { text = text + "|"; }
+        text = text + parts[index];
+    }
+    return text;
+}
+function hiddenOne(sku: string, quantity: i64): Vec<Line> { const lines: Vec<Line> = [line(sku, quantity)]; return lines; }
+function hiddenTwo(a: string, qa: i64, b: string, qb: i64): Vec<Line> { const lines: Vec<Line> = [line(a, qa), line(b, qb)]; return lines; }
+// BOLT 25c (reorder 100): A 500, B 200. NUT 10c (50): A 300. GEAR 12000c (2): B 10.
+// PUMP 90000c (1): A 5. acme regular, credit 300000; zen gold, 100000; tiny regular, 1000.
+function hiddenDepot(): Depot {
+    let d = newDepot();
+    d = hiddenMust(addItem(d, item("BOLT", "Bolt", 25, 100)));
+    d = hiddenMust(addItem(d, item("NUT", "Nut", 10, 50)));
+    d = hiddenMust(addItem(d, item("GEAR", "Gear", 12000, 2)));
+    d = hiddenMust(addItem(d, item("PUMP", "Pump", 90000, 1)));
+    d = hiddenMust(receive(d, "BOLT", "A", 500));
+    d = hiddenMust(receive(d, "BOLT", "B", 200));
+    d = hiddenMust(receive(d, "NUT", "A", 300));
+    d = hiddenMust(receive(d, "GEAR", "B", 10));
+    d = hiddenMust(receive(d, "PUMP", "A", 5));
+    d = hiddenMust(addCustomer(d, "acme", "Acme Ltd", false, 300000));
+    d = hiddenMust(addCustomer(d, "zen", "Zen Co", true, 100000));
+    d = hiddenMust(addCustomer(d, "tiny", "Tiny", false, 1000));
+    return d;
+}
+test("testHiddenItemChecks", () => {
+    const d = hiddenDepot();
+    expect(hiddenFailed(addItem(d, item("", "x", 1, 1))) && hiddenFailed(addItem(d, item("BOLT", "x", 1, 1)))
+        && hiddenFailed(addItem(d, item("X", "x", -1, 1))) && hiddenFailed(addItem(d, item("X", "x", 1, -1)))
+        && findItem(d, "GEAR") === 2 && findItem(d, "gear") === -1).toBe(true);
+});
+test("testHiddenStockByLocation", () => {
+    const d = hiddenDepot();
+    expect(stockAt(d, "BOLT", "A") === 500 && stockAt(d, "BOLT", "B") === 200 && stockAt(d, "BOLT", "C") === 0
+        && stockAt(d, "NOPE", "A") === -1 && totalStock(d, "BOLT") === 700 && totalStock(d, "NOPE") === -1).toBe(true);
+});
+test("testHiddenReceiveChecks", () => {
+    const d = hiddenDepot();
+    expect(hiddenFailed(receive(d, "NOPE", "A", 1)) && hiddenFailed(receive(d, "BOLT", "", 1))
+        && hiddenFailed(receive(d, "BOLT", "A", 0)) && stockAt(hiddenMust(receive(d, "BOLT", "C", 7)), "BOLT", "C") === 7).toBe(true);
+});
+test("testHiddenTransfer", () => {
+    const d = hiddenDepot();
+    const moved = hiddenMust(transfer(d, "GEAR", "B", "A", 4));
+    expect(stockAt(moved, "GEAR", "B") === 6 && stockAt(moved, "GEAR", "A") === 4 && totalStock(moved, "GEAR") === 10
+        && hiddenFailed(transfer(d, "GEAR", "B", "A", 11)) && hiddenFailed(transfer(d, "GEAR", "B", "B", 1))
+        && hiddenFailed(transfer(d, "GEAR", "B", "", 1)) && hiddenFailed(transfer(d, "GEAR", "B", "A", 0))
+        && hiddenFailed(transfer(d, "NOPE", "B", "A", 1)) && stockAt(d, "GEAR", "B") === 10).toBe(true);
+});
+test("testHiddenCustomerChecks", () => {
+    const d = hiddenDepot();
+    expect(hiddenFailed(addCustomer(d, "", "x", false, 1)) && hiddenFailed(addCustomer(d, "acme", "x", false, 1))
+        && hiddenFailed(addCustomer(d, "new", "x", false, -1)) && owedBy(d, "acme") === 0 && owedBy(d, "nobody") === -1
+        && findCustomer(d, "zen") === 1).toBe(true);
+});
+test("testHiddenPromotions", () => {
+    let d = hiddenDepot();
+    d = hiddenMust(addPromotion(d, "BOLT", 100, 10));
+    d = hiddenMust(addPromotion(d, "BOLT", 300, 20));
+    d = hiddenMust(addPromotion(d, "BOLT", 50, 5));
+    // 99 x 25 = 2475 less 5% = 2351.25 -> 2352 (the discount truncates).
+    expect(lineCents(d, line("BOLT", 40)) === 1000 && lineCents(d, line("BOLT", 99)) === 2352
+        && lineCents(d, line("BOLT", 100)) === 2250 && lineCents(d, line("BOLT", 300)) === 6000
+        && hiddenFailed(addPromotion(d, "NOPE", 1, 1)) && hiddenFailed(addPromotion(d, "BOLT", 0, 1))
+        && hiddenFailed(addPromotion(d, "BOLT", 1, 0)) && hiddenFailed(addPromotion(d, "BOLT", 1, 101))).toBe(true);
+});
+test("testHiddenGoldAmount", () => {
+    let d = hiddenMust(addPromotion(hiddenDepot(), "NUT", 10, 50));
+    d = hiddenMust(placeOrder(d, "zen", "A", hiddenTwo("BOLT", 33, "NUT", 10)));
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenTwo("BOLT", 33, "NUT", 10)));
+    // 825 + 50 = 875; gold: 875 - 26 (3%, truncated) = 849.
+    expect(orderCents(d, 1) === 849 && orderCents(d, 2) === 875 && orderCents(d, 3) === -1).toBe(true);
+});
+test("testHiddenOrderChecks", () => {
+    const d = hiddenDepot();
+    const none: Vec<Line> = [];
+    expect(hiddenFailed(placeOrder(d, "nobody", "A", hiddenOne("BOLT", 1))) && hiddenFailed(placeOrder(d, "acme", "A", none))
+        && hiddenFailed(placeOrder(d, "acme", "A", hiddenOne("BOLT", 0))) && hiddenFailed(placeOrder(d, "acme", "A", hiddenOne("NOPE", 1)))
+        && hiddenFailed(placeOrder(d, "acme", "A", hiddenTwo("BOLT", 1, "BOLT", 1)))
+        && hiddenFailed(placeOrder(d, "acme", "B", hiddenOne("NUT", 1))) && hiddenFailed(placeOrder(d, "acme", "A", hiddenOne("BOLT", 501)))
+        && lastOrderId(d) === 0 && stockAt(d, "BOLT", "A") === 500 && hiddenJoin(openTasks(d)) === "").toBe(true);
+});
+test("testHiddenPlaceReserves", () => {
+    const d = hiddenMust(placeOrder(hiddenDepot(), "acme", "B", hiddenTwo("BOLT", 150, "GEAR", 3)));
+    expect(lastOrderId(d) === 1 && statusOf(d, 1) === "placed" && statusOf(d, 2) === "" && stockAt(d, "BOLT", "B") === 50
+        && stockAt(d, "GEAR", "B") === 7 && orderCents(d, 1) === 39750 && owedBy(d, "acme") === 0).toBe(true);
+});
+test("testHiddenCreditHold", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "A", hiddenOne("PUMP", 3)));
+    // 270000 fits 300000; 90000 more does not, counting the placed order;
+    // 250 more does, since held orders do not count.
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenOne("PUMP", 1)));
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenOne("BOLT", 10)));
+    expect(statusOf(d, 1) === "placed" && statusOf(d, 2) === "onHold" && statusOf(d, 3) === "placed"
+        && stockAt(d, "PUMP", "A") === 1 && stockAt(d, "BOLT", "A") === 490
+        && hiddenJoin(openTasks(d)) === "review:1|reorder:PUMP|credit:acme" && hiddenFailed(ship(d, 2))).toBe(true);
+});
+test("testHiddenShipInvoices", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "zen", "B", hiddenOne("GEAR", 2)));
+    d = hiddenMust(ship(d, 1));
+    // 24000 less 3% = 23280.
+    expect(statusOf(d, 1) === "shipped" && lastInvoiceNumber(d) === 1 && owedBy(d, "zen") === 23280
+        && hiddenFailed(ship(d, 1)) && hiddenFailed(ship(d, 9)) && hiddenFailed(cancel(d, 1))
+        && statement(d, "zen") === "#1 1 23280 due\nowed 23280\n" && statement(d, "acme") === "owed 0\n").toBe(true);
+});
+test("testHiddenCancelReturnsStock", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "B", hiddenOne("GEAR", 9)));
+    d = hiddenMust(cancel(d, 1));
+    expect(statusOf(d, 1) === "cancelled" && stockAt(d, "GEAR", "B") === 10 && hiddenFailed(cancel(d, 1))
+        && hiddenFailed(ship(d, 1)) && hiddenFailed(cancel(d, 5)) && hiddenJoin(openTasks(d)) === "").toBe(true);
+});
+test("testHiddenPayReleasesHeld", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 80)));
+    d = hiddenMust(ship(d, 1));
+    // tiny owes 800 of 1000: 300 more is held, and 225 more is held too.
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 30)));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("BOLT", 9)));
+    const held = statusOf(d, 2) === "onHold" && statusOf(d, 3) === "onHold" && hiddenJoin(openTasks(d)) === "credit:tiny";
+    d = hiddenMust(pay(d, 1));
+    // Paid: 300 fits, then 300 + 225 fits too; no held order is left.
+    expect(held && owedBy(d, "tiny") === 0 && statusOf(d, 2) === "placed" && statusOf(d, 3) === "placed"
+        && hiddenJoin(openTasks(d)) === "" && hiddenFailed(pay(d, 1)) && hiddenFailed(pay(d, 2))
+        && statement(d, "tiny") === "#1 1 800 paid\nowed 0\n").toBe(true);
+});
+test("testHiddenReleaseOldestFirst", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 90)));
+    d = hiddenMust(ship(d, 1));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 70)));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 20)));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 40)));
+    d = hiddenMust(pay(d, 1));
+    // 700 fits, 700 + 200 fits, then 400 more does not and stays held.
+    expect(statusOf(d, 2) === "placed" && statusOf(d, 3) === "placed" && statusOf(d, 4) === "onHold"
+        && hiddenJoin(openTasks(d)) === "credit:tiny").toBe(true);
+});
+test("testHiddenCancelReleasesHeld", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 90)));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 50)));
+    d = hiddenMust(cancel(d, 1));
+    expect(statusOf(d, 2) === "placed" && stockAt(d, "NUT", "A") === 250 && hiddenJoin(openTasks(d)) === "").toBe(true);
+});
+test("testHiddenReorderWork", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "A", hiddenOne("NUT", 249)));
+    const low = hiddenJoin(openTasks(d));
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenOne("NUT", 1)));
+    d = hiddenMust(receive(d, "NUT", "C", 1));
+    const raised = hiddenJoin(openTasks(d));
+    d = hiddenMust(transfer(d, "NUT", "C", "A", 1));
+    expect(low === "" && raised === "" && hiddenJoin(openTasks(hiddenMust(placeOrder(d, "acme", "A", hiddenOne("NUT", 1))))) === "reorder:NUT").toBe(true);
+});
+test("testHiddenReorderOpensOnce", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "B", hiddenOne("GEAR", 8)));
+    d = hiddenMust(placeOrder(d, "acme", "B", hiddenOne("GEAR", 1)));
+    const twice = hiddenJoin(openTasks(d));
+    d = hiddenMust(cancel(d, 1));
+    const closed = hiddenJoin(openTasks(d));
+    d = hiddenMust(placeOrder(d, "acme", "B", hiddenOne("GEAR", 9)));
+    expect(twice === "reorder:GEAR" && closed === "" && hiddenJoin(openTasks(d)) === "reorder:GEAR").toBe(true);
+});
+test("testHiddenReviewWork", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "acme", "A", hiddenTwo("PUMP", 2, "BOLT", 40)));
+    const small = hiddenJoin(openTasks(d));
+    d = hiddenMust(cancel(d, 1));
+    d = hiddenMust(placeOrder(d, "acme", "A", hiddenOne("PUMP", 3)));
+    d = hiddenMust(placeOrder(d, "acme", "B", hiddenOne("GEAR", 1)));
+    const opened = hiddenJoin(openTasks(d));
+    d = hiddenMust(cancel(d, 2));
+    // 181000 opens no review; 270000 does, and cancelling it closes it.
+    expect(small === "" && opened === "review:2" && orderCents(d, 1) === 181000 && hiddenJoin(openTasks(d)) === "").toBe(true);
+});
+test("testHiddenHistory", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 90)));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 20)));
+    d = hiddenMust(ship(d, 1));
+    d = hiddenMust(pay(d, 1));
+    d = hiddenMust(cancel(d, 2));
+    const log = history(d);
+    let tail: Vec<string> = [];
+    for (const index of range(5, log.length)) { tail.push(log[index]); }
+    expect(log.length === 14 && hiddenJoin(tail) === "stock NUT|placed 1|stock NUT|held 2|shipped 1|paid 1|placed 2|stock NUT|cancelled 2").toBe(true);
+});
+test("testHiddenImport", () => {
+    const d = hiddenMust(importStock(hiddenDepot(), "BOLT, C, 5\n\n  NUT,C,7  \n"));
+    expect(stockAt(d, "BOLT", "C") === 5 && stockAt(d, "NUT", "C") === 7
+        && hiddenFailed(importStock(d, "BOLT,C,5\nNUT,C\n")) && hiddenFailed(importStock(d, "BOLT,C,x\n"))
+        && hiddenFailed(importStock(d, "NOPE,C,1\n")) && hiddenFailed(importStock(d, "BOLT,C,0\n"))
+        && stockAt(hiddenMust(importStock(hiddenDepot(), "")), "BOLT", "A") === 500).toBe(true);
+});
+test("testHiddenImportErrorsNameLines", () => {
+    const d = hiddenDepot();
+    match (importStock(d, "BOLT,C,1\n\nNUT,C,x\n")) {
+        Result.ok(value) => { expect(false).toBe(true); return; }
+        Result.err(problem) => { expect(problem === "line 3: not a number: x").toBe(true); return; }
+    }
+});
+test("testHiddenStockReport", () => {
+    let d = hiddenMust(receive(hiddenDepot(), "BOLT", "AA", 3));
+    d = hiddenMust(transfer(d, "GEAR", "B", "A", 10));
+    expect(stockReport(d) === "BOLT 703 A:500 AA:3 B:200\nGEAR 10 A:10\nNUT 300 A:300\nPUMP 5 A:5\n").toBe(true);
+});
