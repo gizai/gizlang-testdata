@@ -1,0 +1,12 @@
+# Task
+
+`shop.giz` is a shop's stock, orders and automations, written in Gizlang. `LANGUAGE.md` is the
+language reference. `REQUEST.md` is the change to make. Change `shop.giz` so it does what the
+request asks and everything else keeps working as before; keep its existing functions'
+names and parameters unless the request changes them.
+
+- `./check` checks the program (types, effects, ownership).
+- `./test` runs the tests of `tests.giz`, if you write one, as vitest does (`import {expect, test} from "vitest";`,
+  `test("name", () => { expect(a).toBe(b); });`, with `import {...} from "./shop.giz";`).
+
+Finish when the change is done and `./check` passes.
