@@ -1,0 +1,83 @@
+// Hidden regression suite: behavior no change request asks to change. It is
+// appended to the edited shop.giz; hidden.ts checks the same facts.
+import {expect} from "vitest";
+function hiddenMust(outcome: Result<Store, string>): Store {
+    match (outcome) {
+        Result.ok(value) => { return value; }
+        Result.err(problem) => { assert(false); }
+    }
+}
+function hiddenFailed(outcome: Result<Store, string>): bool {
+    match (outcome) { Result.ok(value) => { return false; } Result.err(problem) => { return true; } }
+}
+function hiddenShop(): Store {
+    let store = newStore();
+    store = hiddenMust(addItem(store, item("P1", "Blue pen", 10, 2, 2500)));
+    store = hiddenMust(addItem(store, item("P2", "black ink", 5, 3, 400)));
+    store = hiddenMust(addItem(store, item("A9", "Red pen", 50, 0, 120)));
+    return store;
+}
+function hiddenLines(sku: string, quantity: i64): Vec<Line> { const lines: Vec<Line> = [Line(sku, quantity)]; return lines; }
+test("testHiddenCancelRestoresStock", () => {
+    const placed = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P1", 4)));
+    const cancelled = hiddenMust(cancel(placed, lastOrderId(placed)));
+    expect(stockOf(placed, "P1") === 6 && stockOf(cancelled, "P1") === 10 && statusOf(cancelled, lastOrderId(placed)) === "cancelled").toBe(true);
+});
+test("testHiddenNotEnoughStock", () => {
+    const store = hiddenShop();
+    expect(hiddenFailed(placeOrder(store, "Ann", hiddenLines("P2", 6))) && hiddenFailed(placeOrder(store, "Ann", hiddenLines("ZZ", 1)))
+        && stockOf(store, "P2") === 5 && lastOrderId(store) === 0).toBe(true);
+});
+test("testHiddenIdsIncrease", () => {
+    const first = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("A9", 1)));
+    const second = hiddenMust(placeOrder(first, "Bo", hiddenLines("A9", 1)));
+    expect(lastOrderId(first) === 1 && lastOrderId(second) === 2).toBe(true);
+});
+test("testHiddenShippedIsFinal", () => {
+    const placed = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("A9", 2)));
+    const shipped = hiddenMust(ship(placed, 1));
+    const cancelled = hiddenMust(cancel(placed, 1));
+    expect(hiddenFailed(cancel(shipped, 1)) && hiddenFailed(ship(cancelled, 1)) && hiddenFailed(ship(shipped, 1))
+        && stockOf(shipped, "A9") === 48 && statusOf(shipped, 1) === "shipped").toBe(true);
+});
+test("testHiddenImportRejectsBadLine", () => {
+    match (importCsv(newStore(), "K1,Kettle,3,1,900\nK2,Kite,2,0,500\nK3,Knife,many,1,300\n")) {
+        Result.ok(value) => { expect(false).toBe(true); return; }
+        Result.err(problem) => { expect(problem.startsWith("line 3")).toBe(true); return; }
+    }
+});
+test("testHiddenImportAddsItems", () => {
+    const store = hiddenMust(importCsv(newStore(), "K1, Kettle ,3,1,900\n\nK2,Kite,2,0,500\n"));
+    expect(stockOf(store, "K1") === 3 && stockOf(store, "K2") === 2 && search(store, "kettle").length === 1).toBe(true);
+});
+test("testHiddenSearchByName", () => {
+    const found = search(hiddenShop(), "BL");
+    expect(found.length === 2 && found[0] === "P1" && found[1] === "P2" && search(hiddenShop(), "red")[0] === "A9").toBe(true);
+});
+test("testHiddenOneReorderPerSku", () => {
+    const first = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P2", 2)));
+    const second = hiddenMust(placeOrder(first, "Bo", hiddenLines("P2", 1)));
+    const tasks = openTasks(second);
+    let reorders = 0;
+    for (const index of range(0, tasks.length)) { if (tasks[index] === "reorder:P2") { reorders = reorders + 1; } }
+    expect(reorders === 1 && openTasks(hiddenShop()).length === 0).toBe(true);
+});
+test("testHiddenReportSortedBySku", () => {
+    const lines = report(hiddenShop()).split("\n");
+    expect(lines[0].startsWith("A9 Red pen 50") && lines[1].startsWith("P1 Blue pen 10") && lines[2].startsWith("P2 black ink 5")).toBe(true);
+});
+test("testHiddenPlainTotal", () => {
+    const store = hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("P1", 3)));
+    expect(orderTotal(store, 1) === 7500 && orderTotal(store, 99) === -1).toBe(true);
+});
+test("testHiddenHistoryOrder", () => {
+    const store = hiddenMust(ship(hiddenMust(placeOrder(hiddenShop(), "Ann", hiddenLines("A9", 1))), 1));
+    const events = history(store);
+    let placed = -1;
+    let shipped = -1;
+    for (const index of range(0, events.length)) {
+        if (events[index] === "placed 1") { placed = index; }
+        if (events[index] === "shipped 1") { shipped = index; }
+    }
+    expect(placed >= 0 && shipped > placed && events[0] === "stock P1 10").toBe(true);
+});
