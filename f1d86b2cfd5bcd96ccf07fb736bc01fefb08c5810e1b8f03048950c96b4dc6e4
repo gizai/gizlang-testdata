@@ -1,0 +1,15 @@
+test("testAccept04PartialPay", () => {
+    let d = hiddenMust(placeOrder(hiddenDepot(), "tiny", "A", hiddenOne("NUT", 90)));
+    d = hiddenMust(ship(d, 1));
+    d = hiddenMust(placeOrder(d, "tiny", "A", hiddenOne("NUT", 50)));
+    d = hiddenMust(payPart(d, 1, 300));
+    // Owes 600: the held 500 does not fit 1000 yet; 100 more and it does.
+    const part = owedBy(d, "tiny") === 600 && statusOf(d, 2) === "onHold" && statement(d, "tiny") === "#1 1 900 due 600\nowed 600\n";
+    d = hiddenMust(payPart(d, 1, 100));
+    const released = statusOf(d, 2) === "placed" && hiddenJoin(openTasks(d)) === "" && history(d)[history(d).length - 2] === "paid 1";
+    const bad = hiddenFailed(payPart(d, 1, 0)) && hiddenFailed(payPart(d, 1, 501)) && hiddenFailed(payPart(d, 1, -5))
+        && hiddenFailed(payPart(d, 7, 1));
+    d = hiddenMust(pay(d, 1));
+    expect(part && released && bad && owedBy(d, "tiny") === 0 && statement(d, "tiny") === "#1 1 900 paid\nowed 0\n"
+        && hiddenFailed(payPart(d, 1, 1)) && hiddenFailed(pay(d, 1))).toBe(true);
+});
