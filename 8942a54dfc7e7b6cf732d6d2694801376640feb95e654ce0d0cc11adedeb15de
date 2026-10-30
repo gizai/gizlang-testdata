@@ -1,0 +1,17 @@
+import Link from "next/link";
+
+export const dynamic = "force-static";
+
+export default function Home() {
+  return (
+    <main>
+      <h1>Giz comments</h1>
+      <p>Live comments on any record.</p>
+      <ul>
+        <li><Link href="/t/docs/1">Comments on docs/1</Link></li>
+        <li><Link href="/login">Sign in</Link></li>
+        <li><a href="/api/tools">Agent tools</a></li>
+      </ul>
+    </main>
+  );
+}
