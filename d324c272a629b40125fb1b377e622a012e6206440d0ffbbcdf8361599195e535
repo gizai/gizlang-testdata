@@ -1,0 +1,103 @@
+"use client";
+
+import { useActionState, useEffect, useRef, useState } from "react";
+import { addCommentAction, removeCommentAction, type ActionState } from "@/app/actions";
+import type { Comment } from "@/lib/model";
+
+type Props = { target: string; initial: Comment[]; me: string; canWrite: boolean; admin: boolean };
+
+const when = (ms: number) => new Date(ms).toISOString().slice(0, 16).replace("T", " ");
+
+// The thread: the server's comments, kept current by the stream, with each
+// top-level comment's replies under it.
+export function Thread({ target, initial, me, canWrite, admin }: Props) {
+  const [comments, setComments] = useState(initial);
+  useEffect(() => {
+    const source = new EventSource(`/api/s?t=${encodeURIComponent(target)}`);
+    source.onmessage = (event) => {
+      const c: Comment = JSON.parse(event.data);
+      setComments((all) => (all.some((o) => o.id === c.id) ? all.map((o) => (o.id === c.id ? c : o)) : [...all, c]));
+    };
+    return () => source.close();
+  }, [target]);
+
+  const ids = new Set(comments.map((c) => c.id));
+  const top = comments.filter((c) => !c.parent || !ids.has(c.parent));
+  const live = comments.filter((c) => !c.removed).length;
+  const item = { me, canWrite, admin };
+  return (
+    <>
+      <p>{live === 1 ? "1 comment" : `${live} comments`}</p>
+      <ol>
+        {top.map((c) => (
+          <Item key={c.id} c={c} replies={comments.filter((r) => r.parent === c.id)} {...item} />
+        ))}
+      </ol>
+      {canWrite ? <CommentForm target={target} /> : <p><a href="/login">Sign in</a> to comment.</p>}
+    </>
+  );
+}
+
+type ItemProps = { c: Comment; replies: Comment[]; me: string; canWrite: boolean; admin: boolean };
+
+function Item({ c, replies, me, canWrite, admin }: ItemProps) {
+  const removable = !c.removed && me !== "" && (admin || c.author === me);
+  return (
+    <li>
+      <header>
+        <b>{c.author}</b>
+        <time>{when(c.created)}</time>
+        {removable && <RemoveButton target={c.target} id={c.id} />}
+      </header>
+      {c.removed ? <p className="gone">This comment was removed.</p> : <p>{c.body}</p>}
+      {!c.parent && (
+        <>
+          <ol>
+            {replies.map((r) => (
+              <Item key={r.id} c={r} replies={[]} me={me} canWrite={canWrite} admin={admin} />
+            ))}
+          </ol>
+          {canWrite && !c.removed && (
+            <details>
+              <summary>Reply</summary>
+              <CommentForm target={c.target} parent={c.id} />
+            </details>
+          )}
+        </>
+      )}
+    </li>
+  );
+}
+
+function CommentForm({ target, parent }: { target: string; parent?: string }) {
+  const [state, action, pending] = useActionState<ActionState, FormData>(addCommentAction, {});
+  const form = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (state.done) form.current?.reset();
+  }, [state.done]);
+  const error = (field: string) => (state.rejection?.field === field ? state.rejection.message : "");
+  return (
+    <form ref={form} action={action}>
+      <input type="hidden" name="target" value={target} />
+      {parent && <input type="hidden" name="parent" value={parent} />}
+      <label>
+        <span>Comment</span>
+        <textarea name="body" required minLength={1} maxLength={10000} />
+      </label>
+      <small className="err">{error("body")}</small>
+      <small className="err">{state.rejection && state.rejection.field !== "body" ? state.rejection.message : ""}</small>
+      <button disabled={pending}>Post</button>
+    </form>
+  );
+}
+
+function RemoveButton({ target, id }: { target: string; id: string }) {
+  const [state, action] = useActionState<ActionState, FormData>(removeCommentAction, {});
+  return (
+    <form className="inline" action={action}>
+      <input type="hidden" name="target" value={target} />
+      <input type="hidden" name="id" value={id} />
+      <button title={state.rejection?.message}>Remove</button>
+    </form>
+  );
+}
