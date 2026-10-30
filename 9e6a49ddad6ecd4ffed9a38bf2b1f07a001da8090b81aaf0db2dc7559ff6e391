@@ -1,0 +1,62 @@
+import { DatabaseSync } from "node:sqlite";
+import type { Comment } from "./model";
+
+export const dbPath = process.env.COMMENTS_DB ?? "comments.db";
+
+// One connection per process, opened at first use (the build evaluates this
+// module in parallel workers) and kept across hot reloads.
+const cache = globalThis as unknown as { db?: DatabaseSync };
+const db = () => (cache.db ??= open());
+
+function open() {
+  // A worker process of each server CPU (run.giz) opens the same file: wait for its write lock, never fail with SQLITE_BUSY.
+  const d = new DatabaseSync(dbPath, { timeout: 5000 });
+  d.exec("PRAGMA journal_mode=WAL");
+  d.exec(`
+    CREATE TABLE IF NOT EXISTS comments (
+      id TEXT PRIMARY KEY,
+      target TEXT NOT NULL,
+      created INTEGER NOT NULL,
+      parent TEXT,
+      author TEXT NOT NULL,
+      body TEXT NOT NULL,
+      removed INTEGER
+    );
+    CREATE INDEX IF NOT EXISTS thread ON comments (target, created);
+    CREATE TABLE IF NOT EXISTS grants (
+      target TEXT NOT NULL,
+      principal TEXT NOT NULL,
+      role TEXT NOT NULL,
+      PRIMARY KEY (target, principal)
+    );
+    INSERT OR IGNORE INTO grants (target, principal, role) VALUES ('docs/1', '*', 'write');
+  `);
+  if (process.env.GIZ_ADMIN) {
+    d.prepare("INSERT OR REPLACE INTO grants (target, principal, role) VALUES ('docs/1', ?, 'admin')").run(process.env.GIZ_ADMIN);
+  }
+  return d;
+}
+
+export const thread = (target: string) =>
+  // node:sqlite rows have a null prototype, which React will not pass to a
+  // Client Component: copy them into plain objects.
+  (db().prepare("SELECT * FROM comments WHERE target = ? ORDER BY created, id").all(target) as Comment[]).map((c) => ({ ...c }));
+
+export const find = (target: string, id: string) =>
+  db().prepare("SELECT * FROM comments WHERE target = ? AND id = ?").get(target, id) as Comment | undefined;
+
+export function insert(c: Comment) {
+  db().prepare("INSERT INTO comments (id, target, created, parent, author, body, removed) VALUES (?, ?, ?, ?, ?, ?, ?)").run(
+    c.id, c.target, c.created, c.parent, c.author, c.body, c.removed,
+  );
+}
+
+export function markRemoved(target: string, id: string, at: number) {
+  db().prepare("UPDATE comments SET body = '', removed = ? WHERE target = ? AND id = ?").run(at, target, id);
+}
+
+export const grants = (target: string, principal: string) =>
+  db().prepare("SELECT principal, role FROM grants WHERE target = ? AND principal IN (?, '*')").all(target, principal) as {
+    principal: string;
+    role: string;
+  }[];
