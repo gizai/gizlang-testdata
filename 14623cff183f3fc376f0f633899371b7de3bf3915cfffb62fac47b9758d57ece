@@ -1,0 +1,27 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { sessionToken } from "@/lib/session";
+
+// Sign-in for the pilot: a name, no password.
+async function login(form: FormData) {
+  "use server";
+  const name = String(form.get("name") ?? "");
+  if (!/^[a-z0-9_-]{1,32}$/.test(name)) throw new Error("A name is 1 to 32 lowercase letters, digits, _ or -.");
+  (await cookies()).set("s", sessionToken(name), { path: "/", httpOnly: true, sameSite: "lax" });
+  redirect("/t/docs/1");
+}
+
+export default function LoginPage() {
+  return (
+    <main>
+      <h1>Sign in</h1>
+      <form action={login}>
+        <label>
+          <span>Name (lowercase letters or numbers)</span>
+          <input name="name" required pattern="[a-z0-9_-]{1,32}" autoFocus />
+        </label>
+        <button>Sign in</button>
+      </form>
+    </main>
+  );
+}
