@@ -1,0 +1,23 @@
+import { addComment, removeComment } from "@/lib/comments";
+import { Rejected, readAddComment, readRemoveComment } from "@/lib/model";
+import { principal } from "@/lib/session";
+
+// The actions for agents and native apps: JSON in and out, a Bearer token.
+const actions = {
+  addComment: (who: string, input: Record<string, unknown>) => addComment(who, readAddComment(input)),
+  removeComment: (who: string, input: Record<string, unknown>) => removeComment(who, readRemoveComment(input)),
+};
+
+export async function POST(request: Request, { params }: { params: Promise<{ name: string }> }) {
+  const { name } = await params;
+  const act = actions[name as keyof typeof actions];
+  if (!act) return Response.json({ ok: false, status: 404, field: "", message: "no such action" }, { status: 404 });
+  try {
+    const input = await request.json();
+    return Response.json({ ok: true, value: await act(await principal(), input) });
+  } catch (e) {
+    if (e instanceof Rejected) return Response.json({ ok: false, ...e.rejection }, { status: e.rejection.status });
+    if (e instanceof SyntaxError) return Response.json({ ok: false, status: 422, field: "", message: "The body is not JSON." }, { status: 422 });
+    throw e;
+  }
+}
