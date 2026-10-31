@@ -1,0 +1,26 @@
+import { grants } from "./db";
+import { reject, type Role } from "./model";
+
+export type Access = { target: string; principal: string; role: Role };
+
+const roles: Role[] = ["read", "write", "admin"];
+const role = (text: string) => roles.find((r) => r === text);
+
+// The principal's access to the target: its own grant, else the grant to
+// everyone ("*"). Reading needs a signed-in principal unless everyone may read.
+export async function access(principal: string, target: string): Promise<Access> {
+  let own: Role | undefined;
+  let everyone: Role | undefined;
+  for (const g of await grants(target, principal)) {
+    if (g.principal === "*") everyone = role(g.role);
+    else if (principal) own = role(g.role);
+  }
+  const granted = own ?? everyone;
+  if (granted) return { target, principal, role: granted };
+  if (!principal) throw reject(401, "", "Sign in first.");
+  throw reject(403, "", "You do not have permission to view this document.");
+}
+
+export const canWrite = (a: Access) => a.principal !== "" && a.role !== "read";
+export const mayRemove = (a: Access, author: string) =>
+  a.principal !== "" && (a.role === "admin" || (a.role === "write" && author === a.principal));
