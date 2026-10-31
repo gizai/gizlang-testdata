@@ -1,0 +1,42 @@
+import { randomBytes } from "node:crypto";
+import { access, canWrite, mayRemove } from "./acl";
+import { find, insert, markRemoved } from "./db";
+import { publish } from "./feed";
+import { reject, type AddComment, type Comment, type RemoveComment } from "./model";
+
+// The actions, shared by the server actions (app/actions.ts) and the agent
+// route (app/api/a/[name]/route.ts).
+export async function addComment(principal: string, input: AddComment): Promise<Comment> {
+  const a = await access(principal, input.target);
+  if (!principal) throw reject(401, "", "Sign in first.");
+  if (!canWrite(a)) throw reject(403, "", "You may not comment on this document.");
+  if (input.parent) {
+    const parent = await find(input.target, input.parent);
+    if (!parent) throw reject(422, "parent", "There is no comment to reply to.");
+    if (parent.removed) throw reject(422, "parent", "A removed comment takes no replies.");
+  }
+  const c: Comment = {
+    id: randomBytes(8).toString("hex"),
+    target: input.target,
+    created: Date.now(),
+    parent: input.parent,
+    author: principal,
+    body: input.body,
+    removed: null,
+  };
+  await insert(c);
+  publish(c);
+  return c;
+}
+
+export async function removeComment(principal: string, input: RemoveComment): Promise<Comment> {
+  const a = await access(principal, input.target);
+  const c = await find(input.target, input.id);
+  if (!c) throw reject(404, "", "There is no such comment.");
+  if (!mayRemove(a, c.author)) throw reject(403, "", "Only the author or a manager may remove a comment.");
+  if (c.removed) return c;
+  const gone = { ...c, body: "", removed: Date.now() };
+  await markRemoved(c.target, c.id, gone.removed);
+  publish(gone);
+  return gone;
+}
