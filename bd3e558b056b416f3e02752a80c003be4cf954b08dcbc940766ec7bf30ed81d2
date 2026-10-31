@@ -1,0 +1,115 @@
+import { DatabaseSync } from "node:sqlite";
+import { Pool, types } from "pg";
+import type { Comment } from "./model";
+
+export const dbPath = process.env.COMMENTS_DB ?? "comments.db";
+
+// The store: PostgreSQL when DATABASE_URL is set (a pool per process), else the SQLite file COMMENTS_DB. Its SQL is the
+// same text on both, with ? parameters.
+type Store = {
+  all: (sql: string, ...args: unknown[]) => Promise<Record<string, unknown>[]>;
+  run: (sql: string, ...args: unknown[]) => Promise<unknown>;
+};
+
+const SCHEMA = `
+  CREATE TABLE IF NOT EXISTS comments (
+    id TEXT PRIMARY KEY,
+    target TEXT NOT NULL,
+    created BIGINT NOT NULL,
+    parent TEXT,
+    author TEXT NOT NULL,
+    body TEXT NOT NULL,
+    removed BIGINT
+  );
+  CREATE INDEX IF NOT EXISTS thread ON comments (target, created);
+  CREATE TABLE IF NOT EXISTS grants (
+    target TEXT NOT NULL,
+    principal TEXT NOT NULL,
+    role TEXT NOT NULL,
+    PRIMARY KEY (target, principal)
+  );
+`;
+
+// One store per process, opened at first use (the build evaluates this
+// module in parallel workers) and kept across hot reloads.
+const cache = globalThis as unknown as { db?: Promise<Store> };
+const db = () => (cache.db ??= open());
+
+async function open() {
+  const url = process.env.DATABASE_URL;
+  const s = url ? await postgres(url) : sqlite();
+  await s.run("INSERT INTO grants (target, principal, role) VALUES ('docs/1', '*', 'write') ON CONFLICT DO NOTHING");
+  if (process.env.GIZ_ADMIN) {
+    await s.run(
+      "INSERT INTO grants (target, principal, role) VALUES ('docs/1', ?, 'admin') ON CONFLICT (target, principal) DO UPDATE SET role = 'admin'",
+      process.env.GIZ_ADMIN,
+    );
+  }
+  return s;
+}
+
+function sqlite(): Store {
+  // A worker process of each server CPU (run.giz) opens the same file: wait for its write lock, never fail with SQLITE_BUSY.
+  const d = new DatabaseSync(dbPath, { timeout: 5000 });
+  d.exec("PRAGMA journal_mode=WAL");
+  d.exec(SCHEMA);
+  return {
+    // node:sqlite rows have a null prototype, which React will not pass to a
+    // Client Component: copy them into plain objects.
+    all: async (sql, ...args) => d.prepare(sql).all(...(args as string[])).map((r) => ({ ...r })),
+    run: async (sql, ...args) => d.prepare(sql).run(...(args as string[])),
+  };
+}
+
+async function postgres(url: string): Promise<Store> {
+  // created and removed are milliseconds, safe as numbers.
+  types.setTypeParser(types.builtins.INT8, Number);
+  const pool = new Pool({ connectionString: url });
+  // The worker processes of each server CPU make the tables at once: one at a time.
+  const c = await pool.connect();
+  try {
+    await c.query("BEGIN");
+    await c.query("SELECT pg_advisory_xact_lock(1)");
+    await c.query(SCHEMA);
+    await c.query("COMMIT");
+  } finally {
+    c.release();
+  }
+  // Each statement prepared once per connection, by name.
+  const prepared = new Map<string, { name: string; text: string }>();
+  const statement = (sql: string) => {
+    let s = prepared.get(sql);
+    if (!s) {
+      let n = 0;
+      prepared.set(sql, (s = { name: `s${prepared.size}`, text: sql.replace(/\?/g, () => `$${++n}`) }));
+    }
+    return s;
+  };
+  return {
+    all: async (sql, ...args) => (await pool.query({ ...statement(sql), values: args })).rows,
+    run: (sql, ...args) => pool.query({ ...statement(sql), values: args }),
+  };
+}
+
+export const thread = async (target: string) =>
+  (await (await db()).all("SELECT * FROM comments WHERE target = ? ORDER BY created, id", target)) as Comment[];
+
+export const find = async (target: string, id: string) =>
+  (await (await db()).all("SELECT * FROM comments WHERE target = ? AND id = ?", target, id))[0] as Comment | undefined;
+
+export async function insert(c: Comment) {
+  await (await db()).run(
+    "INSERT INTO comments (id, target, created, parent, author, body, removed) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    c.id, c.target, c.created, c.parent, c.author, c.body, c.removed,
+  );
+}
+
+export async function markRemoved(target: string, id: string, at: number) {
+  await (await db()).run("UPDATE comments SET body = '', removed = ? WHERE target = ? AND id = ?", at, target, id);
+}
+
+export const grants = async (target: string, principal: string) =>
+  (await (await db()).all("SELECT principal, role FROM grants WHERE target = ? AND principal IN (?, '*')", target, principal)) as {
+    principal: string;
+    role: string;
+  }[];
