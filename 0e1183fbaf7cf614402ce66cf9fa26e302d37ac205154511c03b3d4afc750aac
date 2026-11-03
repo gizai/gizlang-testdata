@@ -1,0 +1,5 @@
+function f(x: u64): u64
+{
+    assert(x < 18446744073709551615u);
+    return ((x + 1u) - 1u);
+}
