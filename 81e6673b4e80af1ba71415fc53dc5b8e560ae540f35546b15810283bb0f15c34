@@ -1,0 +1,13 @@
+function f(x: i64): i64
+{
+    assert(x >= 0);
+    assert(x < 10);
+    let y = x;
+    if ((x < 5)) {
+        y = (y + 1);
+    }
+    else {
+        y = (y + 1);
+    }
+    return (y + 1);
+}
