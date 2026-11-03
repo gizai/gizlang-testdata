@@ -1,0 +1,6 @@
+function f(x: i64): i64
+{
+    assert(x > 0);
+    assert(x < 0);
+    return x;
+}
