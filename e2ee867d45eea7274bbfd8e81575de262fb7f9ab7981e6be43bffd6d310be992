@@ -1,0 +1,4 @@
+function f(): i64
+{
+    console.log(string(1)); return 1;
+}
