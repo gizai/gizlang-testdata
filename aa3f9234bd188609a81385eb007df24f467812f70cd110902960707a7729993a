@@ -1,0 +1,46 @@
+function f(x: i64): i64
+{
+    assert(x === 0);
+    let y = x;
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    y = (y + y);
+    return y;
+}
