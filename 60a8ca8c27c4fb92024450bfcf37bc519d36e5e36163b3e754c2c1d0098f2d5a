@@ -1,0 +1,1 @@
+type R = {x:i64} function R.f(self:i64):i64{return self;}
